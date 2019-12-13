@@ -5,12 +5,25 @@ import java.util.Properties;
 import java.text.MessageFormat;
 
 public class Mysqlconnect {
+	
+	/**
+	 * JDBC(Java資料庫連線，Java Database Connectivity) Driver
+	 */
 	static final String JDBC_DRIVER = "com.sql.cj.jdbc.Driver";
-//	static final String = "jdbc:mysql://missaproject.cfojfxuhc6dx.ap-northeast-1.rds.amazonaws.com:3306/?user=saAdminHua";
+
+	/**
+	 * DataBase connection url 
+	 */
 	static final String DB_URL= "jdbc:mysql://missaproject.cfojfxuhc6dx.ap-northeast-1.rds.amazonaws.com:3306";
 	
+	/**
+	 * login user
+	 */
 	static final String USER = "saAdminHua";
 	
+	/**
+	 * Password
+	 */
 	static final String PWD = "sadadmin2019";
 	
 	static {
