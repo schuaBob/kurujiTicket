@@ -22,11 +22,11 @@ public class MemberHelper {
 		return mh;
 	}
 	
-	public JSONObject create(Member m) {
-		String ecexcute_sql = "";
-		long start_time = System.nanoTime();
-		int row = 0; 
-	}
+//	public JSONObject create(Member m) {
+//		String ecexcute_sql = "";
+//		long start_time = System.nanoTime();
+//		int row = 0; 
+//	}
 	
 
 }
