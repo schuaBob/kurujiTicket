@@ -1,4 +1,4 @@
-package com.controller;
+package ncu.im3069.group14.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
