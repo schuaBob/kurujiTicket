@@ -1,4 +1,4 @@
-package com.app;
+package ncu.im3069.group14.util;
 
 import java.sql.*;
 import java.util.Properties;
