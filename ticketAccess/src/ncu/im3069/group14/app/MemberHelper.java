@@ -46,7 +46,7 @@ public class MemberHelper {
 			
 			executeSQL = pres.toString();
 			
-			System.out.println(MessageFormat.format("¤w°õ¦æSQL«ü¥O:{0}", executeSQL));
+			System.out.println(MessageFormat.format("å·²åŸ·è¡ŒSQL:{0}", executeSQL));
 		} catch (SQLException sqlE) {
 			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
 		} catch (Exception e) {
@@ -77,16 +77,26 @@ public class MemberHelper {
 			con = Mysqlconnect.getConnect();
 			String query = "SELECT * FROM `missa`.`member` WHERE `idmember` = ? LIMIT 1";
 			pres = con.prepareStatement(query);
-			pres.setString(1, id);
+			pres.setInt(1,Integer.parseInt(id));
 			rs = pres.executeQuery();
 			execSQL = pres.toString();
-			System.out.println(MessageFormat.format("¤w°õ¦æSQL:{0}", execSQL));
-			
-			m = new Member(rs.getInt("idmember"),rs.getString("name"),rs.getString("password"),rs.getString("email"),rs.getDate("dateofbirth"),rs.getString("idnumber"),rs.getString("phonenumber"),rs.getString("address"));
-			jsonObj = m.toJSONData();
+			System.out.println(MessageFormat.format("å·²åŸ·è¡ŒSQL:{0}", execSQL));
+			while(rs.next()) {
+				int i = rs.getInt("idmember");
+				String name = rs.getString("name");
+				String password = rs.getString("password");
+				String email = rs.getString("email");
+				Date dob = rs.getDate("dateofbirth");
+				String idn = rs.getString("idnumber");
+				String phonenumber = rs.getString("phonenumber");
+				String address = rs.getString("address");
+				System.out.println(MessageFormat.format("id:{0},name:{1},password:{2},email:{3},dateofbirth:{4},idn:{5},phonenumber:{6},address:{7}", i, name, password, email, dob,idn,phonenumber,address));
+				m = new Member(i,name,password,email,dob,idn,phonenumber,address);
+				jsonObj = m.toJSONData();
+			}
 		} catch (SQLException sqlE) {
+			sqlE.getStackTrace();
 			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
-			
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
@@ -94,12 +104,11 @@ public class MemberHelper {
 		}
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime)/1_000_000_000;
-		JSONObject res = new JSONObject();
-		
-		res.put("sql", execSQL);
-		res.put("row", 1);
-		res.put("time", duration);
-		res.put("data", jsonObj);
-		return res;
+//		JSONObject res = new JSONObject();
+		System.out.println("Spend:"+duration+"sec");
+//		res.put("sql", execSQL);
+//		res.put("duration",duration);
+//		res.put("data", jsonObj);
+		return jsonObj;
 	}
 }

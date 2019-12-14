@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 public class Mysqlconnect {
 	
 	/**
-	 * JDBC(Java資料庫連線，Java Database Connectivity) Driver
+	 * JDBC(Java嚙踝蕭おw嚙編嚙線嚙璀Java Database Connectivity) Driver
 	 */
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
@@ -30,10 +30,10 @@ public class Mysqlconnect {
 		try {
 			Class.forName(Mysqlconnect.JDBC_DRIVER);
 		} catch(ClassNotFoundException cnfE) {
-			System.out.println("載入JDBC驅動類別錯誤");
-			System.out.println(MessageFormat.format("錯誤訊息:{0}", cnfE.getMessage()));
+			System.out.println("JDBC Driver Class Error");
+			System.out.println(MessageFormat.format("Error message:{0}", cnfE.getMessage()));
 		} catch(Exception e) {
-			System.out.println("載入JDBC驅動類別以外的錯誤");
+			System.out.println("Something about JDBC Driver has Error");
 			e.getStackTrace();
 		}
 	}
@@ -47,7 +47,7 @@ public class Mysqlconnect {
 		
 		props.setProperty("useSSL", "false");
 		
-		props.setProperty("serverTimezone","UTC");
+		props.setProperty("serverTimezone","Asia/Shanghai");
 		
 		props.setProperty("useUnicode", "true");
 		
@@ -62,10 +62,10 @@ public class Mysqlconnect {
 		try {
 			con = DriverManager.getConnection(Mysqlconnect.DB_URL, props);
 		} catch(SQLException sqlE) {
-			System.out.println("與資料庫連線錯誤");
-			System.out.println(MessageFormat.format("錯誤訊息:{0}", sqlE.getMessage()));
+			System.out.println("Connection Error");
+			System.out.println(MessageFormat.format("Error Mesage:{0}", sqlE.getMessage()));
 		} catch(Exception e) {
-			System.out.println("與資料庫連線以外的錯誤");
+			System.out.println("Something about Connection has Error");
 			e.getStackTrace();
 		}
 		
@@ -82,10 +82,10 @@ public class Mysqlconnect {
 				con.close();
 			}
 		} catch(SQLException sqlE) {
-			System.out.println("關閉所有資料庫連線錯誤");
-			System.out.println(MessageFormat.format("錯誤訊息:{0}", sqlE.getMessage()));
+			System.out.println("Close Connection Error");
+			System.out.println(MessageFormat.format("Error Code:{0}", sqlE.getMessage()));
 		} catch(Exception e) {
-			System.out.println("關閉所有資料庫連線以外的錯誤");
+			System.out.println("Something about close connection has error");
 			e.getStackTrace();
 		}
 	}
@@ -102,10 +102,10 @@ public class Mysqlconnect {
 				con.close();
 			}
 		} catch(SQLException sqlE) {
-			System.out.println("關閉所有資料庫連線錯誤");
-			System.out.println(MessageFormat.format("錯誤訊息:{0}", sqlE.getMessage()));
+			System.out.println("嚙踝蕭嚙踝蕭嚙課佗蕭嚙踝蕭おw嚙編嚙線嚙踝蕭嚙羯");
+			System.out.println(MessageFormat.format("嚙踝蕭嚙羯嚙確嚙踝蕭:{0}", sqlE.getMessage()));
 		} catch (Exception e) {
-			System.out.println("關閉所有資料庫連線以外的錯誤");
+			System.out.println("嚙踝蕭嚙踝蕭嚙課佗蕭嚙踝蕭おw嚙編嚙線嚙瘡嚙羯嚙踝蕭嚙踝蕭嚙羯");
 			e.getStackTrace();
 		}
 	}
