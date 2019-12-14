@@ -9,7 +9,7 @@ public class Mysqlconnect {
 	/**
 	 * JDBC(Java資料庫連線，Java Database Connectivity) Driver
 	 */
-	static final String JDBC_DRIVER = "com.sql.cj.jdbc.Driver";
+	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
 	/**
 	 * DataBase connection url 
