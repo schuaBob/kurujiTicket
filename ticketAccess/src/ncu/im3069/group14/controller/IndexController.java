@@ -43,6 +43,14 @@ public class IndexController extends HttpServlet {
 			jsonObj.put("data", data);
 			rh.sendJsonRes(jsonObj, response);
 			
+		} else {
+			JSONObject data = mh.readByID("5");
+			
+			JSONObject jsonObj = new JSONObject();
+			
+			jsonObj.put("message", "Query success.");
+			jsonObj.put("data", data);
+			rh.sendJsonRes(jsonObj, response);
 		}
 		
 	}
