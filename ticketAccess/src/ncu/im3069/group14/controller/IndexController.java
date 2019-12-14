@@ -6,13 +6,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import ncu.im3069.group14.app.*;
+import java.sql.Date;
+import org.json.*;
 /**
  * Servlet implementation class IndexController
  */
-@WebServlet("/bobo")
+@WebServlet("/member")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private MemberHelper mh = MemberHelper.getHelper();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -27,7 +30,11 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		Date dob = Date.valueOf("1998-10-13");
+		Member m = new Member("µØ±]²N","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
+		JSONObject res = mh.create(m);
+		
+		response.getWriter().append(res.toString());
 	}
 
 	/**
