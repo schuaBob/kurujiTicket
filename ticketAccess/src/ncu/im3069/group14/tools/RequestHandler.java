@@ -37,7 +37,5 @@ public class RequestHandler {
 		response.setCharacterEncoding("UTF-8");
 		out.print(data);
 		out.flush();
-		
-		
 	}
 }

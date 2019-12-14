@@ -53,6 +53,7 @@ public class IndexController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Date dob = Date.valueOf("1998-10-13");
+		System.out.println(dob);
 		Member m = new Member("華崧淇","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
 		JSONObject res = mh.create(m);
 		

@@ -65,9 +65,9 @@ public class Member {
 		jTemp.put("id", getID());
 		jTemp.put("name", getName());
 		jTemp.put("password", getPassword());
-		jTemp.put("email", getPassword());
+		jTemp.put("email", getEmail());
 		jTemp.put("dateofbirth", getDOB());
-		jTemp.put("idNumber", getIDNumber());
+		jTemp.put("idnumber", getIDNumber());
 		jTemp.put("phonenumber", getPhoneNumber());
 		jTemp.put("address", getAddress());
 		return jTemp;
