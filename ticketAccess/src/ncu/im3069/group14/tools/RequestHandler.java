@@ -1,7 +1,7 @@
 package ncu.im3069.group14.tools;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import org.json.*;
 
 import javax.servlet.http.*;
 public class RequestHandler {
@@ -29,5 +29,15 @@ public class RequestHandler {
 		} else {
 			return "";			
 		}
+	}
+	
+	public void sendJsonRes(JSONObject data,HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		out.print(data);
+		out.flush();
+		
+		
 	}
 }

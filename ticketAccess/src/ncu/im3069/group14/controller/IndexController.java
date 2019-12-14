@@ -31,7 +31,19 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		RequestHandler rh = new RequestHandler(request);
 		
+		String id = rh.getParameter("id");
+		if(!id.isEmpty()) {
+			JSONObject data = mh.readByID(id);
+			
+			JSONObject jsonObj = new JSONObject();
+			
+			jsonObj.put("message", "Query success.");
+			jsonObj.put("data", data);
+			rh.sendJsonRes(jsonObj, response);
+			
+		}
 		
 	}
 
