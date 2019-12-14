@@ -56,7 +56,7 @@ public class MemberHelper {
 		}
 		
 		long endTime = System.nanoTime();
-		long duration = endTime - startTime;
+		long duration = (endTime - startTime)/1_000_000_000;
 		
 		JSONObject response = new JSONObject();
 		response.put("sql", executeSQL);
@@ -66,5 +66,40 @@ public class MemberHelper {
 		return response;
 		
 	}
-
+	
+	public JSONObject readByID(String id) {
+		long startTime = System.nanoTime();
+		JSONObject jsonObj = new JSONObject();
+		Member m = null;
+		String execSQL = "";
+		ResultSet rs = null;
+		try {
+			con = Mysqlconnect.getConnect();
+			String query = "SELECT * FROM `missa`.`member` WHERE `idmember` = ? LIMIT 1";
+			pres = con.prepareStatement(query);
+			pres.setString(1, id);
+			rs = pres.executeQuery();
+			execSQL = pres.toString();
+			System.out.println(MessageFormat.format("§w∞ı¶ÊSQL:{0}", execSQL));
+			
+			m = new Member(rs.getInt("idmember"),rs.getString("name"),rs.getString("password"),rs.getString("email"),rs.getDate("dateofbirth"),rs.getString("idnumber"),rs.getString("phonenumber"),rs.getString("address"));
+			jsonObj = m.toJSONData();
+		} catch (SQLException sqlE) {
+			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
+			
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			Mysqlconnect.close(rs, pres,con);
+		}
+		long endTime = System.nanoTime();
+		long duration = (endTime - startTime)/1_000_000_000;
+		JSONObject res = new JSONObject();
+		
+		res.put("sql", execSQL);
+		res.put("row", 1);
+		res.put("time", duration);
+		res.put("data", jsonObj);
+		return res;
+	}
 }
