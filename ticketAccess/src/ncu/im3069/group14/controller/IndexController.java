@@ -6,23 +6,26 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
 import org.json.*;
 import ncu.im3069.group14.tools.RequestHandler;
+
 /**
  * Servlet implementation class IndexController
  */
 @WebServlet("/member")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	private MemberHelper mh = MemberHelper.getHelper();
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
     public IndexController() {
         super();
+        System.out.println("after super()");
         // TODO Auto-generated constructor stub
     }
 
@@ -31,6 +34,7 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		RequestHandler rh = new RequestHandler(request);
 		
 		String id = rh.getParameter("id");
@@ -52,7 +56,7 @@ public class IndexController extends HttpServlet {
 			jsonObj.put("data", data);
 			rh.sendJsonRes(jsonObj, response);
 		}
-		
+
 	}
 
 	/**
@@ -60,6 +64,7 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 		Date dob = Date.valueOf("1998-10-13");
 		System.out.println(dob);
 		Member m = new Member("華崧淇","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
