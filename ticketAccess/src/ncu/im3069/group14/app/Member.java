@@ -1,6 +1,7 @@
 package ncu.im3069.group14.app;
 
-import java.util.Date;
+import java.sql.Date;
+import org.json.*;
 
 public class Member {
 	private int id;
@@ -13,6 +14,17 @@ public class Member {
 	private String address;
 	
 	public Member(String name,String password, String email, Date dob, String idnumber, String phonenumber, String address) {
+		this.name = name;
+		this.password = password;
+		this.email = email;
+		this.dob = dob;
+		this.phonenumber = phonenumber;
+		this.idnumber = idnumber;
+		this.address = address;
+	}
+	
+	public Member(int id, String name,String password, String email, Date dob, String idnumber, String phonenumber, String address) {
+		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
@@ -46,5 +58,18 @@ public class Member {
 	}
 	public String getAddress() {
 		return this.address;
+	}
+	
+	public JSONObject toJSONData() {
+		JSONObject jTemp = new JSONObject();
+		jTemp.put("id", getID());
+		jTemp.put("name", getName());
+		jTemp.put("password", getPassword());
+		jTemp.put("email", getEmail());
+		jTemp.put("dateofbirth", getDOB());
+		jTemp.put("idnumber", getIDNumber());
+		jTemp.put("phonenumber", getPhoneNumber());
+		jTemp.put("address", getAddress());
+		return jTemp;
 	}
 }
