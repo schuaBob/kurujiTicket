@@ -1,0 +1,22 @@
+ /*行距*/
+ #space{
+        width:21vh;
+        text-align: center;
+    }
+ .border {
+    height:4vh;
+}
+#concert-name{
+    padding-left:4vh;
+    padding-top:16vh;
+    font-size:2.8rem;
+}
+#concert-data{
+    padding-top:15vh;
+    font-size:1rem;
+}
+#logo{
+    width:7vh;
+
+}
+
