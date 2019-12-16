@@ -26,8 +26,8 @@ public class MemberHelper {
 	
 	public JSONObject create(Member m) {
 		String executeSQL = "";
-		long startTime = System.nanoTime();
-		int row = 0;
+//		long startTime = System.nanoTime();
+		boolean b = false;
 		
 		try {
 			con = Mysqlconnect.getConnect();
@@ -42,7 +42,7 @@ public class MemberHelper {
 			pres.setDate(6, m.getDOB());
 			pres.setString(7, m.getPhoneNumber());
 			
-			row = pres.executeUpdate();
+			b = pres.execute();
 			
 			executeSQL = pres.toString();
 			
@@ -54,16 +54,24 @@ public class MemberHelper {
 		}  finally {
 			Mysqlconnect.close(pres, con);
 		}
-		
-		long endTime = System.nanoTime();
-		long duration = (endTime - startTime)/1_000_000_000;
-		
+		JSONObject data = new JSONObject();
 		JSONObject response = new JSONObject();
-		response.put("sql", executeSQL);
-		response.put("time", duration);
-		response.put("row", row);
-		
+		data.put("name", m.getName());
+		data.put("email", m.getEmail());
+		data.put("password", m.getPassword());
+		data.put("idnumber", m.getIDNumber());
+		data.put("address", m.getAddress());
+		data.put("dob", m.getDOB());
+		data.put("phonenumber", m.getPhoneNumber());
+		response.put("Insert", b);
+		response.put("data", data);
 		return response;
+//		long endTime = System.nanoTime();
+//		long duration = (endTime - startTime)/1_000_000_000;
+//		
+//		response.put("sql", executeSQL);
+//		response.put("time", duration);
+//		response.put("row", row);
 		
 	}
 	
@@ -92,7 +100,7 @@ public class MemberHelper {
 				String address = rs.getString("address");
 				System.out.println(MessageFormat.format("id:{0},name:{1},password:{2},email:{3},dateofbirth:{4},idn:{5},phonenumber:{6},address:{7}", i, name, password, email, dob,idn,phonenumber,address));
 				m = new Member(i,name,password,email,dob,idn,phonenumber,address);
-				jsonObj = m.toJSONData();
+				jsonObj = m.toJsonData();
 			}
 		} catch (SQLException sqlE) {
 			sqlE.getStackTrace();
@@ -110,5 +118,37 @@ public class MemberHelper {
 //		res.put("duration",duration);
 //		res.put("data", jsonObj);
 		return jsonObj;
+	}
+	
+	public boolean isExist(Member m) {
+		ResultSet result = null;
+		int row = -1;
+		try {
+			con = Mysqlconnect.getConnect();
+			String sql = "Select count(*) FROM `missa`.`member` where idnumber = ? or email = ? or phonenumber = ?";
+			String email = m.getEmail();
+			String idnumber = m.getIDNumber();
+			String phonenumber =  m.getPhoneNumber();
+			pres = con.prepareStatement(sql);
+			pres.setString(1, email);
+			pres.setString(2, idnumber);
+			pres.setString(3,phonenumber);
+			
+			result = pres.executeQuery();
+			result.next();
+			
+			row = result.getInt("count(*)");
+			System.out.println(MessageFormat.format("{0} rows have the same column data.", row));
+			
+		} catch(SQLException sqlE) {
+			System.err.format("SQL State: %s\n%s\n%s",sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getErrorCode());
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			Mysqlconnect.close(result, pres,con);
+		}
+		
+		return (row == 0) ? false : true;
+		
 	}
 }

@@ -16,14 +16,14 @@ import ncu.im3069.group14.tools.RequestHandler;
  * Servlet implementation class IndexController
  */
 @WebServlet("/member")
-public class IndexController extends HttpServlet {
+public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private MemberHelper mh = MemberHelper.getHelper();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public IndexController() {
+    public MemberController() {
         super();
         System.out.println("after super()");
         // TODO Auto-generated constructor stub
@@ -34,7 +34,7 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		
 		RequestHandler rh = new RequestHandler(request);
 		
 		String id = rh.getParameter("id");
@@ -64,14 +64,29 @@ public class IndexController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		Date dob = Date.valueOf("1998-10-13");
-		System.out.println(dob);
-		Member m = new Member("華崧淇","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
-		JSONObject res = mh.create(m);
 		
-		response.getWriter().append(res.toString());
+		RequestHandler rh = new RequestHandler(request);
+		JSONObject req = rh.toJsonObj();
+		
+		Date dob = Date.valueOf(req.getString("dob"));
+		String name = req.getString("name");
+		String password = req.getString("password");
+		String email = req.getString("email");
+		String idn= req.getString("idnumber");
+		String phonenumber = req.getString("phonenumber");
+		String address = req.getString("address");
+		Member m = new Member(name,password,email,dob,idn,phonenumber,address);
+		JSONObject jsonObj = new JSONObject();
+		
+		if(mh.isExist(m)) {
+			jsonObj.put("message", "資料已被使用。");
+			rh.sendJsonErr(jsonObj, response);
+		}else {
+			JSONObject res = mh.create(m);
+			jsonObj.put("message", "註冊成功。");
+			jsonObj.put("res",res);
+			rh.sendJsonRes(res, response);
+		}
 	}
-
 
 }

@@ -60,7 +60,7 @@ public class Member {
 		return this.address;
 	}
 	
-	public JSONObject toJSONData() {
+	public JSONObject toJsonData() {
 		JSONObject jTemp = new JSONObject();
 		jTemp.put("id", getID());
 		jTemp.put("name", getName());
