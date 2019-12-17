@@ -1,8 +1,9 @@
 package ncu.im3069.group14.app;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.text.*;
 
 public class Order {
 	
@@ -11,7 +12,7 @@ public class Order {
 	private String payment; //紀錄這筆訂單要用哪一種方式付款
 	private boolean paid; //付款了沒?原本是False，付款後變成True
 	private int ticketamount; //訂單總數(1~4)
-	private Timestamp createtime; //訂單建立時間
+	private Date createtime; //訂單建立時間 YYYY-MM-DD HH:MM:SS
 	
 	
 	/**
@@ -21,11 +22,14 @@ public class Order {
 	 * @param ticketamount
 	 */
 	public Order(int memberid, String payment, int ticketamount) {
+		Date date = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+		
 		this.memberid = memberid;
-		this.payment = payment;
+		this.payment = payment; //credit, line, 7
 		this.paid = false ; //剛建立訂單一定還沒付錢
 		this.ticketamount = ticketamount;
-		this.createtime = Timestamp.valueOf(LocalDateTime.now());	
+		this.createtime = date;
 		System.out.println(createtime);
 	}
 	
@@ -49,7 +53,7 @@ public class Order {
 		return this.ticketamount;
 	}
 	
-	public Timestamp getCreatetime() {
+	public Date getCreatetime() {
 		return this.createtime;
 	}
 	

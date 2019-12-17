@@ -27,7 +27,7 @@ public class RequestHandler {
 		if(this.req.getParameter(param)!= null) {
 			return this.req.getParameter(param);
 		} else {
-			return "";			
+			return "";	
 		}
 	}
 	

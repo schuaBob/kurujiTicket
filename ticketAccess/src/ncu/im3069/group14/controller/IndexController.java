@@ -67,7 +67,7 @@ public class IndexController extends HttpServlet {
 
 		Date dob = Date.valueOf("1998-10-13");
 		System.out.println(dob);
-		Member m = new Member("華崧淇","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
+		Member m = new Member("�撏扳��","a29252097","schua1013@gmail.com",dob,"A123456789","0912345678","NCU");
 		JSONObject res = mh.create(m);
 		
 		response.getWriter().append(res.toString());
