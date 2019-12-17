@@ -34,6 +34,13 @@ public class Member {
 		this.address = address;
 	}
 	
+	public Member(int id, String password, String phonenumber, String address) {
+		this.id = id;
+		this.password = password;
+		this.phonenumber = phonenumber;
+		this.address = address;
+	}
+	
 	public int getID() {
 		return this.id;
 	}
@@ -54,7 +61,7 @@ public class Member {
 		return this.idnumber;
 	}
 	public String getPhoneNumber() {
-		return  this.phonenumber;
+		return this.phonenumber;
 	}
 	public String getAddress() {
 		return this.address;

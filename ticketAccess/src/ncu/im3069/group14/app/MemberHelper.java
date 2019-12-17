@@ -27,7 +27,7 @@ public class MemberHelper {
 	public JSONObject create(Member m) {
 		String executeSQL = "";
 //		long startTime = System.nanoTime();
-		boolean b = false;
+		int row = 0;
 		
 		try {
 			con = Mysqlconnect.getConnect();
@@ -42,7 +42,7 @@ public class MemberHelper {
 			pres.setDate(6, m.getDOB());
 			pres.setString(7, m.getPhoneNumber());
 			
-			b = pres.execute();
+			row = pres.executeUpdate();
 			
 			executeSQL = pres.toString();
 			
@@ -54,16 +54,9 @@ public class MemberHelper {
 		}  finally {
 			Mysqlconnect.close(pres, con);
 		}
-		JSONObject data = new JSONObject();
 		JSONObject response = new JSONObject();
-		data.put("name", m.getName());
-		data.put("email", m.getEmail());
-		data.put("password", m.getPassword());
-		data.put("idnumber", m.getIDNumber());
-		data.put("address", m.getAddress());
-		data.put("dob", m.getDOB());
-		data.put("phonenumber", m.getPhoneNumber());
-		response.put("Insert", b);
+		JSONObject data= m.toJsonData();
+		response.put("row", row);
 		response.put("data", data);
 		return response;
 //		long endTime = System.nanoTime();
@@ -77,7 +70,6 @@ public class MemberHelper {
 	
 	public JSONObject readByID(String id) {
 		long startTime = System.nanoTime();
-		JSONObject jsonObj = new JSONObject();
 		Member m = null;
 		String execSQL = "";
 		ResultSet rs = null;
@@ -100,10 +92,9 @@ public class MemberHelper {
 				String address = rs.getString("address");
 				System.out.println(MessageFormat.format("id:{0},name:{1},password:{2},email:{3},dateofbirth:{4},idn:{5},phonenumber:{6},address:{7}", i, name, password, email, dob,idn,phonenumber,address));
 				m = new Member(i,name,password,email,dob,idn,phonenumber,address);
-				jsonObj = m.toJsonData();
 			}
 		} catch (SQLException sqlE) {
-			sqlE.getStackTrace();
+			
 			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
 		} catch (Exception e) {
 			e.getStackTrace();
@@ -112,12 +103,70 @@ public class MemberHelper {
 		}
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime)/1_000_000_000;
-//		JSONObject res = new JSONObject();
 		System.out.println("Spend:"+duration+"sec");
-//		res.put("sql", execSQL);
-//		res.put("duration",duration);
-//		res.put("data", jsonObj);
-		return jsonObj;
+		return m.toJsonData();
+	}
+	public JSONObject update(Member m) {
+		int row = -1;
+		try {
+			con = Mysqlconnect.getConnect();
+			String sql = "Update `missa`.`member` SET `password` = ? , `phonenumber` = ? , `address` = ? WHERE `idmember` = ?";
+			String password = m.getPassword();
+			String phonenumber = m.getPhoneNumber();
+			String address = m.getAddress();
+			int id = m.getID();
+			pres = con.prepareStatement(sql);
+			
+			pres.setString(1,password);
+			pres.setString(2, phonenumber);
+			pres.setString(3, address);
+			pres.setInt(4, id);
+			
+			row = pres.executeUpdate();
+			System.out.println("Effected "+ row +" rows.");
+			String execSQL = pres.toString();
+			System.out.println(execSQL);
+			
+		} catch(SQLException sqlE) {
+			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			Mysqlconnect.close(pres, con);
+		}
+		
+		JSONObject jsonObj = m.toJsonData();
+		JSONObject response = new JSONObject();
+		response.put("row", row);
+		response.put("data", jsonObj);
+//		
+//		jsonObj.put("password", m.getPassword());
+//		jsonObj.put("phonenumber", m.getPhoneNumber());
+//		jsonObj.put("address", m.getAddress());
+//		response.put("row", row);
+//		response.put("data", jsonObj);
+		
+		return response;
+	}
+	
+	public void delete(int id) {
+		try {
+			con = Mysqlconnect.getConnect();
+			String sql = "Delete FROM `missa`.`member` where `idmember` = ?";
+			pres = con.prepareStatement(sql);
+			pres.setInt(1, id);
+			
+			int row = pres.executeUpdate();
+			System.out.println("Effected "+ row +" rows.");
+			System.out.println(pres.toString());
+			
+		} catch(SQLException sqlE) {
+			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			Mysqlconnect.close(pres, con);
+		}
 	}
 	
 	public boolean isExist(Member m) {

@@ -83,10 +83,53 @@ public class MemberController extends HttpServlet {
 			rh.sendJsonErr(jsonObj, response);
 		}else {
 			JSONObject res = mh.create(m);
-			jsonObj.put("message", "註冊成功。");
-			jsonObj.put("res",res);
-			rh.sendJsonRes(res, response);
+			if(res.getInt("row")>0) {
+				jsonObj.put("message", "註冊成功。");
+				jsonObj.put("res",res);
+				rh.sendJsonRes(res, response);
+			} else {
+				jsonObj.put("message", "註冊失敗。");
+				jsonObj.put("res",res);
+				rh.sendJsonErr(res, response);
+			}
+			
 		}
+	}
+	
+	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestHandler rh = new RequestHandler(request);
+		JSONObject req = rh.toJsonObj();
+		int id = req.getInt("id");
+		String password = req.getString("password");
+		String phonenumber = req.getString("phonenumber");
+		String address = req.getString("address");
+		
+		Member m = new Member(id, password, phonenumber, address);
+		JSONObject data = mh.update(m);
+		JSONObject jsonObj = new JSONObject();
+		
+		if(data.getInt("row")>0) {
+			jsonObj.put("message", "已更新資料");
+			jsonObj.put("data",data);
+			rh.sendJsonRes(jsonObj, response);
+		} else {
+			jsonObj.put("message", "更新資料錯誤");
+			jsonObj.put("data",data);
+			rh.sendJsonErr(jsonObj, response);
+		}
+		
+		
+		
+	}
+	
+	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestHandler rh = new RequestHandler(request);
+		String id = rh.getParameter("id");
+		mh.delete(Integer.parseInt(id));
+		JSONObject jsonObj = new JSONObject();
+		
+		jsonObj.put("message", "已刪除資料");
+		rh.sendJsonRes(jsonObj, response);
 	}
 
 }
