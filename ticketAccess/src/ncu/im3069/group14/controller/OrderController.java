@@ -54,10 +54,12 @@ public class OrderController extends HttpServlet {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
 		
-		int memberid = Integer.parseInt(jso.getString("memberid"));
+		//int memberid = Integer.parseInt(jso.getString("memberid"));
+		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
-		int ticketamount = Integer.parseInt(jso.getString("ticketamount"));
-			
+		//int ticketamount = Integer.parseInt(jso.getString("ticketamount"));
+		int ticketamount = jso.getInt("ticketamount");
+		
 		Order o = new Order( memberid, payment, ticketamount);
 		
 		JSONObject result = oh.create(o);
