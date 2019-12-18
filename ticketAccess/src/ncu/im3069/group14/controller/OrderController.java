@@ -18,7 +18,7 @@ public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 
-	private OrderHelper oh = new OrderHelper();
+	private OrderHelper oh = OrderHelper.getHelper();
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -51,8 +51,25 @@ public class OrderController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		Order o = new Order(1, "bobo", 1);
+		RequestHandler rh = new RequestHandler(request);
+		JSONObject jso = rh.toJsonObj();
+		
+		int memberid = Integer.parseInt(jso.getString("memberid"));
+		String payment = jso.getString("payment");
+		int ticketamount = Integer.parseInt(jso.getString("ticketamount"));
+			
+		Order o = new Order( memberid, payment, ticketamount);
+		
+		JSONObject result = oh.create(o);
+		
+		JSONObject resp = new JSONObject();
+        resp.put("status", "200");
+        resp.put("message", "訂單新增成功！");
+        resp.put("result", result);
+        rh.sendJsonRes(resp, response);
+        
+		System.out.println("finish");
+		
 	}
 
 	/**
