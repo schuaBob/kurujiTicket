@@ -79,16 +79,16 @@ public class MemberController extends HttpServlet {
 		JSONObject jsonObj = new JSONObject();
 		
 		if(mh.isExist(m)) {
-			jsonObj.put("message", "資料已被使用。");
+			jsonObj.put("message", "鞈�歇鋡思蝙���");
 			rh.sendJsonErr(jsonObj, response);
 		}else {
 			JSONObject res = mh.create(m);
 			if(res.getInt("row")>0) {
-				jsonObj.put("message", "註冊成功。");
+				jsonObj.put("message", "閮餃�����");
 				jsonObj.put("res",res);
 				rh.sendJsonRes(res, response);
 			} else {
-				jsonObj.put("message", "註冊失敗。");
+				jsonObj.put("message", "閮餃�仃����");
 				jsonObj.put("res",res);
 				rh.sendJsonErr(res, response);
 			}
@@ -109,11 +109,11 @@ public class MemberController extends HttpServlet {
 		JSONObject jsonObj = new JSONObject();
 		
 		if(data.getInt("row")>0) {
-			jsonObj.put("message", "已更新資料");
+			jsonObj.put("message", "撌脫�鞈��");
 			jsonObj.put("data",data);
 			rh.sendJsonRes(jsonObj, response);
 		} else {
-			jsonObj.put("message", "更新資料錯誤");
+			jsonObj.put("message", "��鞈�隤�");
 			jsonObj.put("data",data);
 			rh.sendJsonErr(jsonObj, response);
 		}
@@ -128,7 +128,7 @@ public class MemberController extends HttpServlet {
 		mh.delete(Integer.parseInt(id));
 		JSONObject jsonObj = new JSONObject();
 		
-		jsonObj.put("message", "已刪除資料");
+		jsonObj.put("message", "撌脣�鞈��");
 		rh.sendJsonRes(jsonObj, response);
 	}
 
