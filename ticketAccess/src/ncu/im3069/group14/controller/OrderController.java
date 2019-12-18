@@ -64,7 +64,7 @@ public class OrderController extends HttpServlet {
 		
 		JSONObject resp = new JSONObject();
         resp.put("status", "200");
-        resp.put("message", "­q³æ·s¼W¦¨¥\¡I");
+        resp.put("message", "è¨‚å–®æ–°å¢æˆåŠŸ");
         resp.put("result", result);
         rh.sendJsonRes(resp, response);
         
