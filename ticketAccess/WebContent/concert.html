@@ -1,0 +1,33 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>新增演唱會</button>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $("button").click(function(){
+        $.ajax({
+            type: "POST",
+            url: "api/concert.do",            
+            cache: false,
+            dataType: 'json',
+            timeout: 5000,
+            data:{
+                concertName:"kuruji"
+            },
+            success: function(response){
+                if(response.status == 200){
+                    alert("新增成功，影響"+response.row-effect+"列");
+                }                
+            },
+            error: function(){
+                alert("無法連線到伺服器！");
+            }
+        });
+    });
+</script>
+</html>
