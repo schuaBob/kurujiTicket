@@ -34,16 +34,18 @@ public class OrderController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestHandler rh = new RequestHandler(request);
-		JSONObject data = oh.getOrder();
+		JSONObject jso = rh.toJsonObj();
+		
+		int memberid = jso.getInt("memberid");
+		JSONObject data = oh.getAllOrder(memberid);
 		JSONObject jsonObj = new JSONObject();
 		
 		jsonObj.put("message", "Query success.");
 		jsonObj.put("data", data);
 		rh.sendJsonRes(jsonObj, response);
 		
-		System.out.println("before response");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println("after response");
+		System.out.println("finish doGet");
 	}
 
 	/**
@@ -54,13 +56,11 @@ public class OrderController extends HttpServlet {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
 		
-		//int memberid = Integer.parseInt(jso.getString("memberid"));
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
-		//int ticketamount = Integer.parseInt(jso.getString("ticketamount"));
 		int ticketamount = jso.getInt("ticketamount");
-		
-		Order o = new Order( memberid, payment, ticketamount);
+		int concertid = jso.getInt("concertid");
+		Order o = new Order( memberid, payment, ticketamount, concertid);
 		
 		JSONObject result = oh.create(o);
 		
@@ -70,7 +70,7 @@ public class OrderController extends HttpServlet {
         resp.put("result", result);
         rh.sendJsonRes(resp, response);
         
-		System.out.println("finish");
+		System.out.println("finish doPost");
 		
 	}
 
@@ -86,6 +86,20 @@ public class OrderController extends HttpServlet {
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		RequestHandler rh = new RequestHandler(request);
+		JSONObject jso = rh.toJsonObj();
+		
+		int idorder = jso.getInt("idorder");
+		
+		JSONObject result = oh.cancelOrder(idorder);
+		
+		JSONObject resp = new JSONObject();
+        resp.put("status", "200");
+        resp.put("message", "訂單刪除成功！");
+        resp.put("result", result);
+        rh.sendJsonRes(resp, response);
+        
+		System.out.println("finish doDelete");
 	}
 
 }
