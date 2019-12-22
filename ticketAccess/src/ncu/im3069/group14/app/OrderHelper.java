@@ -1,6 +1,6 @@
 package ncu.im3069.group14.app;
 
-import ncu.im3069.demo.util.DBMgr;
+
 import ncu.im3069.group14.util.Mysqlconnect;
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import org.json.*;
 
 
 public class OrderHelper {
-	
 	
 	private Connection conn = null;
 	private PreparedStatement pres = null;
@@ -140,7 +139,7 @@ public class OrderHelper {
         }
 		response.put("result", "get all data success");
 		response.put("row", row);
-		response.put("dataset", jsa);
+		response.put("orders", jsa);
 		return response;
 	}
 	public JSONObject create(Order o) {
@@ -190,12 +189,12 @@ public class OrderHelper {
 				 
 				
 				 //STEP3 回傳結果
-				 response.put("result", "update success");
+				 response.put("result", "update order success");
 				 if(rs.next()){
 					 idorder = rs.getInt("idorder");
 					 data = o.toJsonData(idorder);
 					 response.put("row", row);
-					 response.put("data", data);
+					 response.put("order", data);
 				 }
 				 
 				 
@@ -221,9 +220,9 @@ public class OrderHelper {
 				o.setIdorder(idorder);
 				data = o.toJsonData(idorder);
 				
-				response.put("result", "create success");
+				response.put("result", "create order success");
 				response.put("row", row);
-				response.put("data", data);
+				response.put("order", data);
 			}			
 			
 		} catch (SQLException e) {
@@ -314,7 +313,7 @@ public class OrderHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             Mysqlconnect.close( pres, conn);
         }
-		response.put("result", "delete success");
+		response.put("result", "delete order success");
 		response.put("row", row);
 		response.put("orderid", idorder);
 		return response;
@@ -330,11 +329,11 @@ public class OrderHelper {
 		
 		try {
 			conn = Mysqlconnect.getConnect();
-			query = "SELECT * FROM `missa`.`orde`r where `idorder` = ? ";
+			query = "SELECT * FROM `missa`.`order` where `idorder` = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, idorder);
 			
-			rs = pres.executeQuery(query);
+			rs = pres.executeQuery();
 			execute_sql = pres.toString();
 			System.out.println(execute_sql);
 			
@@ -354,6 +353,7 @@ public class OrderHelper {
         }
 		
 		if (payment == "none") {
+			response.put("payment", "none");
 			response.put("result", "query failed");
 			return response;
 		}
@@ -370,11 +370,15 @@ public class OrderHelper {
 		JSONObject response = new JSONObject();
 		JSONObject data = getPayment(idorder);
 		String payment = data.getString("payment");
+		if (payment == "none") {
+			response.put("result", "paid failed, didn't find order");
+			return response;
+		}
 		
 		try {
 			conn = Mysqlconnect.getConnect();
-			query = "update missa.order" + 
-					"set paid = true" + 
+			query = "update missa.order " + 
+					"set paid = true " + 
 					"where idorder = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, idorder);

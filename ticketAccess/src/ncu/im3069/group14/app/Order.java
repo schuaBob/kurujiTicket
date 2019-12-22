@@ -2,12 +2,8 @@ package ncu.im3069.group14.app;
 
 
 import java.time.LocalDateTime;
-import java.util.*;
-
 import org.json.JSONObject;
-
 import java.sql.Timestamp;
-import java.text.*;
 
 public class Order {
 	
@@ -40,8 +36,8 @@ public class Order {
 	public Order(int idorder, int memberid, String payment, boolean paid, int ticketamount, Timestamp createtime, int concertid) {
 		this.idorder = idorder;
 		this.memberid = memberid;
-		this.payment = payment; //credit, line, 7
-		this.paid = false ; //剛建立訂單一定還沒付錢
+		this.payment = payment; //credit, line, 7-11
+		this.paid = paid ; 
 		this.ticketamount = ticketamount;
 		this.createtime = Timestamp.valueOf(LocalDateTime.now());;
 		this.concertid = concertid;
