@@ -121,14 +121,14 @@ public class MemberController extends HttpServlet {
 		
 	}
 	
-	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestHandler rh = new RequestHandler(request);
-		String id = rh.getParameter("id");
-		mh.delete(Integer.parseInt(id));
-		JSONObject jsonObj = new JSONObject();
-		
-		jsonObj.put("message", "撌脣�鞈��");
-		rh.sendJsonRes(jsonObj, response);
-	}
+//	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		RequestHandler rh = new RequestHandler(request);
+//		String id = rh.getParameter("id");
+//		mh.delete(Integer.parseInt(id));
+//		JSONObject jsonObj = new JSONObject();
+//		
+//		jsonObj.put("message", "撌脣�鞈��");
+//		rh.sendJsonRes(jsonObj, response);
+//	}
 
 }
