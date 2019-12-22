@@ -6,11 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import ncu.im3069.group14.tools.*;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
 import org.json.*;
-import ncu.im3069.group14.tools.RequestHandler;
+
 
 /**
  * Servlet implementation class IndexController
@@ -25,7 +25,6 @@ public class MemberController extends HttpServlet {
      */
     public MemberController() {
         super();
-        System.out.println("after super()");
         // TODO Auto-generated constructor stub
     }
 
