@@ -14,7 +14,7 @@ public class Mysqlconnect {
 	/**
 	 * DataBase connection url 
 	 */
-	static final String DB_URL= "jdbc:mysql://missaproject.cfojfxuhc6dx.ap-northeast-1.rds.amazonaws.com:3306";
+	static final String DB_URL= "jdbc:mysql://missaproject.cfojfxuhc6dx.ap-northeast-1.rds.amazonaws.com:3306/missa";
 	
 	/**
 	 * login user
