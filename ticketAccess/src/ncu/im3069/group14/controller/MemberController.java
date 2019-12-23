@@ -35,7 +35,6 @@ public class MemberController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		RequestHandler rh = new RequestHandler(request);
-		
 		String id = rh.getMemberIDinToken();
 		
 		JSONObject data = mh.readByID(id);
