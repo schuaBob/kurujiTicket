@@ -20,7 +20,7 @@
 
 <body>
 	<div class="header">
-		<a href="#default" class="logo">CompanyLogo</a>
+		<a href="/" class="logo">CompanyLogo</a>
 		<div class="header-right">
 			<a class="active" href="#home">Home</a>
 			<a href="#contact">Contact</a>
@@ -70,7 +70,7 @@
 				// console.log($("#name").val()())
 				console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
 				$.ajax({
-					url: "member",
+					url: "/Auth/member",
 					method: 'POST',
 					dataType: "JSON",
 					data: {
@@ -83,10 +83,10 @@
 						address: $("#address").val()
 					},
 					error: function (err) {
-						console.log(err.responseJSON.message)
+						console.log(err)
 					},
 					success: function (data) {
-						console.log(data.message)
+						console.log(data)
 					}
 				});
 			})

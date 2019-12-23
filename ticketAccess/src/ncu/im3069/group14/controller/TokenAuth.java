@@ -41,26 +41,33 @@ public class TokenAuth implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		String authorization = httpRequest.getHeader("Authorization");
 		String token = (authorization==null||authorization.isEmpty()) ? null: authorization.split(" ")[1];
+		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
+		System.out.println(path);
+		System.out.println(httpRequest.getMethod());
 		
-		if(token == null) {
-			httpResponse.sendRedirect("/login");
-		} else {
-			Claims clmBody = null;
-			try {
-				clmBody = Token.decode(token);
-			} catch (SignatureException sigE) {
-				System.out.println("The signature is invalid.");
-				httpResponse.setHeader("Authorization", null);
-				httpResponse.sendRedirect("/login");
-			} catch (ExpiredJwtException expE) {
-				System.out.println("The token is out of date.");
-				httpResponse.setHeader("Authorization", null);
-				httpResponse.sendRedirect("/login");
-			}
-			String id = clmBody.getSubject();
-			String jwt = Token.createToken(id);
-			httpResponse.setHeader("Authorization", "Bearer " + jwt);
+		if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
 			chain.doFilter(request, response);
+		} else {
+			if(token == null) {
+				httpResponse.sendRedirect("/login");
+			} else {
+				Claims clmBody = null;
+				try {
+					clmBody = Token.decode(token);
+				} catch (SignatureException sigE) {
+					System.out.println("The signature is invalid.");
+					httpResponse.setHeader("Authorization", null);
+					httpResponse.sendRedirect("/login");
+				} catch (ExpiredJwtException expE) {
+					System.out.println("The token is out of date.");
+					httpResponse.setHeader("Authorization", null);
+					httpResponse.sendRedirect("/login");
+				}
+				String id = clmBody.getSubject();
+				String jwt = Token.createToken(id);
+				httpResponse.setHeader("Authorization", "Bearer " + jwt);
+				chain.doFilter(request, response);
+			}
 		}
 	}
 
