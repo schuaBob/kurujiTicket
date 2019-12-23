@@ -3,7 +3,6 @@ package ncu.im3069.group14.app;
 import java.sql.*;
 import org.json.*;
 import ncu.im3069.group14.util.Mysqlconnect;
-import ncu.im3069.group14.util.DBMgr;
 import java.text.MessageFormat;
 
 public class ConcertHelper {
@@ -43,12 +42,13 @@ public class ConcertHelper {
 				
 		try {
 			/** 取得資料庫之連線 */
-            conn = DBMgr.getConnection();
+            conn = Mysqlconnect.getConnect();
             
             /** sql指令  */
-            String sql = "INSERT INTO testconcert(concertName) VALUES ('?')";
+            String sql = "INSERT INTO testconcert(concertName) VALUES (?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
+            System.out.println(pres.toString());
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
             
@@ -60,7 +60,7 @@ public class ConcertHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            DBMgr.close(pres, conn);
+        	Mysqlconnect.close(pres, conn);
         }
 		
         JSONObject response = new JSONObject();

@@ -18,6 +18,7 @@ public class RequestHandler {
 		StringBuilder sb = new StringBuilder();
 		
 		while((s = request.getReader().readLine())!=null) {
+			System.out.println(s);
 			sb.append(s);
 		}
 		this.reqStr = sb.toString();
@@ -33,7 +34,7 @@ public class RequestHandler {
 	}
 	
 	public JSONObject toJsonObj() {
-		JSONObject temp = new JSONObject(this.reqStr);
+		JSONObject temp = new JSONObject("{"+this.reqStr.replace("=", ":")+"}");		
 		return temp;
 	}
 	
