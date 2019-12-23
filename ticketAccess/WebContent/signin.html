@@ -1,238 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
-</head>
-<head>
-  <title>登入會員</title>
-  <script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-</head>
-<body class="ticket">
-     
-        <div class="background">
-                <i class='fas fa-address-card'  style="font-size:55px; color:#0088A8;margin: 0% 0% 0% 5%;"></i>
-                <h* style="font-size: 35px; color:#EE7700;">哭嚕嘰</h*>
-                <input type="text" placeholder="Search..">
-                <button type="submit"><i class="fa fa-search"></i></button>
-        
-        </div>
-        <style>
-            .ticket input{
-                float: right;
-                padding: 6px;
-                border: none;
-                margin-top: 8px;
-                margin-right: 16px;
-                font-size: 17px;
-                border: 1px solid #ccc;
-                margin:1% 0% 0% 0%;
-            }
-            .ticket button{
-                float: right;
-                padding: 7px 10px;
-                margin-top: 8px;
-                margin-right: 16px;
-                font-size: 17px;
-                border: none;
-                cursor: pointer;
-                background-color:#DDDDDD;
-                margin:1% 0% 0% 0%;
-            }
-            .ticket button:hover {
-                background: #ccc;
-            }
-            </style>
-        
-<div id="content">
-        <h1 style="margin: 0% 0% 0% 26%;">會員登入</h1>
-        <hr color="black" SIZE="5"></hr>
 
-    <br>
-    <br>
-    <br>
-    <form id="form1">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+		<title>登入會員</title>
+		<script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+	</head>
+	<body class="ticket">
 
-    <div class="regemail">
-        <label for="memberemail">信箱</label>
-        <input name="email" type="text" id="memberEmail" maxlength="100" required="required"></input><br></br>
-    </div>
-    <div class="regpassword">
-        <label for="memberpassword">密碼</label>
-        <input name="password" type="text" id="memberPassword" maxlength="100" required="required"></input><br></br>
-    </div>
-    &nbsp;<div class="submit">
-        
-    <input type ="button" onclick="javascript:location.href='首頁(已註冊).html'" value="登入"></input>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-   <br>
-    </form>
+		<div class="background">
+			<i class='fas fa-address-card' style="font-size:55px; color:#0088A8;margin: 0% 0% 0% 5%;"></i>
+			<h* style="font-size: 35px; color:#EE7700;">哭嚕嘰</h*>
+			<input type="text" placeholder="Search..">
+			<button type="submit">
+				<i class="fa fa-search"></i>
+			</button>
 
-    <style>
-        body{
-            background-image: url("https://img.tixbar.com/concert/concert-list.jpg");
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-color:rgba(255,255,255,0.8);
-            background-blend-mode: lighten;
-        }
-        .ticket body {
-            filter:Alpha(opacity=0.7);
-            width: 200%;
-            background-size: 100% 100%;
-        }
-        .background {
-            background-color: #FFEE99;
-            border: 13px solid #FFEE99;
-            padding: 13px;
-            opacity:0.7;
+		</div>
+		<style>
+			.ticket input {
+				float: right;
+				padding: 6px;
+				border: none;
+				margin: 1% 0 0;
+				font-size: 17px;
+				border: 1px solid #ccc;
+			}
+			.ticket button {
+				float: right;
+				padding: 7px 10px;
+				margin: 1% 0 0;
+				font-size: 17px;
+				border: none;
+				cursor: pointer;
+				background-color: #DDDDDD;
+			}
+			.ticket button:hover {
+				background: #ccc;
+			}
+		</style>
 
-        }
-        .regemail label{
-            font-size: 200%;
-            color: black;
-            margin: 0% 0% 0% 30%;
-            font-weight: bold;
-        }
-        .regemail input{
-            width: 30%;
-            padding: 5px 5px;
-            border: 2px black solid;
-            margin: 0% 35% 0% 0%;
-        }
-        .regpassword label{
-            font-size: 200%;
-            color:black;
-            margin: 0% 0% 0% 30%;
-            font-weight: bold;
-        }
-        .regpassword input{
-            width: 30%;
-            padding: 5px 5px;
-            border: 2px black solid;
-            margin: 0% 35% 0% 0%;
-        }
-        .submit input{
-            cursor:pointer;
-            width:5%;
-            margin: 0% 48% 0% 0%;
-            background-color: #CCEEFF;
-            border: 2px solid#CCDDFF;
-        }
-       
-        </style>
+		<div id="content">
+			<h1 style="margin: 0% 0% 0% 26%;">會員登入</h1>
+			<hr color="black" size="5"></hr>
 
-    <script type="text/javascript">
-    $(document).ready(function(){
-        var $form = $('#submit');
-        $form.click(function(){
-            submit();
-        });
-    
+		<br>
+		<br>
+		<br>
+		<form id="form1">
 
-    function submit(){
-        var name = $('#membername').val();
-        var phone = $('#memberphone').val();
-        var email = $('#memberemail').val();
-        var password = $('#memberpassword').val();
+			<div class="regemail">
+				<label for="memberemail">信箱</label>
+				<input name="email" type="text" id="memberEmail" maxlength="100" required="required"></input><br></br>
+	</body>
+</html></div><div class="regpassword">
+<label for="memberpassword">密碼</label>
+<input name="password" type="text" id="memberPassword" maxlength="100" required="required"></input><br></br></div>&nbsp;<div class="submit"><input type="button" onclick="javascript:location.href='首頁(已註冊).html'" value="登入"></input><br><br><br><br><br><br><br><br></form><style>body {
+	background-image: url("https://img.tixbar.com/concert/concert-list.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: rgba(255, 255, 255, 0.8);
+	background-blend-mode: lighten;
+}
+.ticket body {
+	filter:Alpha(opacity=0.7);
+	width: 200%;
+	background-size: 100% 100%;
+}
+.background {
+	background-color: #FFEE99;
+	border: 13px solid #FFEE99;
+	padding: 13px;
+	opacity: 0.7;
 
-        var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-        var password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-        if(!email_rule.test(email)){
-            alert("Email格式錯誤");
-        }
-        else if(!password_rule.test(password)){
-            alert("Password格式錯誤");
-        }
-        else{
-            var member_object = {
-                "name" : name,
-                "phone" : phone,
-                "email" : email,
-                "password" : password
-            };
-
-            var data_string = JSON.stringify(member_object);
-
-            $.ajax({
-                type: "POST",
-                url: "",
-                data: data_string,
-                crossDomain: true,
-                cache: false,
-                dataType: 'json',
-                timeout: 5000,
-                success: function (response) {
-                    $('#flashMessage').html(response.message);
-                    $('#flashMessage').show();
-                        if(response.status == 200){
-                            updateSQLTable(response.response);
-                        }
-                },
-                    error: function () {
-                        alert("無法連線到伺服器！");
-                    }
-
-            });
-        }
-    }
-
-    function updateSQLTable(data){
-        $("#sql_log > tbody").empty();
-            var time = (data.time / 1000000).toFixed(2);
-            var table_html = "";
-
-                table_html += '<tr>';
-                table_html += '<td>' + '1' + '</td>';
-                table_html += '<td>' + data.sql + '</td>';
-                table_html += '<td style="text-align: right">' + '0' + '</td>';
-                table_html += '<td style="text-align: right">' + data.row + '</td>';
-                table_html += '<td style="text-align: right">' + data.row + '</td>';
-                table_html += '<td style="text-align: right">' + time + '</td>';
-                table_html += '</tr>';
-                    
-                $("#sql_log > tbody").append(table_html);
-                $("#sql_summary").html("(default) " + data.row + " queries took " + time + " ms");
-    }
-
-    });
-
-</script>
-
-</div>
+}
+.regemail label {
+	font-size: 200%;
+	color: black;
+	margin: 0 0 0 30%;
+	font-weight: bold;
+}
+.regemail input {
+	width: 30%;
+	padding: 5px;
+	border: 2px black solid;
+	margin: 0 35% 0 0;
+}
+.regpassword label {
+	font-size: 200%;
+	color: black;
+	margin: 0 0 0 30%;
+	font-weight: bold;
+}
+.regpassword input {
+	width: 30%;
+	padding: 5px;
+	border: 2px black solid;
+	margin: 0 35% 0 0;
+}
+.submit input {
+	cursor: pointer;
+	width: 5%;
+	margin: 0 48% 0 0;
+	background-color: #CCEEFF;
+	border: 2px solid#CCDDFF;
+}</style><script type="text/javascript">$(document).ready(function () {
+var $form = $('#submit');
+$form.click(function () {
+submit();
+});
 
 
-<table class="cake-sql-log" id="sql_log" summary="Cake SQL Log" cellspacing="0" style="color:brown;">
-    <caption id="sql_summary">(default) 0 queries took 0 ms</caption>
-    <thead>
-        <tr>
-            <th>Nr</th>
-            <th>Query</th>
-            <th>Error</th>
-            <th>Affected</th>
-            <th>Num. rows</th>
-            <th>Took (ms)</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
+function submit() {
+var name = $('#membername').val();
+var phone = $('#memberphone').val();
+var email = $('#memberemail').val();
+var password = $('#memberpassword').val();
 
-</body>
+var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+var password = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
+if (! email_rule.test(email)) {
+alert("Email格式錯誤");
+} else if (!password_rule.test(password)) {
+alert("Password格式錯誤");
+} else {
+var member_object = {
+"name": name,
+"phone": phone,
+"email": email,
+"password": password
+};
 
+var data_string = JSON.stringify(member_object);
 
+$.ajax({
+type: "POST",
+url: "",
+data: data_string,
+crossDomain: true,
+cache: false,
+dataType: 'json',
+timeout: 5000,
+success: function (response) {
+$('#flashMessage').html(response.message);
+$('#flashMessage').show();
+if (response.status == 200) {
+updateSQLTable(response.response);
+}
+},
+error: function () {
+alert("無法連線到伺服器！");
+}
 
+});
+}
+}
 
+function updateSQLTable(data) {
+$("#sql_log > tbody").empty();
+var time = (data.time / 1000000).toFixed(2);
+var table_html = "";
 
+table_html += '<tr>';
+table_html += '<td>' + '1' + '</td>';
+table_html += '<td>' + data.sql + '</td>';
+table_html += '<td style="text-align: right">' + '0' + '</td>';
+table_html += '<td style="text-align: right">' + data.row + '</td>';
+table_html += '<td style="text-align: right">' + data.row + '</td>';
+table_html += '<td style="text-align: right">' + time + '</td>';
+table_html += '</tr>';
 
+$("#sql_log > tbody").append(table_html);
+$("#sql_summary").html("(default) " + data.row + " queries took " + time + " ms");
+}
+
+});</script></div><table class="cake-sql-log" id="sql_log" summary="Cake SQL Log" cellspacing="0" style="color:brown;"><caption id="sql_summary">(default) 0 queries took 0 ms</caption><thead><tr><th>Nr</th><th>Query</th><th>Error</th><th>Affected</th><th>Num. rows</th><th>Took (ms)</th></tr></thead><tbody></tbody></table></body>
