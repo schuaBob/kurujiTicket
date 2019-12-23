@@ -57,40 +57,40 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
-		//STEP1 ¨ú±o­q³æ°Ñ¼Æ
+		//STEP1 ï¿½ï¿½ï¿½oï¿½qï¿½ï¿½Ñ¼ï¿½
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		
-		//STEP2 «Ø¥ß­q³æ
+		//STEP2 ï¿½Ø¥ß­qï¿½ï¿½
 		Order o = new Order( memberid, payment, ticketamount, concertid);
 		JSONObject result = oh.create(o);
 		
-		//STEP2.5 §PÂ_¬O§_¦¨¥\«Ø¥ß¡A¦pªG¦¨¥\«Ø¥ß¡A·Ç³Æ«Ø¥ß²¼¨é
+		//STEP2.5 ï¿½Pï¿½_ï¿½Oï¿½_ï¿½ï¿½ï¿½\ï¿½Ø¥ß¡Aï¿½pï¿½Gï¿½ï¿½ï¿½\ï¿½Ø¥ß¡Aï¿½Ç³Æ«Ø¥ß²ï¿½ï¿½ï¿½
 		if ( result.getString("result") == "create order success" || result.getString("result") == "update order success") {
 			System.out.println("create order success");
-			//STEP3 ¥h±o²¼¨é°Ñ¼Æ
+			//STEP3 ï¿½hï¿½oï¿½ï¿½ï¿½ï¿½Ñ¼ï¿½
 			temp = result.getJSONObject("order");
 			
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			//seatid­n¥ý¥h¸òconcerthelper­n ³o­Ó³¡¤À­nµ¥wjc
+			//seatidï¿½nï¿½ï¿½ï¿½hï¿½ï¿½concerthelperï¿½n ï¿½oï¿½Ó³ï¿½ï¿½ï¿½ï¿½nï¿½ï¿½wjc
 			int seatid = jso.getInt("seatid");
-			//STEP4 ®Ú¾Ú­q³æ¡A«Ø¥ß²¼¨é 
+			//STEP4 ï¿½Ú¾Ú­qï¿½ï¿½Aï¿½Ø¥ß²ï¿½ï¿½ï¿½ 
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid);
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
 			
 	        resp.put("status", "200");
-	        resp.put("message", "­q³æ·s¼W¦¨¥\¡I");
+	        resp.put("message", "ï¿½qï¿½ï¿½sï¿½Wï¿½ï¿½ï¿½\ï¿½I");
 	        resp.put("order result", result);
 	        resp.put("ticket result", ticketresult);
 	        rh.sendJsonRes(resp, response);
 		}else {
-			//STEP3-1 ¦^¶Ç¥¢±Ñµ²ªG
+			//STEP3-1 ï¿½^ï¿½Ç¥ï¿½ï¿½Ñµï¿½ï¿½G
 			resp.put("status","200");
-			resp.put("message", "­q³æ·s¼W¥¢±Ñ");
+			resp.put("message", "ï¿½qï¿½ï¿½sï¿½Wï¿½ï¿½ï¿½ï¿½");
 	        resp.put("order result",result);
 	        rh.sendJsonErr(resp, response);
 			System.out.println("finish doPut");
@@ -112,7 +112,7 @@ public class OrderController extends HttpServlet {
 		
 		JSONObject resp = new JSONObject();
 		resp.put("status", "200");
-        resp.put("message", "­q³æ¥I´Ú¦¨¥\¡I");
+        resp.put("message", "ï¿½qï¿½ï¿½Iï¿½Ú¦ï¿½ï¿½\ï¿½I");
         resp.put("result", result);
         rh.sendJsonRes(resp, response);
         
@@ -129,14 +129,14 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		
 		int idorder = jso.getInt("idorder");
-		//­n¥ý§R°£Ticket¤~¯à§R°£order
+		//ï¿½nï¿½ï¿½ï¿½Rï¿½ï¿½Ticketï¿½~ï¿½ï¿½Rï¿½ï¿½order
 		JSONObject ticketresult = th.cancelTicket(idorder);
 		JSONObject result = oh.cancelOrder(idorder);
 		
 		
 		JSONObject resp = new JSONObject();
         resp.put("status", "200");
-        resp.put("message", "­q³æ§R°£¦¨¥\¡I");
+        resp.put("message", "ï¿½qï¿½ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½\ï¿½I");
         resp.put("order result", result);
         resp.put("ticket result", ticketresult);
         rh.sendJsonRes(resp, response);
