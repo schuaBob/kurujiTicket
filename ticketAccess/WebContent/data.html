@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<meta charset="UTF-8">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+
+
+
+
+</head>
+
+
+
+
+
+<body>
+    <main>
+        <header>
+            <!--應該要匯入navbar ktml-->
+            <div id="include"></div>
+
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+
+
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+                    <a href="index.html" class=" navbar-brand" id="brand">
+
+                        <img src='spotlights.png' id="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
+                            <span class="border border-dark navv"></span>
+                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link " id="space" href="#">登出</a>
+
+                        </div>
+                    </div>
+                </nav>
+            </nav>
+        </header>
+        <!-- 引入測試-->
+        <div w3-include-html="navbar.html"></div>
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <p id="concert-name">周杰倫嘉年華演唱會</p>
+                    </div>
+                    <div class="col-4" id="concertdata" style="padding-top:6%;">
+
+                    </div>
+                </div>
+                <ul class="nav nav-pills" id="progress">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tickettab">選擇票種</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="datatab">填寫表單</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="paytab">選擇付款方式</a>
+                    </li>
+
+                </ul>
+
+                <div style="height:6vh;"></div>
+                <form>
+                    <fieldset id="dataset">
+
+                        <div class="alert alert-primary" id="ticketdata">
+
+                        </div>
+                        <div>聯絡人資料</div>
+                        <div>
+                            <form-row>
+                                <label for="validationDefault01">*姓名</label>
+                                <input type="text" class="form-control" id="name" placeholder="王曉明" required>
+                            </form-row>
+                            <form-row>
+                                <label for="validationDefault01">*EMAIL</label>
+                                <input type="email" class="form-control" id="email" placeholder="XXX@mail.com" required>
+                            </form-row>
+                            <form-row>
+                                <label for="validationDefault01">*手機</label>
+
+                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                            </form-row>
+                            <form-row>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
+                                    <label class="form-check-label" for="autoSizingCheck2">
+                                        同會員資料
+                                    </label>
+                                </div>
+                                <!--幹-->
+                                <button class="btn btn-primary" type="submit"></button>
+                                <button type="submit" class="btn btn-link">gfdgd</button>
+                                <a href="pay.html" class="btn btn-primary" role="submit" id="data_b" > <button class="btn btn-primary" type="submit">下一步</button></a>
+                            </form-row>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+
+                $("#datetab").removeClass("active");
+                $("#datatab").addClass("active");
+
+                var oq1, oq2, oq3;
+                $.ajax({
+                    url: "dgdfgdf",
+                    method: 'get',
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    success: function (data) {
+                        oq1 = data.w;
+                        oq2 = data.w;
+                        oq3 = data.w;
+
+                    }
+                });
+                //運算顯示
+                oq1 = 0;
+                oq2 = 2;
+                oq3 = 0;
+                if (oq1 != 0) {
+
+                    $("#ticketdata").append($("#area1").html() + "*" + oq1 + "(");
+                    $("#ticketdata").append(pr1 + "*" + oq1 + ")");
+                }
+                if (oq2 != 0) {
+                    $("#ticketdata").append($("#area2").html() + "*" + oq2 + "(");
+                    $("#ticketdata").append(pr2 + "*" + oq2 + ")");
+                }
+                if (oq3 != 0) {
+                    $("#ticketdata").append($("#area3").html() + "*" + oq3 + "(");
+                    $("#ticketdata").append(pr3 + "*" + oq3 + ")");
+                }
+                //var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
+                $("#ticketdata").append("&nbsp;&nbsp;&nbsp;TWD$" + money);
+
+                //輸入預防
+
+                //寫入資料庫
+
+
+            });
+        </script>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<meta charset="UTF-8">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+
+</head>
+
+
+
+
+
+<body>
+    <main>
+        <header>
+            <!--應該要匯入navbar ktml-->
+            <div id="include"></div>
+
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+
+
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+                    <a href="index.html" class=" navbar-brand" id="brand">
+
+                        <img src='spotlights.png' id="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
+                            <span class="border border-dark navv"></span>
+                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link " id="space" href="#">登出</a>
+
+                        </div>
+                    </div>
+                </nav>
+            </nav>
+        </header>
+        <!-- 引入測試-->
+        <div w3-include-html="navbar.html"></div>
+
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <p id="concert-name">周杰倫嘉年華演唱會</p>
+                    </div>
+                    <div class="col-4" id="concertdata" style="padding-top:6%;">
+
+                    </div>
+                </div>
+                <ul class="nav nav-pills" id="progress">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tickettab">選擇票種</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="datatab">填寫表單</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="paytab">選擇付款方式</a>
+                    </li>
+
+                </ul>
+
+                <div style="height:6vh;"></div>
+                <form>
+                    <fieldset id="ticketset">
+                        <div>
+                            票種 票價
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <p id="area1">A區</p>
+                                <span class="badge badge-primary badge-pill" id="price1">8000</span>
+                                <div class="dropdown">
+
+                                    <select class="custom-select" id="orderquantity1">
+                                        <option selected value="0" id="drop1">要幾張?</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <p id="area2"> B區</p>
+                                <span class="badge badge-primary badge-pill" id="price2">4200</span>
+                                <div class="dropdown">
+
+                                    <select class="custom-select" id="orderquantity2">
+                                        <option selected value="0" id="drop2">要幾張?</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <p id="area3">C區</p>
+                                <span class="badge badge-primary badge-pill" id="price3">1500</span>
+                                <div class="dropdown">
+
+                                    <select class="custom-select" id="orderquantity3">
+                                        <option selected value=0 id="drop3">要幾張?</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+
+                            </li>
+                        </ul>
+                        <a href="data.html" class="btn btn-primary" role="button" id="ticket_b">下一步</a>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#datetab").removeClass("active");
+                $("#tickettab").addClass("active");
+
+                //寫入幾區和票數和數量
+                $.ajax({
+                    url: "dgdfgdf",
+                    method: 'get',
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    success: function (data) {
+
+
+
+                        //區域
+                        $("#area1").html(data.area + "區");
+                        $("#area2").html(data.area + "區");
+                        $("#area3").html(data.area + "區");
+
+                        //金額
+                        $("#price1").html(data.price);
+                        $("#price2").html(data.price);
+                        $("#price3").html(data.price);
+
+                        //area 數量
+                        var q1 = data.q;
+                        var q2 = data.q;
+                        var q3 = data.q;
+
+
+                    }
+                });
+
+                //區域張數判斷
+                //待!!(剩4張以內也要改)測試
+                var q1 = 0;
+                var q2 = 4;
+                var q3 = 4;
+                if (q1 == 0) {
+                    $('#orderquantity1').prop('disabled', 'true');
+                    $('#drop1').html('已售完');
+                }
+                if (q2 == 0) {
+                    $('#orderquantity2').prop('disabled', 'true');
+                    $('#drop2').html('已售完');
+                }
+                if (q3 == 0) {
+                    $('#orderquantity3').prop('disabled', 'true');
+                    $('#drop3').html('已售完');
+                }
+
+
+                //不能超過4張
+
+                $("#ticket_b").click(function () {
+
+                    //存資料
+                    var oq1, oq2, oq3;
+                    //數量限制
+                    var total;
+
+
+                    if ($("#orderquantity1").val() == undefined) {
+                        oq1 = 0;
+                    } else {
+                        oq1 = ($("#orderquantity1").val() * 1);
+                    }
+
+                    if ($("#orderquantity2").val() == undefined) {
+                        oq2 = 0;
+
+                    } else {
+                        oq2 = ($("#orderquantity2").val() * 1);
+
+                    }
+                    if ($("#orderquantity3").val() == undefined) {
+                        oq3 = 0;
+                    } else {
+                        oq3 = ($("#orderquantity3").val() * 1);
+                    }
+
+                    total = (oq1 + oq2 + oq3);
+
+                    if (total > 4) {
+                        event.preventDefault();
+                        alert("現在" + total + "張" + "\n一個人總共最多只能買4張!");
+                    }
+
+                    else if (total == 0) {
+                        event.preventDefault();
+                        alert("你忘記選數量囉");
+                    }
+                    //存入
+                    else if (total <= 4) {
+
+
+                    }
+                });
+
+            });
+        </script>
+    </main>
+</body>
+
+</html>
