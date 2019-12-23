@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="statics/js/jquery-3.4.1.min.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <script src="statics/js/jquery-3.4.1.min.js"></script>
+</head>
+<title>演唱會列表(未註冊)</title>
+
+<body>
+  <div class="home">
+    <input type="text" placeholder="Search..">
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <nav class="w3-container fixed top">
+      <p aling="left">
+        <i class='fas fa-music' style="font-size:50px; color:#007799;margin: 1.5% 0% 0% 5%;"></i>
+        <h* style="font-size: 35px; color:#007799;">哭嚕嘰</h*>
+      </p>
+      <p aling="left">
+        <a class="nav-link" href="註冊.html">會員註冊</a>
+        <a class="nav-link" href="會員登入.html">會員登入</a>
+        <a class="nav-link" href="#">訂單</a>
+      </p>
+    </nav>
+    <style>
+      .w3-container {
+        overflow: hidden;
+        position: sticky;
+        top: 0%;
+        position: -webkit-sticky;
+
+      }
+
+      .w3-container a {
+        float: left;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .w3-container a:hover {
+        background-color: #DDDDDD;
+        color: black;
+      }
+
+      .home input {
+        float: right;
+        padding: 6px;
+        border: none;
+        margin-top: 8px;
+        margin-right: 16px;
+        font-size: 17px;
+        border: 1px solid #ccc;
+        margin: 2% 0% 0% 0%;
+      }
+
+      .home button {
+        float: right;
+        padding: 7px 10px;
+        margin-top: 8px;
+        margin-right: 16px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+        margin: 2% 0% 0% 0%;
+        background-color: #DDDDDD;
+      }
+
+      .home button:hover {
+        background: #ccc;
+      }
+    </style>
+
+
+
+
+  <div class="container">
+      <div class="carousel slide" data-ride="carousel" id="carousel-demo">
+           <ol class="carousel-indicators">
+             <li data-target="#carousel-demo" data-slide-to="0" class="active"></li>
+             <li data-target="#carousel-demo" data-slide-to="1"></li>
+             <li data-target="#carousel-demo" data-slide-to="2"></li>
+           </ol>
+         <div class="carousel-inner">
+           <div class="carousel-item active">
+             <img class="d-block w-50" src="https://www.nownews.com/wp-content/uploads/2018/10/1539710050-79305df2140840e66e56f56d4aa37ee8-696x464.jpg" alt="">
+           </div>
+           <div class="carousel-item">
+             <img class="d-block w-50" src="https://cdn2.ettoday.net/images/26/d26919.jpg" alt="">
+           </div>
+           <div class="carousel-item">
+             <img class="d-block w-50" src="https://s.yimg.com/ny/api/res/1.2/m3cfGcTysjNzQb6arGq5dA--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAw/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-07/76635920-ade1-11e9-bd7f-24047f810245" alt="">
+           </div>
+         
+           <a href="#carousel-demo" class="carousel-control-prev" data-slide="prev">
+           <span class="carousel-control-prev-icon"></span>
+           </a>
+           <a href="#carousel-demo" class="carousel-control-next" data-slide="next">
+             <span class="carousel-control-next-icon"></span>
+           </a>
+         </div>
+       </div>
+   </div>
+
+
+
+<style>
+  .carousel .carousel-item {
+width: 1100px;
+
+}
+
+.carousel .carousel-item img {
+height: 400px;
+
+
+width: auto;
+vertical-align: middle;
+margin: 0px auto;
+object-fit: cover;
+
+}
+
+
+  </style>
+
+
+    
+      
+      
+        
+
+      
+  
+
+
+
+    
+
+    <div class="top">
+
+      <h1 style="margin: 0% 0% 0% 18%;font-size: 300%;"><b>演唱會資訊</b></p>
+      </h1>
+    </div>
+    <hr style="background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));">
+    </hr>
+
+
+    <table class="concert1" style="letter-spacing: 5px;">
+      <div class="BTS">
+
+        <img
+          src="https://www.nownews.com/wp-content/uploads/2018/10/1539710050-79305df2140840e66e56f56d4aa37ee8-696x464.jpg"
+          width="550" height="350" style="float:left; margin-right:5px;">
+        <div class="pleaseregister1" alt="Avatar" class="image1"></div>
+        <div class="text1">請註冊</div>
+      </div>
+      <br>
+      <br>
+      <tr>
+        <th>
+        <td><b style="color:#444444;font-size: 150%;">&nbsp;&nbsp;防彈少年團</b></td>
+        </th>
+      </tr>
+      <tr>
+        <th>
+        <td>&nbsp;&nbsp;地點:桃園棒球場</td>
+        </th>
+      </tr>
+  </div>
+  </table>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <table class="concert2" style="letter-spacing: 2px;">
+    <div class="mayday">
+      <img src="https://static.tixcraft.com/images/activity/19_JRI_5299f9a281d1735a23844ca8ed85f090.jpg" width="550"
+        height="350" style="float:left; margin-right:3px;">
+      <div class="pleaseregister2" alt="Avatar" class="image2"></div>
+      <div class="text2">請註冊</div>
+    </div>
+    <tr>
+      <th>
+      <td><b style="color:#444444;font-size: 150%;">&nbsp;&nbsp;五月天</b></td>
+      </th>
+    </tr>
+    <tr>
+      <th>
+      <td>&nbsp;&nbsp;地點:桃園棒球場</td>
+      </th>
+    </tr>
+
+    </div>
+  </table>
+  </div>
+  <style>
+    .BTS {
+      margin: 0% 0% 0% 20%;
+      position: absolute;
+      width: 36.3%;
+    }
+
+    .concert1 {
+      margin: 0% 0% 0% 58%;
+    }
+
+    .image1 {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .pleaseregister1 {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.5s ease;
+      background-color: #888888;
+    }
+
+    .BTS:hover .pleaseregister1 {
+      opacity: 0.5;
+    }
+
+    .text1 {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .concert1 td {
+      font-size: x-large;
+      color: black;
+    }
+
+    .mayday {
+      margin: 7% 0% 10% 20%;
+      position: absolute;
+      width: 36.3%;
+    }
+
+    .concert2 {
+      margin: 7% 0% 10% 58%;
+    }
+
+    .image2 {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .concert2 td {
+      font-size: x-large;
+    }
+
+    .pleaseregister2 {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.5s ease;
+      background-color: #888888;
+    }
+
+    .mayday:hover .pleaseregister2 {
+      opacity: 0.5;
+    }
+
+    .text2 {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+  </style>
+  </body>
+
+  
