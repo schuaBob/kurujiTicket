@@ -200,4 +200,31 @@ public class MemberHelper {
 		return (row == 0) ? false : true;
 		
 	}
+	
+	public int checkPassword(String account, String password) {
+		ResultSet result = null;
+		String mysqlPassword = null;
+		int mysqlID = 0;
+		try {
+			con = Mysqlconnect.getConnect();
+			String sql = "Select id, password From `missa`.`member` Where email = ?";
+			pres = con.prepareStatement(sql);
+			pres.setString(1, account);
+			result = pres.executeQuery();
+			result.next();
+			mysqlPassword = result.getString("password");
+			if(password.equals(mysqlPassword)) {
+				mysqlID = result.getInt("id");
+			}
+		}catch(SQLException sqlE) {
+			System.err.format("SQL State: %s\n%s\n%s",sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getErrorCode());
+		} catch (Exception e) {
+			e.getStackTrace();
+		} finally {
+			Mysqlconnect.close(result, pres,con);
+		}
+		return mysqlID;
+		
+	}
+	
 }

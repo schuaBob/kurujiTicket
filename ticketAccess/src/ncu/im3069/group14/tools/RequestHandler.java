@@ -2,6 +2,7 @@ package ncu.im3069.group14.tools;
 
 import java.io.*;
 import org.json.*;
+import ncu.im3069.group14.util.Token;
 
 import javax.servlet.http.*;
 public class RequestHandler {
@@ -52,5 +53,16 @@ public class RequestHandler {
 		response.setStatus(400);
 		out.print(data);
 		out.flush();
+	}
+	public String getMemberIDinToken() {
+		String authorization = this.req.getHeader("Authorization");
+		String token = authorization.split(" ")[1];
+		String id = null;
+		try {
+			id = Token.decode(token).getSubject();
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+		return id;
 	}
 }

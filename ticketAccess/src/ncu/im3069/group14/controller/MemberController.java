@@ -15,7 +15,7 @@ import org.json.*;
 /**
  * Servlet implementation class IndexController
  */
-@WebServlet("/member")
+@WebServlet("/Auth/member")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,25 +36,15 @@ public class MemberController extends HttpServlet {
 		
 		RequestHandler rh = new RequestHandler(request);
 		
-		String id = rh.getParameter("id");
-		if(!id.isEmpty()) {
-			JSONObject data = mh.readByID(id);
-			
-			JSONObject jsonObj = new JSONObject();
-			
-			jsonObj.put("message", "Query success.");
-			jsonObj.put("data", data);
-			rh.sendJsonRes(jsonObj, response);
-			
-		} else {
-			JSONObject data = mh.readByID("5");
-			
-			JSONObject jsonObj = new JSONObject();
-			
-			jsonObj.put("message", "Query success.");
-			jsonObj.put("data", data);
-			rh.sendJsonRes(jsonObj, response);
-		}
+		String id = rh.getMemberIDinToken();
+		
+		JSONObject data = mh.readByID(id);
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		jsonObj.put("message", "Query success.");
+		jsonObj.put("data", data);
+		rh.sendJsonRes(jsonObj, response);
 
 	}
 
@@ -65,6 +55,7 @@ public class MemberController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		RequestHandler rh = new RequestHandler(request);
+		
 		JSONObject req = rh.toJsonObj();
 		
 		Date dob = Date.valueOf(req.getString("dob"));
@@ -78,16 +69,16 @@ public class MemberController extends HttpServlet {
 		JSONObject jsonObj = new JSONObject();
 		
 		if(mh.isExist(m)) {
-			jsonObj.put("message", "鞈�歇鋡思蝙���");
+			jsonObj.put("message", "資料已被註冊");
 			rh.sendJsonErr(jsonObj, response);
 		}else {
 			JSONObject res = mh.create(m);
 			if(res.getInt("row")>0) {
-				jsonObj.put("message", "閮餃�����");
+				jsonObj.put("message", "註冊成功");
 				jsonObj.put("res",res);
 				rh.sendJsonRes(res, response);
 			} else {
-				jsonObj.put("message", "閮餃�仃����");
+				jsonObj.put("message", "註冊失敗");
 				jsonObj.put("res",res);
 				rh.sendJsonErr(res, response);
 			}
@@ -95,7 +86,7 @@ public class MemberController extends HttpServlet {
 		}
 	}
 	
-	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject req = rh.toJsonObj();
 		int id = req.getInt("id");
@@ -108,11 +99,11 @@ public class MemberController extends HttpServlet {
 		JSONObject jsonObj = new JSONObject();
 		
 		if(data.getInt("row")>0) {
-			jsonObj.put("message", "撌脫�鞈��");
+			jsonObj.put("message", "修改成功");
 			jsonObj.put("data",data);
 			rh.sendJsonRes(jsonObj, response);
 		} else {
-			jsonObj.put("message", "��鞈�隤�");
+			jsonObj.put("message", "修改失敗");
 			jsonObj.put("data",data);
 			rh.sendJsonErr(jsonObj, response);
 		}
@@ -121,7 +112,7 @@ public class MemberController extends HttpServlet {
 		
 	}
 	
-//	public void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		RequestHandler rh = new RequestHandler(request);
 //		String id = rh.getParameter("id");
 //		mh.delete(Integer.parseInt(id));
