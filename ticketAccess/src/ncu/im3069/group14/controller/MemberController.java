@@ -15,7 +15,7 @@ import org.json.*;
 /**
  * Servlet implementation class IndexController
  */
-@WebServlet("/Auth/member")
+@WebServlet("/member")
 public class MemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
