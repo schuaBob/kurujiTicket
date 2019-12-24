@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import ncu.im3069.group14.tools.*;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
+//import java.util.Iterator;
+//import java.util.Map;
+
 import org.json.*;
 
 
@@ -35,7 +38,6 @@ public class MemberController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		RequestHandler rh = new RequestHandler(request);
-		
 		String id = rh.getMemberIDinToken();
 		
 		JSONObject data = mh.readByID(id);
