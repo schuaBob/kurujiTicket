@@ -17,7 +17,16 @@
             dataType: 'json',
             timeout: 5000,
             data:{
-                concertName:"kuruji"
+                concertName: "kuruji",
+                supplierId: 001,
+                location: "location",
+                picture: "URL",
+                seatpicture: "URL",
+                endsellingtime: '2020-1-11 00:00:00',
+                content: "concent",
+                ticketstatus: {"A section":"500"},
+                concertstarttime: '2019-12-24 00:00:00',
+                concertendtime: '2019-12-30 00:00:00'               
             },
             success: function(response){                
                 if(response.status == 200){
