@@ -147,34 +147,38 @@
                 $("#tickettab").addClass("active");
 
                 //寫入幾區和票數和數量
-                $.ajax({
-                    url: "dgdfgdf",
-                    method: 'get',
-                    error: function (err) {
-                        console.log(err);
-                    },
-                    success: function (data) {
+                getconcertdata();
 
+                //寫入頁面
 
+                function getconcertdata() {
+                    $.ajax({
+                        url: "api/concert.do",
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (err) {
+                            console.log(err);
+                        },
+                        success: function (data) {
 
-                        //區域
-                        $("#area1").html(data.area + "區");
-                        $("#area2").html(data.area + "區");
-                        $("#area3").html(data.area + "區");
+                            //區域
+                            $("#area1").html(data.area + "區");
+                            $("#area2").html(data.area + "區");
+                            $("#area3").html(data.area + "區");
 
-                        //金額
-                        $("#price1").html(data.price);
-                        $("#price2").html(data.price);
-                        $("#price3").html(data.price);
+                            //金額
+                            $("#price1").html(data.price);
+                            $("#price2").html(data.price);
+                            $("#price3").html(data.price);
 
-                        //area 數量
-                        var q1 = data.q;
-                        var q2 = data.q;
-                        var q3 = data.q;
+                            //area 數量
+                            var q1 = data.q;
+                            var q2 = data.q;
+                            var q3 = data.q;
+                        }
+                    });
+                }
 
-
-                    }
-                });
 
                 //區域張數判斷
                 //待!!(剩4張以內也要改)測試
@@ -199,7 +203,7 @@
 
                 $("#ticket_b").click(function () {
 
-                    //存資料
+                    //購買區域票數，可以給function用嗎
                     var oq1, oq2, oq3;
                     //數量限制
                     var total;
@@ -241,6 +245,61 @@
 
                     }
                 });
+                function updateDatabase() {
+                    
+                
+                    //減區域票數
+                    var data = {
+                        "ticketstatus":[
+                           oq1,oq2,oq3
+                    ]
+                    }
+                    pass_vaild = vaildData(data);
+                    if (pass_vaild) {
+                        var data_string = JSON.stringify(data);
+
+                        // 發出POST的AJAX請求
+                        $.ajax({
+                            type: "POST",
+                            url: "api/concert.do",
+                            data: data_string,
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+
+                    //輸入選擇的唱會時間
+                    var data2 = {
+                        "amount": [oq1,oq2,oq3],
+                    }
+                    pass_vaild = vaildData(data2);
+                    if (pass_vaild) {
+                        var data_string = JSON.stringify(data2);
+
+                        // 發出POST的AJAX請求
+                        $.ajax({
+                            type: "POST",
+                            url: "order",
+                            data: data_string,
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+                }
 
             });
         </script>
