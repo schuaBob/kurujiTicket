@@ -46,7 +46,7 @@ public class RequestHandler {
 			String key = (String) i.next();
 
 			String value = ((String[]) params.get( key ))[ 0 ];
-
+			System.out.println("Key: "+key+", Value: "+value);
 			temp.put(key, value);
 
 		}
@@ -56,8 +56,7 @@ public class RequestHandler {
 	
 	public void sendJsonRes(JSONObject data,HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		response.setStatus(200);
 		out.print(data);
 		out.flush();

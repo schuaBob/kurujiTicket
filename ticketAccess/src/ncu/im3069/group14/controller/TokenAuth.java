@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,12 +40,25 @@ public class TokenAuth implements Filter {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		String authorization = httpRequest.getHeader("Authorization");
-		String token = (authorization==null||authorization.isEmpty()) ? null: authorization.split(" ")[1];
+//		String authorization = httpRequest.getHeader("Authorization");
+//		String token = (authorization==null||authorization.isEmpty()) ? null: authorization.split(" ")[1];
 		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-		System.out.println(path);
-		System.out.println(httpRequest.getMethod());
-		
+//		System.out.println(path);
+//		System.out.println(httpRequest.getMethod());
+		String token = null;
+		Cookie jwtCookie = null;
+		Cookie[] cookies = httpRequest.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies) {
+				if(c.getName().equals("Token")) {
+					token = c.getValue();
+					jwtCookie = c;
+					break;
+				}
+			}
+		} else {
+			System.out.println("no cookie");
+		}
 		if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
 			chain.doFilter(request, response);
 		} else {
@@ -65,6 +79,8 @@ public class TokenAuth implements Filter {
 				}
 				String id = clmBody.getSubject();
 				String jwt = Token.createToken(id);
+				jwtCookie.setValue(jwt);
+				httpResponse.addCookie(jwtCookie);
 				httpResponse.setHeader("Authorization", "Bearer " + jwt);
 				chain.doFilter(request, response);
 			}

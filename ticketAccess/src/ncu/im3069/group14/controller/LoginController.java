@@ -1,8 +1,11 @@
 package ncu.im3069.group14.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +38,18 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.sendRedirect("login.html");
+		Cookie[] cookies = request.getCookies();
+		if(cookies!=null) {
+			for(Cookie c:cookies) {
+				if(c.getName().equals("Token")) {
+					System.out.println(c.getValue());
+					break;
+				}
+			}
+		} else {
+			System.out.println("no cookie");
+		}
+		response.sendRedirect("signin.html");
 	}
 
 	/**
@@ -45,17 +59,26 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestHandler rh = new RequestHandler(request);
+		JSONObject reqObj = rh.toJsonObj();
+		
 		JSONObject jsonObj = new JSONObject();
-		String account = rh.getParameter("account");
-		String password = rh.getParameter("password");
+		
+		String account = reqObj.getString("account");
+		String password = reqObj.getString("password");
+		
 		int id = mh.checkPassword(account, password);
 		if(id!=0) {
 			String jwt = Token.createToken(String.valueOf(id));
+			Cookie jwtCookie = new Cookie("Token",jwt);
+			jwtCookie.setHttpOnly(true);
+			jwtCookie.setMaxAge(60*60);
+			response.addCookie(jwtCookie);
 			response.setHeader("Authorization", "Bearer " + jwt);
-			jsonObj.put("message", "登入成功");
-			rh.sendJsonRes(jsonObj, response);
+			jsonObj.put("message", "Login success");
+			RequestDispatcher rd = request.getRequestDispatcher("/");
+			rd.forward(request, response);
 		} else {
-			jsonObj.put("message", "登入失敗");
+			jsonObj.put("message", "Login fail");
 			rh.sendJsonErr(jsonObj, response);
 		}
 	}
