@@ -43,7 +43,7 @@ public class ConcertController extends HttpServlet {
         JSONObject jso = jsr.toJsonObj();
 
         //測試一個json，格式為{concertName:kuruji}
-        String concertName = jso.getString("name");
+        String concertName = jso.getString("concertName");
         Concert c = new Concert(jso);
         
         if(concertName.isEmpty()) {

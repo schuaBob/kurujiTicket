@@ -50,7 +50,7 @@ public class RequestHandler {
 			temp.put(key, value);
 
 		}
-				
+		System.out.println(temp.toString());
 		return temp;
 	}
 	

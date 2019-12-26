@@ -45,7 +45,7 @@ public class ConcertHelper {
             conn = Mysqlconnect.getConnect();
             System.out.println("kkkkkkkkkk");
             /** sql指令  */
-            String sql = "INSERT INTO testconcert(?,?,?,?,?,?,?,?,?,?) VALUES ('kuruji',001,'小巨蛋','URL','URL','2020-1-11 00:00:00','內容','{\"A區\":500}','2019-12-24 00:00:00','2019-12-30 00:00:00')";
+            String sql = "INSERT INTO testconcert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
             pres.setString(2, c.getSupplierId().toString());

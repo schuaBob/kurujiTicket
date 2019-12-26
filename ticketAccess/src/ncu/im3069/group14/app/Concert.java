@@ -47,7 +47,7 @@ public class Concert {
 		this.concertendtime = concertendtime;
 	}
 	public Concert(JSONObject obj) {
-		this.name = obj.getString("name");
+		this.name = obj.getString("concertName");
 		this.supplierId = obj.getInt("supplierId");
 		this.location = obj.getString("location");
 		this.picture = obj.getString("picture");
