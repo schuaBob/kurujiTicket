@@ -14,6 +14,7 @@ public class Order {
 	private int ticketamount; //訂單總數(1~4)
 	private Timestamp createtime; //訂單建立時間 YYYY-MM-DD HH:MM:SS
 	private int concertid;
+	private int totalprice;
 	
 	/**
 	 * 建立訂單，需要以下3筆資料
@@ -21,7 +22,7 @@ public class Order {
 	 * @param payment
 	 * @param ticketamount
 	 */
-	public Order(int memberid, String payment, int ticketamount, int concertid) {
+	public Order(int memberid, String payment, int ticketamount, int concertid, int totalprice) {
 		//Date date = new Date();
 		//SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
 		
@@ -31,16 +32,21 @@ public class Order {
 		this.ticketamount = ticketamount;
 		this.createtime = Timestamp.valueOf(LocalDateTime.now());;
 		this.concertid = concertid;
+		this.totalprice = totalprice;
 		System.out.println(createtime);
 	}
-	public Order(int idorder, int memberid, String payment, boolean paid, int ticketamount, Timestamp createtime, int concertid) {
+	/**
+	 * 創一個全新的order，包含所有order的資訊，用在getAllOrder裡面
+	 */
+	public Order(int idorder, int memberid, String payment, boolean paid, int ticketamount, Timestamp createtime, int concertid, int totalprice) {
 		this.idorder = idorder;
 		this.memberid = memberid;
 		this.payment = payment; //credit, line, 7-11
 		this.paid = paid ; 
 		this.ticketamount = ticketamount;
-		this.createtime = Timestamp.valueOf(LocalDateTime.now());;
+		this.createtime = createtime;
 		this.concertid = concertid;
+		this.totalprice = totalprice;
 	}
 	
 	public int getIdorder() {
@@ -70,6 +76,9 @@ public class Order {
 	public int getConcertid() {
 		return this.concertid;
 	}
+	public int getTotalprice() {
+		return this.totalprice;
+	}
 	public boolean isPaid() {
 		this.paid = true;
 		return this.paid;
@@ -92,6 +101,7 @@ public class Order {
 		jTemp.put("ticketamount", getTicketamount());
 		jTemp.put("createtime", getCreatetime());
 		jTemp.put("concertid", getConcertid());
+		jTemp.put("totalprie", getTotalprice());
 		return jTemp;
 	}
 	

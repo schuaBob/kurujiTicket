@@ -120,8 +120,9 @@ public class OrderHelper {
             	Boolean paid = rs.getBoolean("paid");
             	int ticketamount = rs.getInt("ticketamount");
             	Timestamp createtime = rs.getTimestamp("createtime");
+            	int totalprice = rs.getInt("totalprice");
             	
-            	o = new Order(idorder, memberid, payment, paid, ticketamount, createtime, concertid);
+            	o = new Order(idorder, memberid, payment, paid, ticketamount, createtime, concertid,totalprice);
             	temp = o.toJsonData(idorder);
             	jsa.put(temp);
             }
@@ -156,11 +157,12 @@ public class OrderHelper {
 			
 			//checkTicketAmount回傳已經購買的數量，再加上這次的數量，如果大於4就不能買
 			//如果大於零但是小於4，可以購買，update order
+			//但是當每一筆都已經付款，那要重新新增一筆新的訂單
 			if (  ticketbuy + o.getTicketamount() > 4 ) {
 				System.out.println("已經超過購買的票數");
 				response.put("result", "already full");
 				
-			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0){
+			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && !getPaidStatus(o.getMemberid(),o.getConcertid())){
 				
 				conn = Mysqlconnect.getConnect(); 
 				//STEP0 更新order物件的ticketamount
@@ -200,8 +202,8 @@ public class OrderHelper {
 				 
 			}else {
 				conn = Mysqlconnect.getConnect();
-				query = "INSERT INTO `missa`.`order`(`memberid`, `payment`, `paid`, `ticketamount`, `createtime`)"
-				+" VALUES(?, ?, ?, ?, ?)";
+				query = "INSERT INTO `missa`.`order`(`memberid`, `payment`, `paid`, `ticketamount`, `createtime`,`totalprice`)"
+				+" VALUES(?, ?, ?, ?, ?, ?)";
 				pres = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				
 				pres.setInt(1, o.getMemberid());
@@ -209,6 +211,7 @@ public class OrderHelper {
 				pres.setBoolean(3, o.getPaid());
 				pres.setInt(4, o.getTicketamount());
 				pres.setTimestamp(5, o.getCreatetime());
+				pres.setInt(6, o.getTotalprice());
 				
 				row = pres.executeUpdate();
 				exexcute_sql = pres.toString();
@@ -266,11 +269,14 @@ public class OrderHelper {
 			exexcute_sql = pres.toString();
 			System.out.println(exexcute_sql);
 			// 這裡有另外一個選擇，就是回傳撈出的資料數量，因為一筆就代表有一個ticket
-			if(rs.next()){
-				amount = rs.getInt("ticketamount");
-				System.out.println("ticketamount:"+amount);
-			}			
-			
+//			if(rs.next()){
+//				amount = rs.getInt("ticketamount");
+//				System.out.println("ticketamount:"+amount);
+//			}
+			while(rs.next()) {
+				amount += 1;
+			}
+
 		} catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
@@ -402,5 +408,43 @@ public class OrderHelper {
 		response.put("payment", payment);
 		response.put("row", row);
 		return response;
+	}
+	public boolean getPaidStatus(int memberid, int concertid) {
+		String query = "";
+		String execute_sql = "";
+		boolean paid = false;
+		ResultSet rs = null;
+		try {
+			conn = Mysqlconnect.getConnect();
+			query = "SELECT * FROM `missa`.`order` as `a` join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where memberid = ? and concertid = ?;";
+			pres = conn.prepareStatement(query);
+			pres.setInt(1, memberid);
+			pres.setInt(2, concertid);
+			
+			rs = pres.executeQuery();
+			execute_sql = pres.toString();
+			System.out.println(execute_sql);
+			
+			while(rs.next()) {
+				paid = rs.getBoolean("paid");
+				if (paid == false) {
+					break;
+				}
+			}
+			
+		} catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+		} catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            Mysqlconnect.close( pres, conn);
+        }
+		
+		return paid;
+		
 	}
 }

@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/ncu/im3069/group14/controller/IndexController.java=UTF-8
+encoding//src/ncu/im3069/group14/controller/MemberController.java=UTF-8
+encoding//src/ncu/im3069/group14/controller/OrderController.java=UTF-8
 encoding//src/ncu/im3069/group14/tools/JsonReader.java=UTF-8
 encoding//src/ncu/im3069/group14/util/DBMgr.java=UTF-8
-encoding//src/ncu/im3069/group14/controller/MemberController.java=UTF-8
