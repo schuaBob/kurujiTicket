@@ -54,7 +54,7 @@ public class Concert {
 		this.seatpicture = obj.getString("seatpicture");
 		this.endsellingtime = obj.getString("endsellingtime");
 		this.content = obj.getString("content");
-		this.ticketstatus = obj.getJSONArray("ticketstatus").getJSONObject(0);
+		this.ticketstatus = obj.getJSONObject("ticketstatus");
 		this.concertstarttime = obj.getString("concertstarttime");
 		this.concertendtime = obj.getString("concertendtime");
 	}
