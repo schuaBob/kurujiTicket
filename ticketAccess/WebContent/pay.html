@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
+   
 
 <meta charset="UTF-8">
 
@@ -93,14 +94,12 @@
 
                             <label>
                                 <input class="form-check-input" type="radio" name="paymethod" value="linepay" id="linepay">LINE PAY</label>
-                            <label>
-                                <input class="form-check-input" type="radio" name="paymethod" value="711" id="711">超商付款</label>
                         </div>
                         <div class="alert alert-primary" role="alert">
                             B區票*1 4200*1 TWD$4200
                         </div>
                         <!--為啥你不見了-->
-                        <button type="botton" class="btn btn-primary" name="next" id="data_b">上一步</button>
+
                         <button type="submit" class="btn btn-primary" id="pay_b">開始繳費</button>
 
                     </div>
@@ -109,8 +108,29 @@
         </div>
         <script>
             $(document).ready(function () {
+
+                //alert時間
+                $("#pay_b").click(function () {
+                    var currentdate = new Date();
+                    var type = $("input[name=paymethod]:checked").parent('label').text();
+
+                    var datetime = "現在是" +
+                        + currentdate.getFullYear() + "/"
+                        + (currentdate.getMonth() + 1) + "/" + currentdate.getDate() + " 的 "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds(); +"\n"
+                    currentdate.setMinutes(currentdate.getMinutes() + 30);
+                    var limittime = currentdate.getMinutes();
+                    var paytime = "請你在" + currentdate.getHours() + ":"
+                        + limittime + ":"
+                        + currentdate.getSeconds() + " 前用" + type + "繳完費";
+
+
+                    alert("您選擇" + type + "付款\n" + datetime + "\n" + paytime);
+                });
             });
-            </script>
+        </script>
     </main>
 </body>
 
