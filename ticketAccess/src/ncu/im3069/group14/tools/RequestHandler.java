@@ -25,8 +25,6 @@ public class RequestHandler {
 		this.req = request;
 //		String s = null;
 //		StringBuilder sb = new StringBuilder();
-		
-		
 //		while((s = request.getReader().readLine())!=null) {
 //			System.out.println(s);
 //			sb.append(s);
