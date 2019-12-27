@@ -126,10 +126,11 @@
 					url:"login",
 					method:"POST",
 					dataType:"JSON",
-					data:{
+					contentType:"application/json",
+					data:JSON.stringify({
 						account:$("#memberEmail").val(),
 						password:$("#memberPassword").val()
-					},
+					}),
 					error:function (err) {
 						console.log(err)
 					},
