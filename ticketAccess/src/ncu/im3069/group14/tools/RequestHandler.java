@@ -44,21 +44,35 @@ public class RequestHandler {
 	}
 	
 	public JSONObject toJsonObj() {
-		JSONObject temp = new JSONObject();
-		Map<String, String[]> params = this.req.getParameterMap();
 
-		Iterator<String> i = params.keySet().iterator();
-		while ( i.hasNext() ){
-
-			String key = (String) i.next();
-
-			String value = ((String[]) params.get( key ))[ 0 ];
-			System.out.println("Key: "+key+", Value: "+value);
-			temp.put(key, value);
-
+		String str,wholestr="";
+		try {
+			BufferedReader bf = req.getReader();			
+			while((str = bf.readLine()) != null) {
+				wholestr += str;
+			}
+		}catch(IOException ioexception) {
+			ioexception.getStackTrace();
 		}
-				
+		System.out.println(wholestr);
+		JSONObject temp = new JSONObject(wholestr);
 		return temp;
+		
+		
+		
+//		Map<String, String[]> params = this.req.getParameterMap();
+//
+//		Iterator<String> i = params.keySet().iterator();
+//		while ( i.hasNext() ){
+//			count++;
+//			String key = (String) i.next();
+//			System.out.println(key);
+//			String value = ((String[]) params.get( key ))[ 0 ];
+////			System.out.println(value);
+//			temp.put(key, value);
+//
+//		}
+		
 	}
 	
 	public void sendJsonRes(JSONObject data,HttpServletResponse response) throws IOException {

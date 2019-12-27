@@ -41,9 +41,9 @@ public class ConcertController extends HttpServlet {
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
-
+        System.out.println(jso.get("ticketstatus").getClass().getName());
         //測試一個json，格式為{concertName:kuruji}
-        String concertName = jso.getString("name");
+        String concertName = jso.getString("concertName");
         Concert c = new Concert(jso);
         
         if(concertName.isEmpty()) {
