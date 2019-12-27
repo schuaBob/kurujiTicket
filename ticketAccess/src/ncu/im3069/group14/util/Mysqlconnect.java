@@ -7,7 +7,7 @@ import java.text.MessageFormat;
 public class Mysqlconnect {
 	
 	/**
-	 * JDBC(Java��Ʈw�s�u�AJava Database Connectivity) Driver
+	 * JDBC(Java Database Connectivity) Driver
 	 */
 	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
 
@@ -102,10 +102,10 @@ public class Mysqlconnect {
 				con.close();
 			}
 		} catch(SQLException sqlE) {
-			System.out.println("�����Ҧ���Ʈw�s�u���~");
-			System.out.println(MessageFormat.format("���~�T��:{0}", sqlE.getMessage()));
+			System.out.println("Connection Close Error");
+			System.out.println(MessageFormat.format("Error Message:{0}", sqlE.getMessage()));
 		} catch (Exception e) {
-			System.out.println("�����Ҧ���Ʈw�s�u�H�~�����~");
+			System.out.println("Connection Close has Error");
 			e.getStackTrace();
 		}
 	}
