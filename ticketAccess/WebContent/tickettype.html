@@ -266,29 +266,46 @@
 
                 function storage() {
 
-                    //購買區域票數
-                    localStorage.setItem("area1_q", oq1);
-                    localStorage.setItem("area2_q", oq2);
-                    localStorage.setItem("area3_q", oq3);
-
-                    //區域
-                    localStorage.setItem("area1", $("#area1").html());
-                    localStorage.setItem("area2", $("#area2").html());
-                    localStorage.setItem("area3", $("#area3").html());
-
-                    //區域錢
+                    //要判斷有甚麼area，提前判斷，看是否有localstorage
+                    var first = "";
+                    var second = "";
+                    //價錢
                     var pr1 = ($("#price1").html() * 1);
                     var pr2 = ($("#price2").html() * 1);
                     var pr3 = ($("#price3").html() * 1);
-                    localStorage.setItem("area1_money",pr1);
-                    localStorage.setItem("area2_money", pr2);
-                    localStorage.setItem("area3_money",pr3);
-                    
+
+                    //購買區域票數
+                    //存買哪區、幾張、存顯示
+                    if (oq1 != 0) {
+                        localStorage.setItem("area1_q", oq1);
+                        localStorage.setItem("area1", $("#area1").text());
+                        first = $("#area1").text() + "票*" + oq1+"&nbsp;&nbsp;";
+                        second = pr1 + "*" + oq1+"&nbsp;&nbsp;";
+                    };
+
+                    if (oq2 != 0) {
+                        localStorage.setItem("area2_q", oq2);
+                        localStorage.setItem("area2", $("#area2").text());
+                        first += $("#area2").text() + "票*" + oq2+"&nbsp;&nbsp;";
+                        second += pr2 + "*" + oq2+"&nbsp;&nbsp;";
+                    };
+                    if (oq3 != 0) {
+                        localStorage.setItem("area3_q", oq3);
+                        localStorage.setItem("area3", $("#area3").text());
+                        first += $("#area3").text() + "票*" + oq3;
+                        second += pr3 + "*" + oq3;
+                    };
+
+
+
                     //總價錢
                     var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
-                    localStorage.setItem("total_money",money);
-
-                    //錢
+                    localStorage.setItem("total_money", money);
+                    
+                    //之後修space
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                   
+                    localStorage.setItem("display", display);
                 }
 
 

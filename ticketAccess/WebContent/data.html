@@ -119,57 +119,26 @@
                 
                 $("#datetab").removeClass("active");
                 $("#datatab").addClass("active");
+                $("#ticketdata").append(localStorage.display);
 
-                var oq1, oq2, oq3;
-                $.ajax({
-                    url: "dgdfgdf",
-                    method: 'get',
-                    error: function (err) {
-                        console.log(err);
-                    },
-                    success: function (data) {
-                        oq1 = data.w;
-                        oq2 = data.w;
-                        oq3 = data.w;
-
-                    }
-                });
+                //判斷會員
+                var member=1;
+                localStorage.setItem("memberid", member);
                 
-                //運算顯示
-                oq1 = 0;
-                oq2 = 2;
-                oq3 = 0;
-                /*
-                if (oq1 != 0) {
-
-                    $("#ticketdata").append($("#area1").html() + "*" + oq1 + "(");
-                    $("#ticketdata").append(pr1 + "*" + oq1 + ")");
-                }
-                if (oq2 != 0) {
-                    $("#ticketdata").append($("#area2").html() + "*" + oq2 + "(");
-                    $("#ticketdata").append(pr2 + "*" + oq2 + ")");
-                }
-                if (oq3 != 0) {
-                    $("#ticketdata").append($("#area3").html() + "*" + oq3 + "(");
-                    $("#ticketdata").append(pr3 + "*" + oq3 + ")");
-                }
-                
-                //var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
-               // $("#ticketdata").append("&nbsp;&nbsp;&nbsp;TWD$" + money);*/
-
-                //輸入預防
-                
-                //寫入資料庫
                 $("#data_b").click(function(){
                 
                     datasubmit();
                 });
+
+                //自動輸入member data
+                
                 
                 function datasubmit() {
                     var name = $('#order_name').val();
                     var email = $('#order_email').val();
                     var phone = $('#order_phone').val();
-
+                    
+                     //輸入預防
                     var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
                     var phone_rule = /^[09]{2}[0-9]{8}$/;
                     
@@ -186,36 +155,10 @@
                         alert("phone格式不符!");
                     }
                     else {
-                        // 將資料組成JSON格式
-                        var data_object = {
-                            "name": name,
-                            "email": email,
-                            "phone": phone
-                        };
-
-                        // 將JSON格式轉換成字串
-                        var data_string = JSON.stringify(data_object);
-
-                        // 發出POST的AJAX請求
-                        $.ajax({
-                            type: "POST",
-                            url: "api/member.do",
-                            data: data_string,
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                                $('#flashMessage').html(response.message);
-                                $('#flashMessage').show();
-                                if (response.status == 200) {
-                                    updateSQLTable(response.response);
-                                }
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
+                        localStorage.setItem("temp_name", name);
+                        localStorage.setItem("temp_mail",email );
+                        localStorage.setItem("temp_phone",phone);
+                       
                     }
                 }
 
