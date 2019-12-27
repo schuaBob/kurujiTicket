@@ -143,64 +143,86 @@
         </div>
         <script>
             $(document).ready(function () {
+
                 $("#datetab").removeClass("active");
                 $("#tickettab").addClass("active");
 
+                //購買區域票數，可以給function用嗎
+                var oq1, oq2, oq3;
+
                 //寫入幾區和票數和數量
-                $.ajax({
-                    url: "dgdfgdf",
-                    method: 'get',
-                    error: function (err) {
-                        console.log(err);
-                    },
-                    success: function (data) {
+                getconcertdata();
+                botton_change();
 
-
-
-                        //區域
-                        $("#area1").html(data.area + "區");
-                        $("#area2").html(data.area + "區");
-                        $("#area3").html(data.area + "區");
-
-                        //金額
-                        $("#price1").html(data.price);
-                        $("#price2").html(data.price);
-                        $("#price3").html(data.price);
-
-                        //area 數量
-                        var q1 = data.q;
-                        var q2 = data.q;
-                        var q3 = data.q;
-
-
-                    }
+                $("#ticket_b").click(function () {
+                    limit();
+                    storage();
                 });
+
+                //寫入頁面
+
+                function getconcertdata() {
+
+                    //localstorage
+
+                    var a = localStorage.concert_content;
+                    $("#concertdata").html(a);
+
+
+                    $.ajax({
+                        url: "api/concert.do",
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (err) {
+                            console.log(err);
+                        },
+                        success: function (data) {
+
+                            //區域
+                            $("#area1").html(data.area + "區");
+                            $("#area2").html(data.area + "區");
+                            $("#area3").html(data.area + "區");
+
+                            //金額
+                            $("#price1").html(data.price);
+                            $("#price2").html(data.price);
+                            $("#price3").html(data.price);
+
+                            //area 數量
+                            var q1 = data.q;
+                            var q2 = data.q;
+                            var q3 = data.q;
+                        }
+                    });
+                }
+
 
                 //區域張數判斷
                 //待!!(剩4張以內也要改)測試
-                var q1 = 0;
-                var q2 = 4;
-                var q3 = 4;
-                if (q1 == 0) {
-                    $('#orderquantity1').prop('disabled', 'true');
-                    $('#drop1').html('已售完');
+                function botton_change() {
+
+                    var q1 = 0;
+                    var q2 = 4;
+                    var q3 = 4;
+                    if (q1 == 0) {
+                        $('#orderquantity1').prop('disabled', 'true');
+                        $('#drop1').html('已售完');
+                    }
+                    if (q2 == 0) {
+                        $('#orderquantity2').prop('disabled', 'true');
+                        $('#drop2').html('已售完');
+                    }
+                    if (q3 == 0) {
+                        $('#orderquantity3').prop('disabled', 'true');
+                        $('#drop3').html('已售完');
+                    }
                 }
-                if (q2 == 0) {
-                    $('#orderquantity2').prop('disabled', 'true');
-                    $('#drop2').html('已售完');
-                }
-                if (q3 == 0) {
-                    $('#orderquantity3').prop('disabled', 'true');
-                    $('#drop3').html('已售完');
-                }
+
 
 
                 //不能超過4張
+                function limit() {
 
-                $("#ticket_b").click(function () {
-
-                    //存資料
-                    var oq1, oq2, oq3;
                     //數量限制
                     var total;
 
@@ -240,7 +262,52 @@
 
 
                     }
-                });
+                }
+
+                function storage() {
+
+                    //要判斷有甚麼area，提前判斷，看是否有localstorage
+                    var first = "";
+                    var second = "";
+                    //價錢
+                    var pr1 = ($("#price1").html() * 1);
+                    var pr2 = ($("#price2").html() * 1);
+                    var pr3 = ($("#price3").html() * 1);
+
+                    //購買區域票數
+                    //存買哪區、幾張、存顯示
+                    if (oq1 != 0) {
+                        localStorage.setItem("area1_q", oq1);
+                        localStorage.setItem("area1", $("#area1").text());
+                        first = $("#area1").text() + "票*" + oq1+"&nbsp;&nbsp;";
+                        second = pr1 + "*" + oq1+"&nbsp;&nbsp;";
+                    };
+
+                    if (oq2 != 0) {
+                        localStorage.setItem("area2_q", oq2);
+                        localStorage.setItem("area2", $("#area2").text());
+                        first += $("#area2").text() + "票*" + oq2+"&nbsp;&nbsp;";
+                        second += pr2 + "*" + oq2+"&nbsp;&nbsp;";
+                    };
+                    if (oq3 != 0) {
+                        localStorage.setItem("area3_q", oq3);
+                        localStorage.setItem("area3", $("#area3").text());
+                        first += $("#area3").text() + "票*" + oq3;
+                        second += pr3 + "*" + oq3;
+                    };
+
+
+
+                    //總價錢
+                    var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
+                    localStorage.setItem("total_money", money);
+                    
+                    //之後修space
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                   
+                    localStorage.setItem("display", display);
+                }
+
 
             });
         </script>
