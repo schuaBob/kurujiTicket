@@ -163,10 +163,17 @@
         </div>
         <script>
             //想替他們加名字
+
             $(document).ready(function () {
+
                 //一開始跳轉此頁面
                 //ajax load資料concertname,location,ticketstatus(價錢、幾區),座位數量?
+
+
+
                 getconcertdata();
+                change_botton();
+                storage();
                 //寫入頁面
                 function getconcertdata() {
                     $.ajax({
@@ -194,79 +201,43 @@
                         }
                     });
                 }
+               
                 //改按鈕狀態
-                if ($("#quantitynow1").html() == ("剩下" + 0 + "張")) {
-                    $("#order_b1").addClass("disabled");
-                    $("#order_b1").prop('disabled', true);
-                    $("#order_b1").text("已售完");
-                };
-                if ($("#quantitynow2").html() == ("剩下" + 0 + "張")) {
-                    $("#order_b2").addClass("disabled");
-                    $("#order_b2").prop('disabled', true);
-                    $("#order_b2").text("已售完");
-                };
-                if ($("#quantitynow3").html() == ("剩下" + 0 + "張")) {
-                    $("#order_b3").addClass("disabled");
-                    $("#order_b3").prop('disabled', true);
-                    $("#order_b3").text("已售完");
-                };
-
-                //存資料
-                $("#check").click(function () {
-                    updateDatabase();
-                });
-
-                function updateDatabase() {
-                    //減那時間票數
-                    var data = {
-                        "ticketstatus": 4,
-                    }
-                    pass_vaild = vaildData(data);
-                    if (pass_vaild) {
-                        var data_string = JSON.stringify(data);
-
-                        // 發出POST的AJAX請求
-                        $.ajax({
-                            type: "POST",
-                            url: "api/concert.do",
-                            data: data_string,
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
-                    }
-
-                    //輸入選擇的唱會時間
-                    var data2 = {
-                        "PRICE": 4,
-                    }
-                    pass_vaild = vaildData(data2);
-                    if (pass_vaild) {
-                        var data_string = JSON.stringify(data2);
-
-                        // 發出POST的AJAX請求
-                        $.ajax({
-                            type: "POST",
-                            url: "order",
-                            data: data_string,
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
-                    }
+                function change_botton() {
+                    if ($("#quantitynow1").html() == ("剩下" + 0 + "張")) {
+                        $("#order_b1").addClass("disabled");
+                        $("#order_b1").prop('disabled', true);
+                        $("#order_b1").text("已售完");
+                    };
+                    if ($("#quantitynow2").html() == ("剩下" + 0 + "張")) {
+                        $("#order_b2").addClass("disabled");
+                        $("#order_b2").prop('disabled', true);
+                        $("#order_b2").text("已售完");
+                    };
+                    if ($("#quantitynow3").html() == ("剩下" + 0 + "張")) {
+                        $("#order_b3").addClass("disabled");
+                        $("#order_b3").prop('disabled', true);
+                        $("#order_b3").text("已售完");
+                    };
                 }
+
+                function storage() {
+                    $("#order_b1").click(function () {
+                        localStorage.setItem("concert_content", $("#concert1").html());
+                        localStorage.setItem("concert_id", 1);
+                    });
+                    $("#order_b2").click(function () {
+                        localStorage.setItem("concert_content", $("#concert2").html());
+                        localStorage.setItem("concert_id", 2);
+                    });
+                    $("#order_b1").click(function () {
+                        localStorage.setItem("concert_content", $("#concert3").html());
+                        localStorage.setItem("concert_id", 3);
+                    });
+                }
+
+
+
             });
 
         </script>
