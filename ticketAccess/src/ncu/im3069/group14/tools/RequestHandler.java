@@ -5,9 +5,16 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.json.*;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import ncu.im3069.group14.util.Token;
 
 import javax.servlet.http.*;
+import javax.servlet.http.Cookie;
 public class RequestHandler {
 	private HttpServletRequest req;
 	
@@ -70,15 +77,30 @@ public class RequestHandler {
 		out.print(data);
 		out.flush();
 	}
-	public String getMemberIDinToken() {
-		String authorization = this.req.getHeader("Authorization");
-		String token = authorization.split(" ")[1];
-		String id = null;
-		try {
-			id = Token.decode(token).getSubject();
-		} catch (Exception e) {
-			e.getStackTrace();
+	public String getMemberIDinRequest() {
+		
+		Cookie[] cookies = this.req.getCookies();
+			
+		String token = null;
+		
+		for (Cookie c:cookies) {
+			System.out.println("Name:"+c.getName());
+			if(c.getName().equals("Token")) {
+				token = c.getValue();
+				System.out.println("Incoming token: "+token);
+				break;
+			}
 		}
-		return id;
+		Claims claimBody = null;
+		try {
+			claimBody = Token.decode(token);
+		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException
+				| IllegalArgumentException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "0";
+		}
+		return claimBody.getSubject();
+		
 	}
 }

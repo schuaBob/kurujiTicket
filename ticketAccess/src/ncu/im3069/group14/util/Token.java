@@ -6,6 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 
 public class Token {
 	
@@ -23,7 +26,7 @@ public class Token {
 				.setIssuer(Token.Issuer)
 				.setAudience(Token.Audience)
 				.setIssuedAt(Date.from(now))
-				.setExpiration(Date.from(now.plus(20,ChronoUnit.MINUTES)))
+				.setExpiration(Date.from(now.plus(60,ChronoUnit.MINUTES)))
 				.signWith(SignatureAlgorithm.HS512,Token.Secret.getBytes("UTF-8"))
 				.compact();
 		return jws;
@@ -33,6 +36,13 @@ public class Token {
 	public static Claims decode(String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
 		Claims temp = Jwts.parser().setSigningKey(Token.Secret.getBytes("UTF-8")).parseClaimsJws(token).getBody();
 		return temp;
+	}
+	
+	public static HttpServletResponse addTokentoCookie(Cookie jwtCookie,HttpServletResponse response) {
+		jwtCookie.setMaxAge(60*60);
+		jwtCookie.setHttpOnly(true);
+		response.addCookie(jwtCookie);
+		return response;
 	}
 	
 	

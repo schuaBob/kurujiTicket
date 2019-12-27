@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
-//import ncu.im3069.group14.tools.RequestHandler;
+
 import ncu.im3069.group14.util.Token;
 
 /**
@@ -30,14 +30,20 @@ public class IndexController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		//進到首頁後，獲得使用者傳進來的request的所有cookie
 		Cookie[] cookies = request.getCookies();
+		
 		String token = null;
+		
 		try {
+			/**
+		     * cookies是一個陣列，因此用for的方式看過所有的cookie name
+		     * 如果這個cookie的name是token，那麼將這個cookie的value賦予給token這個字串變數
+		     */
 			for (Cookie c:cookies) {
 				System.out.println("Name:"+c.getName());
 				if(c.getName().equals("Token")) {
@@ -50,28 +56,54 @@ public class IndexController extends HttpServlet {
 			e.getStackTrace();
 		}
 		
+		//如果Token的value是空的或是null，代表他沒有登入，進入index.html作為首頁
 		if(token==null||token.isEmpty()) {
 			response.sendRedirect("index.html");
 		} else {
+			/** 
+			 * 	如果Token的value不是空的，那就檢查這個token的值是不是可以用的
+			 * Token.decode()就是檢查用的method
+			 */
 			try {
 				Claims clmBody = Token.decode(token);
+				
+				//如果token被串改過，那麼這個使用者是非法的，不能讓他進到登入後的首頁
 			} catch (SignatureException sigE) {
 				System.out.println("The signature is invalid.");
+				
+				//重新給一個名叫Token的cookie
 				Cookie emptyCookie = new Cookie("Token",null);
+				
+				//設定cookie為HttpOnly，防止cookie在前端被更改
+				emptyCookie.setHttpOnly(true);
+				
+				//將cookie加到response裡
 				response.addCookie(emptyCookie);
+				
+				//回傳首頁
 				response.sendRedirect("index.html");
-				return;
+				
+				//如果這個token過期了
 			} catch (ExpiredJwtException expE) {
 				System.out.println("The token is out of date.");
+				
+				//重新給一個名叫Token的cookie
 				Cookie emptyCookie = new Cookie("Token",null);
+				
+				//設定cookie為HttpOnly，防止cookie在前端被更改
+				emptyCookie.setHttpOnly(true);
+				
+				//將cookie加到response裡
 				response.addCookie(emptyCookie);
+				
+				//回傳首頁
 				response.sendRedirect("index.html");
-				return;
 			}
-//			response.setHeader("Authorization", "Bearer " + token);
+			
+			//如果這個Token都沒有問題，則進入登入過後的首頁
 			System.out.println("Is logined.");
 			response.sendRedirect("index-signin.html");
-			return;
+			
 		}
 	}
 

@@ -59,12 +59,6 @@ public class MemberHelper {
 		response.put("row", row);
 		response.put("data", data);
 		return response;
-//		long endTime = System.nanoTime();
-//		long duration = (endTime - startTime)/1_000_000_000;
-//		
-//		response.put("sql", executeSQL);
-//		response.put("time", duration);
-//		response.put("row", row);
 		
 	}
 	
