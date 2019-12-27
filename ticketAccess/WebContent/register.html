@@ -88,8 +88,9 @@
 					error: function (err) {
 						console.log(err)
 					},
-					success: function (data) {
-						console.log(data)
+					success: function (res) {
+						console.log(res.message)
+                        window.location.replace(res.redirect);
 					}
 				});
 			})

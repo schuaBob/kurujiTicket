@@ -46,7 +46,7 @@ public class MemberHelper {
 			
 			executeSQL = pres.toString();
 			
-			System.out.println(MessageFormat.format("已執行SQL:{0}", executeSQL));
+			System.out.println(MessageFormat.format("SQL has been exec:{0}", executeSQL));
 		} catch (SQLException sqlE) {
 			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class MemberHelper {
 			pres.setInt(1,Integer.parseInt(id));
 			rs = pres.executeQuery();
 			execSQL = pres.toString();
-			System.out.println(MessageFormat.format("已執行SQL:{0}", execSQL));
+			System.out.println(MessageFormat.format("SQL has been exec:{0}", execSQL));
 			while(rs.next()) {
 				int i = rs.getInt("idmember");
 				String name = rs.getString("name");

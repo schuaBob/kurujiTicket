@@ -102,7 +102,6 @@ public class MemberController extends HttpServlet {
 				
 				//回傳註冊成功的訊息
 				resObj.put("message", "註冊成功");
-				resObj.put("account",res.getString("email"));
 				resObj.put("redirect", "signin.html");
 				rh.sendJsonRes(resObj, response);
 				

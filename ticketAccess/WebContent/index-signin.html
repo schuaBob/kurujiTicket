@@ -338,17 +338,18 @@
 
   <script>
     $(document).ready(function () {
-      $("#logoutBtn").click(function(e) {
+      $("#logoutBtn").click(function (e) {
         e.preventDefault();
         $.ajax({
-          url:"login",
-          method:"Delete",
-          dataType:"JSON",
-          error:(err)=>{
+          url: "login",
+          method: "Delete",
+          dataType: "JSON",
+          error: (err) => {
             console.log(err)
           },
-          success:(res)=>{
-            console.log(res)
+          success: (res) => {
+            console.log(res.message)
+            window.location.replace(res.redirect);
           }
         })
       })
