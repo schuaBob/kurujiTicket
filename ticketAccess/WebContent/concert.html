@@ -10,24 +10,26 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
     $("button").click(function(){
+        let obj = {
+            concertName: "kuruji",
+            supplierId: 001,
+            location: "location",
+            picture: "URL",
+            seatpicture: "URL",
+            endsellingtime: '2020-1-11 00:00:00',
+            content: "concent",
+            ticketstatus:{"A section":"500"},
+            concertstarttime: '2019-12-24 00:00:00',
+            concertendtime: '2019-12-30 00:00:00'      
+        }
         $.ajax({
             type: "POST",
             url: "api/concert.do",            
             cache: false,
-            dataType: 'json',
+            contentType : "application/json",
+            dataType: "json",
             timeout: 5000,
-            data:{
-                concertName: "kuruji",
-                supplierId: 001,
-                location: "location",
-                picture: "URL",
-                seatpicture: "URL",
-                endsellingtime: '2020-1-11 00:00:00',
-                content: "concent",
-                ticketstatus: {"A section":"500"},
-                concertstarttime: '2019-12-24 00:00:00',
-                concertendtime: '2019-12-30 00:00:00'               
-            },
+            data:{mydata:JSON.stringify(obj)},
             success: function(response){                
                 if(response.status == 200){
                     alert("成功");

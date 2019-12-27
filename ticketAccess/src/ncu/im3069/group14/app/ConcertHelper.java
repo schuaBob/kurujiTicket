@@ -43,7 +43,6 @@ public class ConcertHelper {
 		try {
 			/** 取得資料庫之連線 */
             conn = Mysqlconnect.getConnect();
-            System.out.println("kkkkkkkkkk");
             /** sql指令  */
             String sql = "INSERT INTO testconcert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
