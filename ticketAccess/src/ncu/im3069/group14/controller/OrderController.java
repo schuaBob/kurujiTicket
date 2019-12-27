@@ -57,40 +57,41 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
-		//STEP1 ���o�q��Ѽ�
+		//STEP1 嚙踝蕭嚙緻嚙緬嚙踝蕭捊嚙�
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
+		int totalprice = jso.getInt("totalprice");
 		
-		//STEP2 �إ߭q��
-		Order o = new Order( memberid, payment, ticketamount, concertid);
+		//STEP2 嚙諍立訂嚙踝蕭
+		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
 		JSONObject result = oh.create(o);
 		
-		//STEP2.5 �P�_�O�_���\�إߡA�p�G���\�إߡA�ǳƫإ߲���
+		//STEP2.5 嚙瞑嚙稻嚙瞌嚙稻嚙踝蕭嚙穀嚙諍立，嚙緘嚙瘦嚙踝蕭嚙穀嚙諍立，嚙褒備建立莎蕭嚙踝蕭
 		if ( result.getString("result") == "create order success" || result.getString("result") == "update order success") {
 			System.out.println("create order success");
-			//STEP3 �h�o����Ѽ�
+			//STEP3 嚙篁嚙緻嚙踝蕭嚙踝蕭捊嚙�
 			temp = result.getJSONObject("order");
 			
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			//seatid�n���h��concerthelper�n �o�ӳ����n��wjc
+			//seatid嚙緯嚙踝蕭嚙篁嚙踝蕭concerthelper嚙緯 嚙緻嚙諉喉蕭嚙踝蕭嚙緯嚙踝蕭wjc
 			int seatid = jso.getInt("seatid");
-			//STEP4 �ھڭq��A�إ߲��� 
+			//STEP4 嚙誹據訂嚙踝蕭A嚙諍立莎蕭嚙踝蕭 
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid);
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
 			
 	        resp.put("status", "200");
-	        resp.put("message", "�q��s�W���\�I");
+	        resp.put("message", "嚙緬嚙踝蕭s嚙磕嚙踝蕭嚙穀嚙瘢");
 	        resp.put("order result", result);
 	        resp.put("ticket result", ticketresult);
 	        rh.sendJsonRes(resp, response);
 		}else {
-			//STEP3-1 �^�ǥ��ѵ��G
+			//STEP3-1 嚙稷嚙褒伐蕭嚙諸蛛蕭嚙瘦
 			resp.put("status","200");
-			resp.put("message", "�q��s�W����");
+			resp.put("message", "嚙緬嚙踝蕭s嚙磕嚙踝蕭嚙踝蕭");
 	        resp.put("order result",result);
 	        rh.sendJsonErr(resp, response);
 			System.out.println("finish doPut");
@@ -112,7 +113,7 @@ public class OrderController extends HttpServlet {
 		
 		JSONObject resp = new JSONObject();
 		resp.put("status", "200");
-        resp.put("message", "�q��I�ڦ��\�I");
+        resp.put("message", "嚙緬嚙踝蕭I嚙誹佗蕭嚙穀嚙瘢");
         resp.put("result", result);
         rh.sendJsonRes(resp, response);
         
@@ -129,14 +130,14 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		
 		int idorder = jso.getInt("idorder");
-		//�n���R��Ticket�~��R��order
+		//嚙緯嚙踝蕭嚙磋嚙踝蕭Ticket嚙羯嚙踝蕭R嚙踝蕭order
 		JSONObject ticketresult = th.cancelTicket(idorder);
 		JSONObject result = oh.cancelOrder(idorder);
 		
 		
 		JSONObject resp = new JSONObject();
         resp.put("status", "200");
-        resp.put("message", "�q��R�����\�I");
+        resp.put("message", "嚙緬嚙踝蕭R嚙踝蕭嚙踝蕭嚙穀嚙瘢");
         resp.put("order result", result);
         resp.put("ticket result", ticketresult);
         rh.sendJsonRes(resp, response);

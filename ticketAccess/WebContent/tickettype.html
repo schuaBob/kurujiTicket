@@ -143,15 +143,32 @@
         </div>
         <script>
             $(document).ready(function () {
+
                 $("#datetab").removeClass("active");
                 $("#tickettab").addClass("active");
 
+                //購買區域票數，可以給function用嗎
+                var oq1, oq2, oq3;
+
                 //寫入幾區和票數和數量
                 getconcertdata();
+                botton_change();
+
+                $("#ticket_b").click(function () {
+                    limit();
+                    storage();
+                });
 
                 //寫入頁面
 
                 function getconcertdata() {
+
+                    //localstorage
+
+                    var a = localStorage.concert_content;
+                    $("#concertdata").html(a);
+
+
                     $.ajax({
                         url: "api/concert.do",
                         method: 'get',
@@ -182,29 +199,30 @@
 
                 //區域張數判斷
                 //待!!(剩4張以內也要改)測試
-                var q1 = 0;
-                var q2 = 4;
-                var q3 = 4;
-                if (q1 == 0) {
-                    $('#orderquantity1').prop('disabled', 'true');
-                    $('#drop1').html('已售完');
+                function botton_change() {
+
+                    var q1 = 0;
+                    var q2 = 4;
+                    var q3 = 4;
+                    if (q1 == 0) {
+                        $('#orderquantity1').prop('disabled', 'true');
+                        $('#drop1').html('已售完');
+                    }
+                    if (q2 == 0) {
+                        $('#orderquantity2').prop('disabled', 'true');
+                        $('#drop2').html('已售完');
+                    }
+                    if (q3 == 0) {
+                        $('#orderquantity3').prop('disabled', 'true');
+                        $('#drop3').html('已售完');
+                    }
                 }
-                if (q2 == 0) {
-                    $('#orderquantity2').prop('disabled', 'true');
-                    $('#drop2').html('已售完');
-                }
-                if (q3 == 0) {
-                    $('#orderquantity3').prop('disabled', 'true');
-                    $('#drop3').html('已售完');
-                }
+
 
 
                 //不能超過4張
+                function limit() {
 
-                $("#ticket_b").click(function () {
-
-                    //購買區域票數，可以給function用嗎
-                    var oq1, oq2, oq3;
                     //數量限制
                     var total;
 
@@ -244,62 +262,52 @@
 
 
                     }
-                });
-                function updateDatabase() {
-                    
-                
-                    //減區域票數
-                    var data = {
-                        "ticketstatus":[
-                           oq1,oq2,oq3
-                    ]
-                    }
-                    pass_vaild = vaildData(data);
-                    if (pass_vaild) {
-                        var data_string = JSON.stringify(data);
-
-                        // 發出POST的AJAX請求
-                        $.ajax({
-                            type: "POST",
-                            url: "api/concert.do",
-                            data: data_string,
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
-                    }
-
-                    //輸入選擇的唱會時間
-                    var data2 = {
-                        "amount": [oq1,oq2,oq3],
-                    }
-                    pass_vaild = vaildData(data2);
-                    if (pass_vaild) {
-                        var data_string = JSON.stringify(data2);
-
-                        // 發出POST的AJAX請求
-                        $.ajax({
-                            type: "POST",
-                            url: "order",
-                            data: data_string,
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
-                    }
                 }
+
+                function storage() {
+
+                    //要判斷有甚麼area，提前判斷，看是否有localstorage
+                    var first = "";
+                    var second = "";
+                    //價錢
+                    var pr1 = ($("#price1").html() * 1);
+                    var pr2 = ($("#price2").html() * 1);
+                    var pr3 = ($("#price3").html() * 1);
+
+                    //購買區域票數
+                    //存買哪區、幾張、存顯示
+                    if (oq1 != 0) {
+                        localStorage.setItem("area1_q", oq1);
+                        localStorage.setItem("area1", $("#area1").text());
+                        first = $("#area1").text() + "票*" + oq1+"&nbsp;&nbsp;";
+                        second = pr1 + "*" + oq1+"&nbsp;&nbsp;";
+                    };
+
+                    if (oq2 != 0) {
+                        localStorage.setItem("area2_q", oq2);
+                        localStorage.setItem("area2", $("#area2").text());
+                        first += $("#area2").text() + "票*" + oq2+"&nbsp;&nbsp;";
+                        second += pr2 + "*" + oq2+"&nbsp;&nbsp;";
+                    };
+                    if (oq3 != 0) {
+                        localStorage.setItem("area3_q", oq3);
+                        localStorage.setItem("area3", $("#area3").text());
+                        first += $("#area3").text() + "票*" + oq3;
+                        second += pr3 + "*" + oq3;
+                    };
+
+
+
+                    //總價錢
+                    var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
+                    localStorage.setItem("total_money", money);
+                    
+                    //之後修space
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                   
+                    localStorage.setItem("display", display);
+                }
+
 
             });
         </script>

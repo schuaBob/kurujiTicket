@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,50 +26,69 @@ public class TokenAuth implements Filter {
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
+	//ÀË¬dToken¥Îªºmiddleware
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-
-		// pass the request along the filter chain
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		String authorization = httpRequest.getHeader("Authorization");
-		String token = (authorization==null||authorization.isEmpty()) ? null: authorization.split(" ")[1];
-		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-		System.out.println(path);
-		System.out.println(httpRequest.getMethod());
 		
-		if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
-			chain.doFilter(request, response);
-		} else {
-			if(token == null) {
-				httpResponse.sendRedirect("/login");
+		
+		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
+		
+		
+		String token = null;
+		Cookie[] cookies = httpRequest.getCookies();
+		
+		try {
+			for(Cookie c:cookies) {
+				if(c.getName().equals("Token")) {
+					token = c.getValue();
+					System.out.println("Incoming token: "+token);
+					break;
+				}
+			}
+		} catch (NullPointerException e) {
+			e.getStackTrace();
+		}
+			
+		
+		
+		
+//		if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
+//			chain.doFilter(request, response);
+//		} else {
+			if(token == null||token.isEmpty()) {
+				if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
+					chain.doFilter(request, response);
+				} else {
+					httpResponse.sendRedirect("/login");
+				}
 			} else {
 				Claims clmBody = null;
+				Cookie jwtCookie = null;
 				try {
 					clmBody = Token.decode(token);
 				} catch (SignatureException sigE) {
 					System.out.println("The signature is invalid.");
-					httpResponse.setHeader("Authorization", null);
+					jwtCookie = new Cookie("Token",null);
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 					httpResponse.sendRedirect("/login");
 				} catch (ExpiredJwtException expE) {
 					System.out.println("The token is out of date.");
-					httpResponse.setHeader("Authorization", null);
+					jwtCookie = new Cookie("Token",null);
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 					httpResponse.sendRedirect("/login");
 				}
 				String id = clmBody.getSubject();
 				String jwt = Token.createToken(id);
-				httpResponse.setHeader("Authorization", "Bearer " + jwt);
+				jwtCookie.setValue(jwt);
+				httpResponse.addCookie(jwtCookie);
+				
 				chain.doFilter(request, response);
 			}
-		}
+//		}
 	}
 
 	/**
