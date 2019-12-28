@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <main>
+        <!--ticket介面-->
+        <div class="modal fade " id="show" tabindex="-1">
+            <div class="modal-dialog modal-lg " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">
+                            <div class="title" id="show_title">票券詳細資訊</div>
+                        </h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="t_close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="content" id="show_content"></div>
+                        <table class="table">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">演唱會</th>
+                                    <th scope="col">座位區</th>
+                                    <th scope="col">座位編號</th>
+                                    <th scope="col">名字</th>
+                                    <th scope="col">信箱</th>
+                                    <th scope="col">手機</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>A區</td>
+                                    <td>23</td>
+                                    <td>余函倩</td>
+                                    <td>rubyyu2800@gamil.com</td>
+                                    <td>0928036709</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>Thornton</td>
+                                    <td>@fat</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer" id="o_close">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <header>
+            <!--應該要匯入navbar ktml-->
+            <div id="include"></div>
+
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+
+
+                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+                    <a href="index.html" class=" navbar-brand" id="brand">
+
+                        <img src='spotlights.png' id="logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
+                            <span class="border border-dark navv"></span>
+                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
+                            <span class="border border-dark"></span>
+                            <a class="nav-item nav-link " id="space" href="#">登出</a>
+
+                        </div>
+                    </div>
+                </nav>
+            </nav>
+        </header>
+        <h1 style="padding-top:3vh;padding-left:1%;font-size:12vh">我的訂單</h1>
+        <div class="order" style="padding-left:17%">
+            <div class="order_content" id="">
+                <div class="card">
+                    <div class="card-header" id="createtime">
+                        2018/12/25 13:00
+                    </div>
+                    <div class="row order_detail">
+                        <div class="col">
+                            <h4 class="card-title" id="ticketamount">4張票</h4>
+                            <h6 class="card-title" id="payment">信用卡</h6>
+
+
+                            <h2 class="card-text" id="money">18000</h2>
+                        </div>
+
+                        <div class="col more" style="padding-left:30%;padding-top:4%;">
+                            <a href="#" class="btn btn-primary" id="detail">已付款</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            $(document).ready(function () {
+                ticketshow();
+
+
+
+            });
+
+            function ticketshow() {
+
+                $(".more").mousedown(function () {
+
+                    let textid = this.id;
+                    $("#show").modal("show");
+
+                    $.ajax({
+                        url: "/documents/require_data/" + textid,
+                        method: 'get',
+                        error: function (err) {
+                            console.log(err);
+                        },
+                        success: function (data) {
+                            $.each(data, function (i, item) {
+
+                                var temp = "";
+
+
+                                temp += '<tr><th scope="row">' + item.concertname + '</th>';
+                                temp += '<td>' + item.seatarea + '</td>';
+                                temp += '<td>' + item.seatid + '</td>';
+                                temp += '<td>' + item.name + '</td>';
+                                temp += '<td>' + item.email + '</td>';
+                                temp += '<td>' + item.phonenumber + '</td></tr>'
+
+                                $(tbody).append(temp);
+                            });
+
+                        }
+                    });
+
+                });
+            }
+            function ordershow() {
+                //把所有order放上去
+                $.ajax({
+                    url: "order",
+                    method: 'get',
+                    dataType: 'json',
+                    error: function (err) {
+                        console.log(err);
+                    },
+                    success: function (data) {
+
+
+
+                        //order訂單顯現
+                        $.each(data, function (i, item) {
+
+                            var temp = "";
+                            temp += '<div class="order_content" id=" ' + item.idorder + '">';
+                            temp += '<div class="card"><div class="card-header" >' + item.createtime + ' </div>';
+                            //ticketamount怪怪的
+                            temp += ' <div class="row order_detail"><div class="col"><h4 class="card-title" >' + item.ticketamount + '張票</h4>';
+                            if (item.payment == "credit") {
+                                temp += '<h6 class="card-title" >信用卡</h6>';
+                            } else {
+                                temp += '<h6 class="card-title" >LINE PAY</h6>';
+                            }
+
+                            temp += '<h2 class="card-text" >' + item.totalprice + '</h2>';
+                            if (item.paid == 1) {
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">已付款</a></div></div></div></div>'
+                            }
+                            else {
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">待付款</a></div></div></div></div>'
+                            }
+
+                            $(".order_content").append(temp);
+
+
+
+                        })
+
+
+                    }
+                });
+            }
+        </script>
+
+    </main>
+</body>
+
+</html>
