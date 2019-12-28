@@ -54,6 +54,8 @@
                                     <td>Jacob</td>
                                     <td>Thornton</td>
                                     <td>@fat</td>
+                                    <td>@fat</td>
+                                    <td>@fat</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -73,7 +75,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -105,7 +107,7 @@
         <h1 style="padding-top:3vh;padding-left:1%;font-size:12vh">我的訂單</h1>
         <div class="order" style="padding-left:17%">
             <div class="order_content" id="">
-                <div class="card">
+                <div class="card order_card">
                     <div class="card-header" id="createtime">
                         2018/12/25 13:00
                     </div>
@@ -142,7 +144,7 @@
                     $("#show").modal("show");
 
                     $.ajax({
-                        url: "/documents/require_data/" + textid,
+                        url: "ticket" + textid,
                         method: 'get',
                         error: function (err) {
                             console.log(err);

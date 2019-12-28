@@ -27,7 +27,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -64,79 +64,92 @@
                 <div class="row">
                     <div class="col-6">
                         <p id="concert-name">周杰倫嘉年華演唱會</p>
+
+
+
+                        <ul class="nav nav-pills" id="progress">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tickettab">選擇票種</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="datatab">填寫表單</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="paytab">選擇付款方式</a>
+                            </li>
+
+                        </ul>
                     </div>
-                    <div class="col-4" id="concertdata" style="padding-top:6%;">
+                    <div class="col-4" id="tickettype_concertdata">
 
                     </div>
                 </div>
-                <ul class="nav nav-pills" id="progress">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="tickettab">選擇票種</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="datatab">填寫表單</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="paytab">選擇付款方式</a>
-                    </li>
-
-                </ul>
-
                 <div style="height:6vh;"></div>
                 <form>
                     <fieldset id="ticketset">
-                        <div>
-                            票種 票價
+                        <div class="area_choice">
+                            <div class="area_title">
+                                票種/票價/購買數量
+                            </div>
+
+                            <ul class="list-group ">
+                                <div class="area_item">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center ">
+                                        <p id="area1">A區</p>
+                                        <span class="badge badge-primary badge-pill" id="price1">8000</span>
+                                        <div class="dropdown">
+
+                                            <select class="custom-select" id="orderquantity1">
+                                                <option selected value="0" id="drop1">要幾張</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="area_item">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center area_item">
+                                        <p id="area2"> B區</p>
+                                        <span class="badge badge-primary badge-pill" id="price2">4200</span>
+                                        <div class="dropdown">
+
+                                            <select class="custom-select" id="orderquantity2">
+                                                <option selected value="0" id="drop2">要幾張</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="area_item">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center area_item">
+                                        <p id="area3">C區</p>
+                                        <span class="badge badge-primary badge-pill" id="price3">1500</span>
+                                        <div class="dropdown">
+
+                                            <select class="custom-select" id="orderquantity3">
+                                                <option selected value=0 id="drop3">要幾張</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+
+                                    </li>
+                                </div>
+                            </ul>
                         </div>
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p id="area1">A區</p>
-                                <span class="badge badge-primary badge-pill" id="price1">8000</span>
-                                <div class="dropdown">
-
-                                    <select class="custom-select" id="orderquantity1">
-                                        <option selected value="0" id="drop1">要幾張?</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p id="area2"> B區</p>
-                                <span class="badge badge-primary badge-pill" id="price2">4200</span>
-                                <div class="dropdown">
-
-                                    <select class="custom-select" id="orderquantity2">
-                                        <option selected value="0" id="drop2">要幾張?</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <p id="area3">C區</p>
-                                <span class="badge badge-primary badge-pill" id="price3">1500</span>
-                                <div class="dropdown">
-
-                                    <select class="custom-select" id="orderquantity3">
-                                        <option selected value=0 id="drop3">要幾張?</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>
-                                </div>
-
-                            </li>
-                        </ul>
+                        <div class="area_button">
                         <a href="data.html" class="btn btn-primary" role="button" id="ticket_b">下一步</a>
+                        </div>
                     </fieldset>
                 </form>
             </div>
@@ -159,7 +172,7 @@
 
                 $("#ticket_b").click(function () {
                     limit();
-                    
+
                 });
 
                 //寫入頁面
@@ -169,7 +182,7 @@
                     //localstorage
 
                     var a = localStorage.concert_content;
-                    $("#concertdata").html(a);
+                    $("#tickettype_concertdata").html(a);
 
                     //url加上concertid
                     $.ajax({
@@ -205,9 +218,9 @@
                 function botton_change() {
 
                     //預設
-                    q[0]= 0;
+                    q[0] = 0;
                     q[1] = 4;
-                    q[2]= 4;
+                    q[2] = 4;
                     if (q[0] == 0) {
                         $('#orderquantity1').prop('disabled', 'true');
                         $('#drop1').html('已售完');
@@ -230,7 +243,7 @@
                     //數量限制
                     var total;
 
-                   
+
                     if ($("#orderquantity1").val() == undefined) {
                         oq1 = 0;
                     } else {
@@ -249,7 +262,7 @@
                     } else {
                         oq3 = ($("#orderquantity3").val() * 1);
                     }
-                    
+
                     total = (oq1 + oq2 + oq3);
 
                     if (total > 4) {
@@ -298,7 +311,7 @@
                         second += pr2 + "*" + oq2 + "&nbsp;&nbsp;";
                     };
                     //為啥
-                   
+
                     if (oq3 != 0) {
                         alert("!");
                         localStorage.setItem("area3_q", oq3);
@@ -306,8 +319,8 @@
                         first += $("#area3").text() + "票*" + oq3;
                         second += pr3 + "*" + oq3;
                     };
-                
-                   
+
+
 
 
 
