@@ -171,37 +171,39 @@
 
 
 
-                getconcertdata();
+                // getconcertdata();
                 change_botton();
                 storage();
+
                 //寫入頁面
+                //要有地方抓點入演唱會的id
                 function getconcertdata() {
                     $.ajax({
                         url: "api/concert.do",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {
-                            console.log(err);
+                            alert("無法連線到伺服器！");
                         },
                         success: function (data) {
+
 
                             //演唱會名字
                             $("#concert_name").html(data.name);
 
-                            //那時的票數
-                            $("#quntitynow1").html("剩下" + data.ticketstatus + "張");
-                            $("#quantitynow2").html("剩下" + data.ticketstatus + "張");
-                            $("#quantitynow3").html("剩下" + data.ticketstatus + "張");
+                            //逐一顯示
+                            $.each(data.ticketstatus, function (i, item) {
+                                $("#quantitynow" + i).html("剩下" + item.quantity + "張");
 
-                            //演唱會時間分別
-                            $("#concert1").html(data.content);
-                            $("#concert2").html(data.content);
-                            $("#concert3").html(data.content);
+                                $("#concert" + i).html(item.content);
+                            })
+
 
                         }
+
                     });
                 }
-               
+
                 //改按鈕狀態
                 function change_botton() {
                     if ($("#quantitynow1").html() == ("剩下" + 0 + "張")) {
