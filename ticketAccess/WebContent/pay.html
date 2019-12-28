@@ -27,7 +27,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -43,9 +43,9 @@
                         <div class="navbar-nav">
                             <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
                             <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
                             <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
                             <span class="border border-dark"></span>
                             <a class="nav-item nav-link disable" id="space" href="#">會員</a>
                             <span class="border border-dark"></span>
@@ -156,8 +156,8 @@
                 }
                 
                 function update() {
-                    
-                    if (localStorage.area1) {
+                  
+                    if (localStorage.area1!=0) {
                        
                         var data = {
                             "concertid": localStorage.concertid,
@@ -190,7 +190,7 @@
                         });
                     }
                     
-                    if (localStorage.area2) {
+                    if (localStorage.area2!=0) {
                        
                         var data = {
                             "concertid": localStorage.concert_id,
@@ -223,7 +223,7 @@
                             }
                         });
                     }
-                    if (localStorage.area3) {
+                    if (localStorage.area3!=0) {
                         //
                         var data = {
                             "concertid": localStorage.concertid,

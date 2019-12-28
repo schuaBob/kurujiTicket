@@ -27,7 +27,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -43,9 +43,9 @@
                         <div class="navbar-nav">
                             <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
                             <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
                             <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
                             <span class="border border-dark"></span>
                             <a class="nav-item nav-link disable" id="space" href="#">會員</a>
                             <span class="border border-dark"></span>
@@ -95,14 +95,12 @@
                 <!--第一頁-->
                 <fieldset id="orderset">
                     <div class="row" style="padding-left:20%;">
-                        <div class="w-25">
+                        <div class="w-30">
                             <div class="card">
                                 <div class="card-body">
                                     <div id="concert1">
                                         <h5 class="card-title">2020/10/3星期六</h5>
                                         <p class="card-text">
-
-                                            <p>周杰倫嘉年華演唱會</p>
                                             <p>台北小巨蛋</p>
                                             <p>19:00-21:00</p>
                                         </p>
@@ -116,13 +114,12 @@
                             </div>
                         </div>
                         <span style="width:2%;"></span>
-                        <div class="w-25">
+                        <div class="w-30">
                             <div class="card">
                                 <div class="card-body">
                                     <div id="concert2">
                                         <h5 class="card-title">2020/10/4星期日</h5>
                                         <p class="card-text">
-                                            <p>周杰倫嘉年華演唱會</p>
                                             <p>台北小巨蛋</p>
                                             <p>19:00-21:00</p>
                                         </p>
@@ -136,13 +133,12 @@
                             </div>
                         </div>
                         <span style="width:2%;"></span>
-                        <div class="w-25">
+                        <div class="w-30">
                             <div class="card">
                                 <div class="card-body">
                                     <div id="concert3">
                                         <h5 class="card-title">2020/10/10星期六</h5>
                                         <p class="card-text">
-                                            <p>周杰倫嘉年華演唱會</p>
                                             <p>台北小巨蛋</p>
                                             <p>19:00-21:00</p>
                                         </p>
@@ -171,37 +167,39 @@
 
 
 
-                getconcertdata();
+                // getconcertdata();
                 change_botton();
                 storage();
+
                 //寫入頁面
+                //要有地方抓點入演唱會的id
                 function getconcertdata() {
                     $.ajax({
                         url: "api/concert.do",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {
-                            console.log(err);
+                            alert("無法連線到伺服器！");
                         },
                         success: function (data) {
+
 
                             //演唱會名字
                             $("#concert_name").html(data.name);
 
-                            //那時的票數
-                            $("#quntitynow1").html("剩下" + data.ticketstatus + "張");
-                            $("#quantitynow2").html("剩下" + data.ticketstatus + "張");
-                            $("#quantitynow3").html("剩下" + data.ticketstatus + "張");
+                            //逐一顯示
+                            $.each(data.ticketstatus, function (i, item) {
+                                $("#quantitynow" + i).html("剩下" + item.quantity + "張");
 
-                            //演唱會時間分別
-                            $("#concert1").html(data.content);
-                            $("#concert2").html(data.content);
-                            $("#concert3").html(data.content);
+                                $("#concert" + i).html(item.content);
+                            })
+
 
                         }
+
                     });
                 }
-               
+
                 //改按鈕狀態
                 function change_botton() {
                     if ($("#quantitynow1").html() == ("剩下" + 0 + "張")) {

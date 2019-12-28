@@ -3,13 +3,13 @@
         width:21vh;
         text-align: center;
     }
- .border {
-    height:4vh;
-}
+
+
 #concert-name{
     padding-left:4vh;
     padding-top:16vh;
     font-size:2.8rem;
+    font-weight: bold;
 }
 #concert-data{
     padding-top:15vh;
@@ -19,4 +19,40 @@
     width:7vh;
 
 }
+/*買票*/
+#concert_name{
+    padding-top:3%;
+    font-size:9vh;
+   font-weight:bold;
+}
+/*date*/
+/*tickettype*/
+#tickettype_concertdata{
+    padding-top:9%;
+}
 
+.area_choice{
+    width:80%;
+    padding-left: 16%;
+}
+.area_item{
+    padding-top:2%;
+}
+.area_button{
+    padding-left: 85%;
+}
+
+/*order頁面*/
+.order_content{
+    padding-top:3%;
+}
+
+.order_card{
+    width:73%;
+}
+.order_detail{
+    padding-left:2%;padding-top:1%;padding-bottom:1%;
+}
+.more{
+    padding-left:30%;padding-top:4%;
+}
