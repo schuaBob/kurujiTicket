@@ -2,7 +2,7 @@ package ncu.im3069.group14.app;
 
 import java.sql.*;
 import org.json.*;
-import ncu.im3069.group14.util.Mysqlconnect;
+import ncu.im3069.group14.util.MysqlConnect;
 import java.text.MessageFormat;
 
 public class MemberHelper {
@@ -30,7 +30,7 @@ public class MemberHelper {
 		int row = 0;
 		
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String query = "INSERT INTO `missa`.`member`(`name`, `email`, `password`, `idnumber`, `address`, `dateofbirth`, `phonenumber`)"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?)";
 			pres = con.prepareStatement(query);
@@ -52,7 +52,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}  finally {
-			Mysqlconnect.close(pres, con);
+			MysqlConnect.close(pres, con);
 		}
 		JSONObject response = new JSONObject();
 		JSONObject data= m.toJsonData();
@@ -68,7 +68,7 @@ public class MemberHelper {
 		String execSQL = "";
 		ResultSet rs = null;
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String query = "SELECT * FROM `missa`.`member` WHERE `idmember` = ? LIMIT 1";
 			pres = con.prepareStatement(query);
 			pres.setInt(1,Integer.parseInt(id));
@@ -93,7 +93,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			Mysqlconnect.close(rs, pres,con);
+			MysqlConnect.close(rs, pres,con);
 		}
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime)/1_000_000_000;
@@ -103,7 +103,7 @@ public class MemberHelper {
 	public JSONObject update(Member m) {
 		int row = -1;
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String sql = "Update `missa`.`member` SET `password` = ? , `phonenumber` = ? , `address` = ? WHERE `idmember` = ?";
 			String password = m.getPassword();
 			String phonenumber = m.getPhoneNumber();
@@ -126,7 +126,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			Mysqlconnect.close(pres, con);
+			MysqlConnect.close(pres, con);
 		}
 		
 		JSONObject jsonObj = m.toJsonData();
@@ -145,7 +145,7 @@ public class MemberHelper {
 	
 	public void delete(int id) {
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String sql = "Delete FROM `missa`.`member` where `idmember` = ?";
 			pres = con.prepareStatement(sql);
 			pres.setInt(1, id);
@@ -159,7 +159,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			Mysqlconnect.close(pres, con);
+			MysqlConnect.close(pres, con);
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class MemberHelper {
 		ResultSet result = null;
 		int row = -1;
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String sql = "Select count(*) FROM `missa`.`member` where idnumber = ? or email = ? or phonenumber = ?";
 			String email = m.getEmail();
 			String idnumber = m.getIDNumber();
@@ -188,7 +188,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			Mysqlconnect.close(result, pres,con);
+			MysqlConnect.close(result, pres,con);
 		}
 		
 		return (row == 0) ? false : true;
@@ -201,7 +201,7 @@ public class MemberHelper {
 		String mysqlPassword = null;
 		int mysqlID = 0;
 		try {
-			con = Mysqlconnect.getConnect();
+			con = MysqlConnect.getConnect();
 			String sql = "Select idmember, password From `missa`.`member` Where email = ?";
 			pres = con.prepareStatement(sql);
 			pres.setString(1, account);
@@ -216,7 +216,7 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			Mysqlconnect.close(result, pres,con);
+			MysqlConnect.close(result, pres,con);
 		}
 		return mysqlID;
 		

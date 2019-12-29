@@ -2,7 +2,7 @@ package ncu.im3069.group14.app;
 
 import java.sql.*;
 import org.json.*;
-import ncu.im3069.group14.util.Mysqlconnect;
+import ncu.im3069.group14.util.MysqlConnect;
 import java.text.MessageFormat;
 
 public class ConcertHelper {
@@ -42,7 +42,7 @@ public class ConcertHelper {
 				
 		try {
 			/** 取得資料庫之連線 */
-            conn = Mysqlconnect.getConnect();
+            conn = MysqlConnect.getConnect();
             /** sql指令  */
             String sql = "INSERT INTO testconcert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
@@ -68,7 +68,7 @@ public class ConcertHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-        	Mysqlconnect.close(pres, conn);
+        	MysqlConnect.close(pres, conn);
         }
 		
         JSONObject response = new JSONObject();

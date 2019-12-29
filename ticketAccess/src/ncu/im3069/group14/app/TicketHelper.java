@@ -1,7 +1,7 @@
 package ncu.im3069.group14.app;
 
 import java.sql.*;
-import ncu.im3069.group14.util.Mysqlconnect;
+import ncu.im3069.group14.util.MysqlConnect;
 import org.json.*;
 
 public class TicketHelper {
@@ -26,7 +26,7 @@ public class TicketHelper {
 		JSONArray jsa = new JSONArray();
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "insert into missa.ticket (concertid,orderid,seatarea,seatid,isused) values(?,?,?,?,?);";
 			pres = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pres.setInt(1, t.getConcertid());
@@ -61,7 +61,7 @@ public class TicketHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
 		System.out.println("finish tickethelper create");
 		response.put("result","create ticket success");
@@ -78,7 +78,7 @@ public class TicketHelper {
 		System.out.println("start get ticket");
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			pres = conn.prepareStatement("select * from `missa`.`ticket` where `orderid` = ? ");
 			pres.setInt(1, orderid);
 			rs = pres.executeQuery();
@@ -99,7 +99,7 @@ public class TicketHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close(rs, pres, conn);
+            MysqlConnect.close(rs, pres, conn);
         }
 		response.put("result", "get all data success");
 		response.put("row", row);
@@ -112,7 +112,7 @@ public class TicketHelper {
 		JSONObject response = new JSONObject();
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			pres = conn.prepareStatement("update missa.ticket set isused = true where idticket = ? ");
 			pres.setInt(1, idticket);
 			row = pres.executeUpdate();
@@ -127,7 +127,7 @@ public class TicketHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close(pres, conn);
+            MysqlConnect.close(pres, conn);
         }
 		response.put("result", "ticket used success");
 		response.put("idticket", idticket);
@@ -142,7 +142,7 @@ public class TicketHelper {
 		JSONObject response = new JSONObject();
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "delete from `missa`.`ticket` where `orderid` = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, idorder);
@@ -161,7 +161,7 @@ public class TicketHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
 		response.put("result", "delete ticket success");
 		response.put("row", row);
