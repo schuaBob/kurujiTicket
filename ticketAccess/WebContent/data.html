@@ -70,10 +70,10 @@
                 </div>
                 <ul class="nav nav-pills" id="progress">
                     <li class="nav-item">
-                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                        <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tickettab">選擇票種</a>
+                        <a class="nav-link" id="tickettab" href="tickettype.html">選擇票種</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="datatab">填寫表單</a>
@@ -85,38 +85,46 @@
                 </ul>
 
                 <div style="height:6vh;"></div>
-                <form>
-                    <fieldset id="dataset">
+
+                <div id="dataset">
+
+                    <div class="data_front">
 
                         <div class="alert alert-primary" id="ticketdata">
-
+                            <img src="checklist.png" style="width:5vh;">&nbsp;&nbsp;
                         </div>
-                        <div>聯絡人資料</div>
-                        <div>
-                            <form-row>
-                                <label for="validationDefault01">*姓名</label>
-                                <input type="text" class="form-control" id="order_name" placeholder="王曉明" required>
-                            </form-row>
-                            <form-row>
-                                <label for="validationDefault01">*EMAIL</label>
-                                <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
-                            </form-row>
-                            <form-row>
-                                <label for="validationDefault01">*手機</label>
+                        <div class="data_title">聯絡人資料</div>
+                    </div>
+                    <div class="data_content">
+                        <form-row>
+                            <label for="validationDefault01">*姓名</label>
+                            <input type="text" class="form-control" id="order_name" placeholder="王曉明" required>
+                        </form-row>
+                        <form-row>
+                            <label for="validationDefault01">*EMAIL</label>
+                            <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
+                        </form-row>
+                        <form-row>
+                            <label for="validationDefault01">*手機</label>
 
-                                <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
-                            </form-row>
-                            <form-row>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
-                                    <label> 同會員資料 </label>
-                                </div>
-                                <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
-                            </form-row>
-                        </div>
-                    </fieldset>
-                </form>
+                            <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                        </form-row>
+
+                        <form-row>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
+                                <label> 同會員資料 </label>
+                            </div>
+                    </div>
+                    <div class="data_button">
+                        <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
+                    </div>
+                    </form-row>
+
+                </div>
             </div>
+
+        </div>
         </div>
         <script>
             $(document).ready(function () {
@@ -125,8 +133,10 @@
                 $("#datatab").addClass("active");
                 $("#ticketdata").append(localStorage.display);
 
-                $('#member').mousedown(function() {
-                   
+
+
+                $('#member').mousedown(function () {
+
                     memebercheck();
                 });
 
@@ -138,11 +148,11 @@
 
                 //自動輸入member data
                 function memebercheck() {
-                    
+
                     $("#order_name").val("111");
-                    $("#order_phone").val("22");
-                    $("#order_email").val("a2333@gmail");
-                  
+                    $("#order_phone").val("0912334567");
+                    $("#order_email").val("a2333@gmail.com");
+
                     //判斷會員
                     var member = 1;
                     localStorage.setItem("memberid", member);
