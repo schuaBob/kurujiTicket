@@ -74,18 +74,19 @@ public class RequestHandler {
 	}
 	
 	public void sendJsonRes(JSONObject data,HttpServletResponse response) throws IOException {
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 		response.setStatus(200);
+		PrintWriter out = response.getWriter();
 		out.print(data);
 		out.flush();
 	}
 	
 	public void sendJsonErr(JSONObject data, HttpServletResponse response) throws IOException {
-		PrintWriter out = response.getWriter();
 		response.setContentType("applicatiion/json");
 		response.setCharacterEncoding("UTF-8");
 		response.setStatus(400);
+		PrintWriter out = response.getWriter();
 		out.print(data);
 		out.flush();
 	}
