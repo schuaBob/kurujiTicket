@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.Properties;
 import java.text.MessageFormat;
 
-public class Mysqlconnect {
+public class MysqlConnect {
 	
 	/**
 	 * JDBC(Java Database Connectivity) Driver
@@ -28,7 +28,7 @@ public class Mysqlconnect {
 	
 	static {
 		try {
-			Class.forName(Mysqlconnect.JDBC_DRIVER);
+			Class.forName(MysqlConnect.JDBC_DRIVER);
 		} catch(ClassNotFoundException cnfE) {
 			System.out.println("JDBC Driver Class Error");
 			System.out.println(MessageFormat.format("Error message:{0}", cnfE.getMessage()));
@@ -38,7 +38,7 @@ public class Mysqlconnect {
 		}
 	}
 	
-	public Mysqlconnect() {
+	public MysqlConnect() {
 		
 	}
 	
@@ -53,14 +53,14 @@ public class Mysqlconnect {
 		
 		props.setProperty("characterEncoding", "utf8");
 		
-		props.setProperty("user", Mysqlconnect.USER);
+		props.setProperty("user", MysqlConnect.USER);
 		
-		props.setProperty("password", Mysqlconnect.PWD);
+		props.setProperty("password", MysqlConnect.PWD);
 		
 		Connection con = null;
 		
 		try {
-			con = DriverManager.getConnection(Mysqlconnect.DB_URL, props);
+			con = DriverManager.getConnection(MysqlConnect.DB_URL, props);
 		} catch(SQLException sqlE) {
 			System.out.println("Connection Error");
 			System.out.println(MessageFormat.format("Error Mesage:{0}", sqlE.getMessage()));
