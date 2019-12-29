@@ -46,7 +46,6 @@
             }
           }
         </style>
-        <!-- Custom styles for this template -->
         <link href="jumbotron.css" rel="stylesheet">
       </head>
 
@@ -61,10 +60,10 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">新增活動 <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">新增活動</a>
+            <a class="nav-link" href="#">檢視新增票券</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1">修改活動內容</a>
@@ -98,21 +97,55 @@
             <form>
             <div class="form-group">
                 <label for="exampleFormControlInput1">演唱會名稱</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="concertname">
+                <input type="email" class="form-control" id="concertNameID" placeholder="concertname">
             </div>
 
             <div class="form-group">
                   <label for="exampleFormControlInput1">地址</label>
-                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="address">
+                  <input type="email" class="form-control" id="addressID" placeholder="address">
             <div>
+
             <div class="form-group">
                  <label for="exampleFormControlTextarea1">演唱會描述</label>
-                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                 <textarea class="form-control" id="descriptionID" rows="3"></textarea>
             </div>
+
             <div class="form-group">
-                  <label for="bookdate">演唱會日期與時間</label>
-                  <input type="datetime-local" name="bdaytime">
+              <label for="bookdate">演唱會時間: 從</label>
+              <input type="datetime-local" id="starttime">
+              <label for="bookdate">到</label>
+              <input type="datetime-local" id="endtime">
             </div>
+
+            <div class="form-group">
+              <label for="bookdate">關閉售票日期與時間</label>
+              <input type="datetime-local" id="endsellingtime">
+            </div>
+            <div id="demo">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">票種及價格</span>
+                </div>
+                <input type="text" class="form-control" placeholder="區域" id="ticketarea">
+                <input type="text" class="form-control" placeholder="票價" id="ticketprice">
+                <input type="text" class="form-control" placeholder="數量" id="ticketammount">
+              </div>
+            </div>
+            
+
+            <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="insertFunction()">+</button>
+              <script>
+                    function insertFunction() {
+                    document.getElementById("demo").insertAdjacentHTML("beforeend",`<div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">票種及價格</span>
+                </div>
+                <input type="text" class="form-control" placeholder="區域">
+                <input type="text" class="form-control" placeholder="票價">
+                <input type="text" class="form-control" placeholder="數量">
+              </div>`);
+                  }
+              </script>
             </form>
           </p>
         </div>
@@ -126,7 +159,7 @@
             <p>
                 <form>
                     <div class="form-group">
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                      <input type="file" class="form-control-file" id="poster">
                     </div>
                 </form>
             </p>
@@ -137,23 +170,58 @@
             <p>
                 <form>
                     <div class="form-group">
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                      <input type="file" class="form-control-file" id="seatpic">
                     </div>
                 </form>
             </p>
             <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
           </div>
         </div>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Submit »</a></p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button" onclick="submitFunction()">Submit »</a></p>
+              <script>
+                Name = concertNameID.value;
+                address = addressID.value;
+                description = descriptionID.value;
+                constarttime = starttime.value;
+                conendtime = endtime.value;
+                estime = endsellingtime.value;
+                poster1 = poster.value;
+                seatpic1 = seatpic.value;
+
+                
+                $("button").click(submitFunction(){
+                  $.ajax({
+                    type: "POST",
+                    url: " ",   <!--接收網頁的路徑-->
+                    cache: false,
+                    dataType: 'json',
+                    timeout: 5000,
+                    data:{
+                      "concertName" : Name ,
+                      "supplierId" : 001,
+                      "location" :  address,
+                      "picture" : poster1,
+                      "seatpicture" : seatpic1,
+                      "endsellingtime" : estime ,
+                      "content" : description,
+                      "ticketstatus" :[{ }],
+                      "concertstarttime" : constarttime,
+                      "concertendtime" : conendtime
+
+                    },
+                });
+              </script>
+
         <hr>
     
       </div> <!-- /container -->
     </main>
     
     <footer class="container">
-      <p>© Company 2019</p>
+      <p>© KuluGi 2019</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
           <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
     </body>
 </html>
