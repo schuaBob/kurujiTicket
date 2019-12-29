@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/order")
+@WebServlet("/Auth/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -58,7 +58,7 @@ public class OrderController extends HttpServlet {
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
 		//STEP1 嚙踝蕭嚙緻嚙緬嚙踝蕭捊嚙�
-		int memberid = jso.getInt("memberid");
+		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");

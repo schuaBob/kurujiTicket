@@ -183,11 +183,13 @@
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
                             "payment": paytype,
+                            "seatid": 100,
+                            "totalprice":200    
                         }
                         var data_string = JSON.stringify(data);
 
                         $.ajax({
-                            type: "POST",
+                            type: "PUT",
                             url: "order",
                             data: data_string,
                             crossDomain: true,
