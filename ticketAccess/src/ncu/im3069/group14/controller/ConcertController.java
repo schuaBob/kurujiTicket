@@ -13,9 +13,6 @@ import org.json.*;
 import ncu.im3069.group14.tools.RequestHandler;
 
 
-
-import ncu.im3069.group14.tools.JsonReader;
-
 /**
  * Servlet implementation class ConcertController
  */
@@ -42,19 +39,16 @@ public class ConcertController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
-        JsonReader jsr = new JsonReader(request);
-        JSONObject jso = jsr.getObject();
-        
+		RequestHandler jsr = new RequestHandler(request);
+        JSONObject jso = jsr.toJsonObj();
+        System.out.println(jso.get("ticketstatus").getClass().getName());
         //測試一個json，格式為{concertName:kuruji}
         String concertName = jso.getString("concertName");
-        
-        Concert c = new Concert(concertName);
+        Concert c = new Concert(jso);
         
         if(concertName.isEmpty()) {
-        	/** 以字串組出JSON格式之資料 */
-            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
             /** 透過JsonReader物件回傳到前端（以字串方式） */
-            jsr.response(resp, response);
+            jsr.sendJsonRes(jso, response);
         }else {
         	//暫時
         	JSONObject data = ch.createConcert(c);
@@ -64,7 +58,7 @@ public class ConcertController extends HttpServlet {
             resp.put("row-effect", data);
             
             /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-            jsr.response(resp, response);
+            jsr.sendJsonRes(resp, response);
         }
 	}
 

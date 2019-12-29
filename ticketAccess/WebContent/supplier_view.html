@@ -46,7 +46,6 @@
             }
           }
         </style>
-        <!-- Custom styles for this template -->
         <link href="jumbotron.css" rel="stylesheet">
       </head>
 
@@ -60,14 +59,14 @@
     
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="supplier_home.html">新增活動<span class="sr-only">(current)</span></a>
+          </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">檢視新增票券</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">新增活動</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1">修改活動內容</a>
+          <li class="nav-item ">
+            <a class="nav-link" href="supplier_modify.html" >修改活動內容</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">供應商專區</a>
@@ -93,26 +92,83 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
-          <h6 class="display-4">新增活動</h6>
+          <h6 class="display-4">檢視新增票券</h6>
           <p>
             <form>
             <div class="form-group">
-                <label for="exampleFormControlInput1">演唱會名稱</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="concertname">
+              <table> 
+                <tr> <td>演唱會名稱:</td> <td>Jay Chou concert</td> </tr>
+              <table>
+                <!--<label for="exampleFormControlInput1" >演唱會名稱</label>
+                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="concertname">-->
             </div>
 
             <div class="form-group">
-                  <label for="exampleFormControlInput1">地址</label>
-                  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="address">
+              <table> 
+                <tr> <td>地址:</td> <td>105台北市松山區南京東路四段2號</td> </tr>
+              <table>
             <div>
+
             <div class="form-group">
-                 <label for="exampleFormControlTextarea1">演唱會描述</label>
-                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <table> 
+                <tr>  
+                  <td>演唱會描述:</td> 
+                  <td>周杰倫「嘉年華」世界巡迴演唱會在哭嚕嘰搶票系統 你可以購買到最新周杰倫演唱會門票了！</td> 
+                </tr>
+              <table>
             </div>
+
             <div class="form-group">
-                  <label for="bookdate">演唱會日期與時間</label>
-                  <input type="datetime-local" name="bdaytime">
+              <table> 
+                <tr> <td>演唱會時間:從</td> <td>2020/04/30 7:00pm</td> </tr>
+                <tr> <td>到</td> <td>2020/04/30 10:00pm</td> </tr>
+              <table>
             </div>
+
+            <div class="form-group">
+              <table> 
+                <tr> <td>關閉售票日期與時間:</td> <td>2020/02/10 12:00am</td> </tr>
+              <table>
+            </div>
+            <div id="demo">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">票種及價格</span>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">區域</th>
+                        <th scope="col">票價</th>
+                        <th scope="col">數量</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>A區</td>
+                        <td>$6000</td>
+                        <td>120</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>B區</td>
+                        <td>$4100</td>
+                        <td>150</td>
+                      </tr>
+                      <tr>
+                        <th>3</th>
+                        <td>B區</td>
+                        <td>$2500</td>
+                        <td>300</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+              </script>
             </form>
           </p>
         </div>
@@ -123,25 +179,17 @@
         <div class="row">
           <div class="col-md-4">
             <h2>主視覺</h2>
-            <p>
-                <form>
-                    <div class="form-group">
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                </form>
-            </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <figure class="figure">
+              <img src="..." class="figure-img img-fluid rounded" alt="...">
+              <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>
           </div>
           <div class="col-md-4">
             <h2>座位圖</h2>
-            <p>
-                <form>
-                    <div class="form-group">
-                      <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                    </div>
-                </form>
-            </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <figure class="figure">
+              <img src="..." class="figure-img img-fluid rounded" alt="...">
+              <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>
           </div>
         </div>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Submit »</a></p>
@@ -151,9 +199,10 @@
     </main>
     
     <footer class="container">
-      <p>© Company 2019</p>
+      <p>© KuluGi 2019</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
           <script>window.jQuery || document.write('<script src="/docs/4.4/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
     </body>
 </html>
+

@@ -3,13 +3,18 @@ package ncu.im3069.group14.controller;
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ncu.im3069.group14.tools.*;
+import ncu.im3069.group14.util.Token;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
-import org.json.*;
+
+
+
+import org.json.JSONObject;
 
 
 /**
@@ -35,52 +40,78 @@ public class MemberController extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		RequestHandler rh = new RequestHandler(request);
+		String id = rh.getMemberIDinRequest();
 		
-		String id = rh.getMemberIDinToken();
+		JSONObject memberData = mh.readByID(id);
 		
-		JSONObject data = mh.readByID(id);
+		JSONObject resObj = new JSONObject();
+		if(!id.equals("0")) {
+			resObj.put("message", "Query success.");
+			resObj.put("memberData", memberData);
+			rh.sendJsonRes(resObj, response);
+		} else {
+			resObj.put("message", "Query error.");
+			
+			rh.sendJsonErr(resObj, response);
+		}
 		
-		JSONObject jsonObj = new JSONObject();
-		
-		jsonObj.put("message", "Query success.");
-		jsonObj.put("data", data);
-		rh.sendJsonRes(jsonObj, response);
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 	會員註冊
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+
+		//先將註冊的request傳到requesthandler，接著轉成JSONObject 的型態
 		RequestHandler rh = new RequestHandler(request);
-		
 		JSONObject req = rh.toJsonObj();
 		
+		//取得dob欄位的資料
 		Date dob = Date.valueOf(req.getString("dob"));
+		//取得name欄位的資料
 		String name = req.getString("name");
+		//取得password欄位的資料
 		String password = req.getString("password");
+		//取得email欄位的資料
 		String email = req.getString("email");
+		//取得idnumber
 		String idn= req.getString("idnumber");
+		//phonenumber
 		String phonenumber = req.getString("phonenumber");
+		//address
 		String address = req.getString("address");
+		//透過以上的資料建立一個Member物件
 		Member m = new Member(name,password,email,dob,idn,phonenumber,address);
-		JSONObject jsonObj = new JSONObject();
 		
+		JSONObject resObj = new JSONObject();
+		
+		//如果欄位資料有被註冊過
 		if(mh.isExist(m)) {
-			jsonObj.put("message", "資料已被註冊");
-			rh.sendJsonErr(jsonObj, response);
+			
+			//回傳被註冊過的訊息
+			resObj.put("message", "資料已被註冊");
+			rh.sendJsonErr(resObj, response);
 		}else {
+			
+			//如果沒被註冊過，就寫入資料庫
 			JSONObject res = mh.create(m);
+			
+			//如果回傳的row大於0的話代表存入成功
 			if(res.getInt("row")>0) {
-				jsonObj.put("message", "註冊成功");
-				jsonObj.put("res",res);
-				rh.sendJsonRes(res, response);
+				
+				//回傳註冊成功的訊息
+				resObj.put("message", "註冊成功");
+				resObj.put("redirect", "signin.html");
+				rh.sendJsonRes(resObj, response);
+				
+				//如果存取錯誤
 			} else {
-				jsonObj.put("message", "註冊失敗");
-				jsonObj.put("res",res);
-				rh.sendJsonErr(res, response);
+				
+				//回傳存取失敗的訊息
+				resObj.put("message", "註冊失敗");
+				resObj.put("res",res);
+				rh.sendJsonErr(resObj, response);
 			}
 			
 		}
@@ -95,17 +126,18 @@ public class MemberController extends HttpServlet {
 		String address = req.getString("address");
 		
 		Member m = new Member(id, password, phonenumber, address);
-		JSONObject data = mh.update(m);
-		JSONObject jsonObj = new JSONObject();
+		JSONObject memRes = mh.update(m);
+		JSONObject resObj = new JSONObject();
 		
-		if(data.getInt("row")>0) {
-			jsonObj.put("message", "修改成功");
-			jsonObj.put("data",data);
-			rh.sendJsonRes(jsonObj, response);
+		if(memRes.getInt("row")>0) {
+			Cookie jwtCookie = new Cookie("Token",null);
+			Token.addTokentoCookie(jwtCookie, response);
+			resObj.put("message", "修改成功");
+			resObj.put("redirect", "signin.html");
+			rh.sendJsonRes(resObj, response);
 		} else {
-			jsonObj.put("message", "修改失敗");
-			jsonObj.put("data",data);
-			rh.sendJsonErr(jsonObj, response);
+			resObj.put("message", "修改失敗");
+			rh.sendJsonErr(resObj, response);
 		}
 		
 		

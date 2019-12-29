@@ -46,7 +46,7 @@ public class MemberHelper {
 			
 			executeSQL = pres.toString();
 			
-			System.out.println(MessageFormat.format("已執行SQL:{0}", executeSQL));
+			System.out.println(MessageFormat.format("SQL has been exec:{0}", executeSQL));
 		} catch (SQLException sqlE) {
 			System.err.format("SQL State: %s\n%s\n%s", sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getMessage());
 		} catch (Exception e) {
@@ -59,12 +59,6 @@ public class MemberHelper {
 		response.put("row", row);
 		response.put("data", data);
 		return response;
-//		long endTime = System.nanoTime();
-//		long duration = (endTime - startTime)/1_000_000_000;
-//		
-//		response.put("sql", executeSQL);
-//		response.put("time", duration);
-//		response.put("row", row);
 		
 	}
 	
@@ -80,7 +74,7 @@ public class MemberHelper {
 			pres.setInt(1,Integer.parseInt(id));
 			rs = pres.executeQuery();
 			execSQL = pres.toString();
-			System.out.println(MessageFormat.format("已執行SQL:{0}", execSQL));
+			System.out.println(MessageFormat.format("SQL has been exec:{0}", execSQL));
 			while(rs.next()) {
 				int i = rs.getInt("idmember");
 				String name = rs.getString("name");
@@ -202,19 +196,20 @@ public class MemberHelper {
 	}
 	
 	public int checkPassword(String account, String password) {
+		System.out.println(account+" + " +password);
 		ResultSet result = null;
 		String mysqlPassword = null;
 		int mysqlID = 0;
 		try {
 			con = Mysqlconnect.getConnect();
-			String sql = "Select id, password From `missa`.`member` Where email = ?";
+			String sql = "Select idmember, password From `missa`.`member` Where email = ?";
 			pres = con.prepareStatement(sql);
 			pres.setString(1, account);
 			result = pres.executeQuery();
 			result.next();
 			mysqlPassword = result.getString("password");
 			if(password.equals(mysqlPassword)) {
-				mysqlID = result.getInt("id");
+				mysqlID = result.getInt("idmember");
 			}
 		}catch(SQLException sqlE) {
 			System.err.format("SQL State: %s\n%s\n%s",sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getErrorCode());

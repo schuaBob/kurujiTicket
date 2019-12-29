@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 
+
 <meta charset="UTF-8">
 
 
@@ -10,7 +11,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="script.js"></script>
 
 
 
@@ -27,7 +27,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top " id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -43,9 +43,9 @@
                         <div class="navbar-nav">
                             <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
                             <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
                             <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
                             <span class="border border-dark"></span>
                             <a class="nav-item nav-link disable" id="space" href="#">會員</a>
                             <span class="border border-dark"></span>
@@ -70,13 +70,13 @@
                 </div>
                 <ul class="nav nav-pills" id="progress">
                     <li class="nav-item">
-                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                        <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tickettab">選擇票種</a>
+                        <a class="nav-link" id="tickettab"  href="tickettype.html">選擇票種</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="datatab">填寫表單</a>
+                        <a class="nav-link" id="datatab"  href="data.html">填寫表單</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="paytab">選擇付款方式</a>
@@ -84,33 +84,197 @@
 
                 </ul>
 
-                <div style="height:6vh;"></div>
-                <form>
-                    <div class="border border-dark">
-                        <div class="form-check">
-                            <label>
-                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card" checked>信用卡</label>
+                
+                <div class="payset">
+                    <div class="pay_title">
+                        付款資訊
+                    </div>
+                    <div style="height:5vh"></div>
+                    <div class="border border-dark payset_c">
 
-                            <label>
-                                <input class="form-check-input" type="radio" name="paymethod" value="linepay" id="linepay">LINE PAY</label>
-                            <label>
-                                <input class="form-check-input" type="radio" name="paymethod" value="711" id="711">超商付款</label>
+                        <div class="row payment_choice">
+                            <div class="col">付款方式</div>
+
+                            <div class="col">
+                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card" checked>信用卡
+                            </div>
+                            <div class="col">
+
+                                <input class="form-check-input" type="radio" name="paymethod" value="linepay" id="linepay">LINE PAY
+                            </div>
+
                         </div>
-                        <div class="alert alert-primary" role="alert">
-                            B區票*1 4200*1 TWD$4200
+                        <div class="pay_content">
+                            <div class="alert alert-primary" role="alert" id="ticket">
+                                <img src="checklist.png" style="width:5vh;">&nbsp;&nbsp;</div>
                         </div>
-                        <!--為啥你不見了-->
-                        <button type="botton" class="btn btn-primary" name="next" id="data_b">上一步</button>
-                        <button type="submit" class="btn btn-primary" id="pay_b">開始繳費</button>
 
                     </div>
-                </form>
+                </div>
+
+                <div class="pay_button">
+                    <button type="submit" class="btn btn-primary" id="pay_b">開始繳費</button>
+                </div>
+
             </div>
+
+        </div>
         </div>
         <script>
             $(document).ready(function () {
+                var paytype;
+
+                $("#datetab").removeClass("active");
+                $("#paytab").addClass("active");
+                $("#ticket").append(localStorage.display);
+
+                //alert時間
+                $("#pay_b").click(function () {
+
+                    show();
+                    update();
+
+
+
+                });
+
+
+
+                function show() {
+
+                    var currentdate = new Date();
+
+                    //判斷radio botton
+                    if ($("#card").is(":checked")) {
+                        paytype = "信用卡";
+                        localStorage.setItem("payment", "credit");
+                    }
+                    else {
+                        paytype = "Line Pay";
+                        localStorage.setItem("payment", "711");
+                    }
+
+                    var datetime = "現在是" +
+                        + currentdate.getFullYear() + "/"
+                        + (currentdate.getMonth() + 1) + "/" + currentdate.getDate() + " 的 "
+                        + currentdate.getHours() + ":"
+                        + currentdate.getMinutes() + ":"
+                        + currentdate.getSeconds(); +"\n"
+                    currentdate.setMinutes(currentdate.getMinutes() + 30);
+                    var limittime = currentdate.getMinutes();
+                    var paytime = "請你在" + currentdate.getHours() + ":"
+                        + limittime + ":"
+                        + currentdate.getSeconds() + " 前用" + paytype + "繳完費";
+
+                    alert("您選擇" + paytype + "付款\n" + datetime + "\n" + paytime);
+
+                }
+
+                function update() {
+
+                    if (localStorage.area1 != 0) {
+
+                        var data = {
+                            "concertid": localStorage.concertid,
+                            "seatarea": localStorage.area1,
+                            "ticketamount": localStorage.area1_q,
+                            "memberid": localStorage.memberid,
+                            "name": localStorage.temp_name,
+                            "phonenumber": localStorage.temp_phone,
+                            "email": localStorage.temp_mail,
+                            "payment": paytype,
+                        }
+                        var data_string = JSON.stringify(data);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "order",
+                            data: data_string,
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                                if (response.status == 200) {
+                                    alert("成功!");
+                                }
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+
+                    if (localStorage.area2 != 0) {
+
+                        var data = {
+                            "concertid": localStorage.concert_id,
+                            "seatarea": localStorage.area2,
+                            "ticketamount": localStorage.area2_q,
+                            "memberid": localStorage.memberid,
+                            "name": localStorage.temp_name,
+                            "phonenumber": localStorage.temp_phone,
+                            "email": localStorage.temp_mail,
+                            "payment": paytype
+                        }
+
+                        var data_string = JSON.stringify(data);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "order",
+                            data: data_string,
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                                if (response.status == 200) {
+
+                                }
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+                    if (localStorage.area3 != 0) {
+                        //
+                        var data = {
+                            "concertid": localStorage.concertid,
+                            "seatarea": localStorage.area3,
+                            "ticketamount": localStorage.area3_q,
+                            "memberid": localStorage.memberid,
+                            "name": localStorage.temp_name,
+                            "phonenumber": localStorage.temp_phone,
+                            "email": localStorage.temp_mail,
+                            "payment": paytype,
+                        }
+                        var data_string = JSON.stringify(data);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "order",
+                            data: data_string,
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                                if (response.status == 200) {
+
+                                }
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+                }
+
+
             });
-            </script>
+        </script>
     </main>
 </body>
 

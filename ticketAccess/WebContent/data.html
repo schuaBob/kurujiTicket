@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
 
 
 
@@ -27,7 +27,7 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:100vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -43,9 +43,9 @@
                         <div class="navbar-nav">
                             <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
                             <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="buticket.html">我要購票</a>
+                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
                             <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="#">訂單紀錄</a>
+                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
                             <span class="border border-dark"></span>
                             <a class="nav-item nav-link disable" id="space" href="#">會員</a>
                             <span class="border border-dark"></span>
@@ -70,10 +70,10 @@
                 </div>
                 <ul class="nav nav-pills" id="progress">
                     <li class="nav-item">
-                        <a class="nav-link active" id="datetab" href="#dateset">選擇日期</a>
+                        <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="tickettab">選擇票種</a>
+                        <a class="nav-link" id="tickettab" href="tickettype.html">選擇票種</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="datatab">填寫表單</a>
@@ -85,87 +85,127 @@
                 </ul>
 
                 <div style="height:6vh;"></div>
-                <form>
-                    <fieldset id="dataset">
+
+                <div id="dataset">
+
+                    <div class="data_front">
 
                         <div class="alert alert-primary" id="ticketdata">
-
+                            <img src="checklist.png" style="width:5vh;">&nbsp;&nbsp;
                         </div>
-                        <div>聯絡人資料</div>
-                        <div>
-                            <form-row>
-                                <label for="validationDefault01">*姓名</label>
-                                <input type="text" class="form-control" id="name" placeholder="王曉明" required>
-                            </form-row>
-                            <form-row>
-                                <label for="validationDefault01">*EMAIL</label>
-                                <input type="email" class="form-control" id="email" placeholder="XXX@mail.com" required>
-                            </form-row>
-                            <form-row>
-                                <label for="validationDefault01">*手機</label>
+                        <div class="data_title">聯絡人資料</div>
+                    </div>
+                    <div class="data_content">
+                        <form-row>
+                            <label for="validationDefault01">*姓名</label>
+                            <input type="text" class="form-control" id="order_name" placeholder="王曉明" required>
+                        </form-row>
+                        <form-row>
+                            <label for="validationDefault01">*EMAIL</label>
+                            <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
+                        </form-row>
+                        <form-row>
+                            <label for="validationDefault01">*手機</label>
 
-                                <input type="tel" class="form-control" name="phone" id="phone" placeholder="0912345678" pattern="[0-9]{10}" required>
-                            </form-row>
-                            <form-row>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
-                                    <label class="form-check-label" for="autoSizingCheck2">
-                                        同會員資料
-                                    </label>
-                                </div>
-                                <!--幹-->
-                                <button class="btn btn-primary" type="submit"></button>
-                                <button type="submit" class="btn btn-link">gfdgd</button>
-                                <a href="pay.html" class="btn btn-primary" role="submit" id="data_b" > <button class="btn btn-primary" type="submit">下一步</button></a>
-                            </form-row>
-                        </div>
-                    </fieldset>
-                </form>
+                            <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                        </form-row>
+
+                        <form-row>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
+                                <label> 同會員資料 </label>
+                            </div>
+                    </div>
+                    <div class="data_button">
+                        <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
+                    </div>
+                    </form-row>
+
+                </div>
             </div>
+
+        </div>
         </div>
         <script>
             $(document).ready(function () {
 
                 $("#datetab").removeClass("active");
                 $("#datatab").addClass("active");
+                $("#ticketdata").append(localStorage.display);
 
-                var oq1, oq2, oq3;
-                $.ajax({
-                    url: "dgdfgdf",
-                    method: 'get',
-                    error: function (err) {
-                        console.log(err);
-                    },
-                    success: function (data) {
-                        oq1 = data.w;
-                        oq2 = data.w;
-                        oq3 = data.w;
+
+
+                $('#member').mousedown(function () {
+
+                    memebercheck();
+                });
+
+
+                $("#data_b").click(function () {
+
+                    datasubmit();
+                });
+
+                //自動輸入member data
+                function memebercheck() {
+
+                    $("#order_name").val("111");
+                    $("#order_phone").val("0912334567");
+                    $("#order_email").val("a2333@gmail.com");
+
+                    //判斷會員
+                    var member = 1;
+                    localStorage.setItem("memberid", member);
+
+                    //url加上memberid
+                    $.ajax({
+                        url: "Auth/member",
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (err) {
+                            console.log(err);
+                        },
+                        success: function (data) {
+
+                            $("#order_name").val(data.name);
+                            $("#order_phone").val(data.phonenumber);
+                            $("#order_mail").val(data.email);
+
+                        }
+                    });
+
+
+                }
+
+
+                function datasubmit() {
+                    var name = $('#order_name').val();
+                    var email = $('#order_email').val();
+                    var phone = $('#order_phone').val();
+
+                    //輸入預防
+                    var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                    var phone_rule = /^[09]{2}[0-9]{8}$/;
+
+                    if (!name) {
+                        event.preventDefault();
+                        alert("請輸入名字!");
+                    }
+                    if (!email_rule.test(email)) {
+                        event.preventDefault();
+                        alert("Email格式不符！");
+                    }
+                    if (!phone_rule.test(phone)) {
+                        event.preventDefault();
+                        alert("phone格式不符!");
+                    }
+                    else {
+                        localStorage.setItem("temp_name", name);
+                        localStorage.setItem("temp_mail", email);
+                        localStorage.setItem("temp_phone", phone);
 
                     }
-                });
-                //運算顯示
-                oq1 = 0;
-                oq2 = 2;
-                oq3 = 0;
-                if (oq1 != 0) {
-
-                    $("#ticketdata").append($("#area1").html() + "*" + oq1 + "(");
-                    $("#ticketdata").append(pr1 + "*" + oq1 + ")");
                 }
-                if (oq2 != 0) {
-                    $("#ticketdata").append($("#area2").html() + "*" + oq2 + "(");
-                    $("#ticketdata").append(pr2 + "*" + oq2 + ")");
-                }
-                if (oq3 != 0) {
-                    $("#ticketdata").append($("#area3").html() + "*" + oq3 + "(");
-                    $("#ticketdata").append(pr3 + "*" + oq3 + ")");
-                }
-                //var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
-                $("#ticketdata").append("&nbsp;&nbsp;&nbsp;TWD$" + money);
-
-                //輸入預防
-
-                //寫入資料庫
 
 
             });

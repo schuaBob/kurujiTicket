@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <title>註冊會員</title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="css/register.css">
+    <style>
+        
+    </style>
+</head>
+
+<body class="ticket">
+
+    <div class="background">
+        <i class='fas fa-address-card' style="font-size:55px; color:#0088A8;margin: 0% 0% 0% 5.3%;"></i>
+        <h style="font-size: 36px; color:#EE7700;">哭嚕嘰</h>
+    </div>
+
+    <div id="content">
+        <h1 style="margin: 0% 0% 0% 26%;">註冊會員資料</h1>
+        <form id="form1">
+            <div class="regname">
+                <label>姓名</label>
+                <input type="text" id="name" maxlength="50" required="required">
+                <br>
+                <br>
+            </div>
+            <div class="regpassword">
+                <label>密碼</label>
+                <input type="text" id="password" maxlength="100" required="required">
+                <br></br>
+            </div>
+            <div class="regemail">\
+                <label>信箱</label>
+                <input type="text" id="email" maxlength="100" required="required">
+                <br></br>
+            </div>
+            <div class="regdob">\
+                <label>生日</label>
+                <input type="text" id="dob" maxlength="10" required="required">
+                <br></br>
+            </div>
+            <div class="regphone">
+                <label>手機</label>
+                <input type="text" id="phonenumber" maxlength="10" required="required"
+                    onkeyup="value=value.replace(/[^\d]/g,'') ">
+                <br></br>
+            </div>
+            <div class="regidnumber">
+                <label>身分證</label>
+                <input type="text" id="idnumber" maxlength="10" required="required">
+                <br><br>
+            </div>
+            <div class="regaddress">
+                <label>地址</label>
+                <input type="text" id="address" maxlength="100" required="required">
+                <br></br>
+            </div>
+            <div class="submit"><input type="button" id="submitForm" value="註冊"></div>
+        </form>
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function () {
+			$("#submitForm").click(function (e) {
+				e.preventDefault();
+				console.log("Submit")
+				// console.log($("#name").val()())
+				console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
+				$.ajax({
+					url: "/Auth/member",
+					method: 'POST',
+					dataType: "JSON",
+					data: {
+						name: $("#name").val(),
+						password: $("#password").val(),
+						email: $("#email").val(),
+						dob: $("#dob").val(),
+						idnumber: $("#idnumber").val(),
+						phonenumber: $("#phonenumber").val(),
+						address: $("#address").val()
+					},
+					error: function (err) {
+						console.log(err)
+					},
+					success: function (res) {
+						console.log(res.message)
+                        window.location.replace(res.redirect);
+					}
+				});
+			})
+		})
+	</script>
+
+</body>
+
+</html>
