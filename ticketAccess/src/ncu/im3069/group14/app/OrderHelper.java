@@ -307,7 +307,6 @@ public class OrderHelper {
 			execute_sql = pres.toString();
 			System.out.println(execute_sql);
 			
-			
 		} catch (SQLException e) {
             /** ¦L¥XJDBC SQL«ü¥O¿ù»~ **/
             System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
