@@ -39,7 +39,7 @@ public class TicketController extends HttpServlet {
 		
 		JSONObject jsonObj = new JSONObject();
 		
-		jsonObj.put("message", "Query success.");
+		jsonObj.put("message", "查詢票券成功");
 		jsonObj.put("data", data);
 		rh.sendJsonRes(jsonObj, response);
 		
