@@ -45,7 +45,7 @@ public class ConcertHelper {
 			/** 取得資料庫之連線 */
             conn = MysqlConnect.getConnect();
             /** sql指令  */
-            String sql = "INSERT INTO testconcert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
             pres.setString(2, c.getSupplierId().toString());
@@ -83,10 +83,18 @@ public class ConcertHelper {
 		try {
 			ResultSet rs = null;
 			conn = MysqlConnect.getConnect();
-			String sql = "SELECT * FROM testconcert WHERE session = ?";
-			pres = conn.prepareStatement(sql);
-			pres.setString(1, session);
-			rs = pres.executeQuery();					
+			
+			if(session != null && !session.equals("")) {
+				String sql = "SELECT * FROM concert WHERE session = ?";
+				pres = conn.prepareStatement(sql);
+				pres.setString(1, session);
+				rs = pres.executeQuery();	
+			}else {
+				String sql = "SELECT * FROM concert";
+				pres = conn.prepareStatement(sql);
+				pres.setString(1, session);
+				rs = pres.executeQuery();
+			}							
 			
 			ResultSetMetaData rsmd = null;
 			String columnName = null;
