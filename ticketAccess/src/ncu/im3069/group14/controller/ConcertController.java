@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
+import java.util.ArrayList;
+
 import org.json.*;
 import ncu.im3069.group14.tools.RequestHandler;
 
@@ -35,8 +37,9 @@ public class ConcertController extends HttpServlet {
 		RequestHandler jsr = new RequestHandler(request);
         /** 取出經解析到 JsonReader 之 Request 參數 */
         String session = jsr.getParameter("session");
-        JSONObject result = ch.getConcertBySession(session); 
-        
+        System.out.println("session="+session);
+        JSONArray result = ch.getConcertBySession(session); 
+        System.out.println(result.toString());
         if(result.isEmpty()) {
         	JSONObject resp = new JSONObject();
         	resp.put("status", "200");
@@ -58,10 +61,6 @@ public class ConcertController extends HttpServlet {
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
-//        System.out.println(jso.get("ticketstatus").getClass().getName());
-        //測試一個json，格式為{concertName:kuruji}
-//        String concertName = jso.getString("concertName");
-//        System.out.println(concertName);
         Concert c = new Concert(jso);
         
         JSONObject data = ch.createConcert(c);
