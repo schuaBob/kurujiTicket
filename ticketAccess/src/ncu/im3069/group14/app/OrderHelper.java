@@ -138,9 +138,15 @@ public class OrderHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             MysqlConnect.close(rs, pres, conn);
         }
-		response.put("result", "get all data success");
-		response.put("row", row);
-		response.put("orders", jsa);
+		if ( row > 0 ) {
+			response.put("result", "get member all data success");
+			response.put("row", row);
+			response.put("orders", jsa);
+		}else {
+			response.put("result", "no data or error happened");
+			response.put("row", row);
+		}
+		
 		return response;
 	}
 	public JSONObject create(Order o) {
@@ -165,8 +171,10 @@ public class OrderHelper {
 			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && !getPaidStatus(o.getMemberid(),o.getConcertid())){
 				
 				conn = MysqlConnect.getConnect(); 
+				
 				//STEP0 更新order物件的ticketamount
 				o.updateAmount(ticketbuy+ o.getTicketamount());
+				
 				//STEP1 更新order資料庫
 				query = "update `missa`.`order`  "
 				 		+ "inner join `missa`.`ticket` "
@@ -182,13 +190,13 @@ public class OrderHelper {
 				 row = pres.executeUpdate();
 				 exexcute_sql = pres.toString();
 				 System.out.println(exexcute_sql);
+				 
 				 //STEP2 查詢				 
 				 query = "SELECT * FROM `missa`.`order` as `a` inner join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where `memberid` = ? and `concertid` = ? ";
 				 pres = conn.prepareStatement(query);
 				 pres.setInt(1, o.getMemberid());
 				 pres.setInt(2, o.getConcertid());
 				 ResultSet rs = pres.executeQuery();
-				 
 				
 				 //STEP3 回傳結果
 				 response.put("result", "update order success");
@@ -268,11 +276,7 @@ public class OrderHelper {
 			
 			exexcute_sql = pres.toString();
 			System.out.println(exexcute_sql);
-			// 這裡有另外一個選擇，就是回傳撈出的資料數量，因為一筆就代表有一個ticket
-//			if(rs.next()){
-//				amount = rs.getInt("ticketamount");
-//				System.out.println("ticketamount:"+amount);
-//			}
+			//回傳撈出的資料數量，因為一筆就代表有一個ticket
 			while(rs.next()) {
 				amount += 1;
 			}
@@ -318,9 +322,16 @@ public class OrderHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             MysqlConnect.close( pres, conn);
         }
-		response.put("result", "delete order success");
-		response.put("row", row);
-		response.put("orderid", idorder);
+		if ( row > 0 ) {
+			response.put("result", "delete order success");
+			response.put("row", row);
+			response.put("orderid", idorder);
+		}else {
+			response.put("result", "delete order failed");
+			response.put("row", row);
+			response.put("orderid", idorder);
+		}
+		
 		return response;
 		
 	}
@@ -403,9 +414,15 @@ public class OrderHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             MysqlConnect.close( pres, conn);
         }
-		response.put("result", "order paid success");
-		response.put("payment", payment);
-		response.put("row", row);
+		if (row > 0) {
+			response.put("result", "order paid success");
+			response.put("payment", payment);
+			response.put("row", row);
+		}else {
+			response.put("result", "order paid failed");
+			response.put("row", row);
+		}
+		
 		return response;
 	}
 	public boolean getPaidStatus(int memberid, int concertid) {
