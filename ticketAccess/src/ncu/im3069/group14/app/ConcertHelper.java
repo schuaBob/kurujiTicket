@@ -75,4 +75,37 @@ public class ConcertHelper {
         response.put("row", row);
         return response;
 	}
+	public JSONObject getConcertBySession(String session) {		
+		
+		JSONObject temp = new JSONObject();
+		
+		try {
+			ResultSet rs = null;
+			conn = Mysqlconnect.getConnect();
+			String sql = "SELECT * FROM testconcert WHERE session = ?";
+			pres = conn.prepareStatement(sql);
+			pres.setString(1, session);
+			rs = pres.executeQuery();					
+			
+			ResultSetMetaData rsmd = null;
+			String columnName = null;
+			while(rs.next()) {
+				rsmd = rs.getMetaData();				
+				for(int i=0;i<rsmd.getColumnCount();i++) {
+					columnName = rsmd.getColumnName(i+1);
+					temp.put(columnName, rs.getString(columnName));
+				}
+			}
+		}catch(SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+        	Mysqlconnect.close(pres, conn);
+        }
+		return temp;
+	}
 }

@@ -31,8 +31,25 @@ public class ConcertController extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		RequestHandler jsr = new RequestHandler(request);
+        /** 取出經解析到 JsonReader 之 Request 參數 */
+        String session = jsr.getParameter("session");
+        JSONObject result = ch.getConcertBySession(session); 
+        
+        if(result.isEmpty()) {
+        	JSONObject resp = new JSONObject();
+        	resp.put("status", "200");
+            resp.put("data", "{}");
+            resp.put("isEmpty", "true");
+        	jsr.sendJsonRes(resp, response);
+        }else {
+        	JSONObject resp = new JSONObject();
+        	resp.put("status", "200");
+            resp.put("data", result.toString());
+            resp.put("isEmpty", "false");
+            jsr.sendJsonRes(resp, response);
+        }        
 	}
 
 	
@@ -41,25 +58,20 @@ public class ConcertController extends HttpServlet {
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
-        System.out.println(jso.get("ticketstatus").getClass().getName());
+//        System.out.println(jso.get("ticketstatus").getClass().getName());
         //測試一個json，格式為{concertName:kuruji}
-        String concertName = jso.getString("concertName");
+//        String concertName = jso.getString("concertName");
+//        System.out.println(concertName);
         Concert c = new Concert(jso);
         
-        if(concertName.isEmpty()) {
-            /** 透過JsonReader物件回傳到前端（以字串方式） */
-            jsr.sendJsonRes(jso, response);
-        }else {
-        	//暫時
-        	JSONObject data = ch.createConcert(c);
-        	JSONObject resp = new JSONObject();
-        	resp.put("status", "200");
-            resp.put("message", "成功新增演唱會");
-            resp.put("row-effect", data);
-            
-            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-            jsr.sendJsonRes(resp, response);
-        }
+        JSONObject data = ch.createConcert(c);
+    	JSONObject resp = new JSONObject();
+    	resp.put("status", "200");
+        resp.put("message", "成功新增演唱會");
+        resp.put("row-effect", data);
+        
+        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        jsr.sendJsonRes(resp, response);
 	}
 
 }

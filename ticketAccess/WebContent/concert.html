@@ -5,11 +5,13 @@
     <title>Document</title>
 </head>
 <body>
-    <button>新增演唱會</button>
+    <button id="addConcert">新增演唱會</button>
+    <button id="getData">get</button>
+    <p id="text"></p>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    $("button").click(function(){
+    $("#addConcert").click(function(){
         var obj = {
             concertName: "kuruji",
             supplierId: 001,
@@ -26,7 +28,6 @@
             type: "POST",
             url: "api/concert.do",            
             cache: false,
-            contentType : "application/json",
             dataType: "json",
             timeout: 5000,
             data:JSON.stringify(obj),
@@ -35,9 +36,42 @@
                     alert("成功");
                 }                
             },
-            error: function(){
+            error: function(err){
                 alert("無法連線到伺服器！");
             }
+        });
+    });
+
+    $("#getData").click(function(){
+        // $.get("api/concert.do?session=pp",function(data,status){
+        //     alert("111");
+        //     alert(data);
+        //     alert(status);
+        //     if(data.status == 200){
+        //         alert("成功");
+        //         console.log(data);
+        //     }else{
+        //         alert("失敗");
+        //     }
+        // });
+        $.ajax({
+           type: "GET",
+           url: "api/concert.do?session=aa",
+           cache: false,
+           dataType: "json",
+           timeout: 5000,
+           success: function(response){   
+                if(response.status == 200 && response.isEmpty == "false"){                 	
+                    alert("成功");
+                    let data = JSON.parse(response.data);
+                    alert("演唱會名稱:"+data.name);
+                }else{
+                    alert("沒東西或有問題");
+                }
+           },
+           error:function(err){
+                alert("無法連線到伺服器！");
+           }
         });
     });
 </script>
