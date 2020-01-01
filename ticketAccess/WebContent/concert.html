@@ -13,22 +13,23 @@
 <script>
     $("#addConcert").click(function(){
         var obj = {
-            concertName: "kuruji",
+            concertName: "Jay Chou",
             supplierId: 001,
             location: "location",
             picture: "URL",
             seatpicture: "URL",
             endsellingtime: '2020-1-11 00:00:00',
-            content: "concent",
-            ticketstatus:{"A section":"500"},
-            concertstarttime: '2019-12-24 00:00:00',
-            concertendtime: '2019-12-30 00:00:00'      
+            content: "內容",
+            ticketstatus:{"data":[{"Area":"A","SeatTotal":"300","Sold":"0","Price":"1000"},{"Area":"B","SeatTotal":"250","Sold":"0","Price":"700"}]},
+            concertstarttime: '2019-1-10 19:00:00',
+            concertendtime: '2019-1-10 22:00:00'      
         }
         $.ajax({
             type: "POST",
             url: "api/concert.do",            
             cache: false,
             dataType: "json",
+            contentType: "application/json",
             timeout: 5000,
             data:JSON.stringify(obj),
             success: function(response){                
@@ -43,28 +44,19 @@
     });
 
     $("#getData").click(function(){
-        // $.get("api/concert.do?session=pp",function(data,status){
-        //     alert("111");
-        //     alert(data);
-        //     alert(status);
-        //     if(data.status == 200){
-        //         alert("成功");
-        //         console.log(data);
-        //     }else{
-        //         alert("失敗");
-        //     }
-        // });
         $.ajax({
            type: "GET",
-           url: "api/concert.do?session=aa",
+           url: "api/concert.do?session=chou", //session代表場次代號
            cache: false,
            dataType: "json",
            timeout: 5000,
            success: function(response){   
-                if(response.status == 200 && response.isEmpty == "false"){                 	
-                    alert("成功");
-                    let data = JSON.parse(response.data);
-                    alert("演唱會名稱:"+data.name);
+                if(response.status == 200 && response.isEmpty == "false"){
+                    let data = JSON.parse(response.data);                    
+                    //data是一個JSONArray，data = [JSONObject1,JSONObject2...];
+                    for(var i=0; i<data.length;i++){
+                        $("#text").append("<span>"+data[i].name+"</span><br>");
+                    }
                 }else{
                     alert("沒東西或有問題");
                 }
