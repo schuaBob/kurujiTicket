@@ -84,7 +84,7 @@ public class ConcertHelper {
 			ResultSet rs = null;
 			conn = MysqlConnect.getConnect();
 			
-			if(session != null && !session.equals("")) {
+			if(!"".equals(session)) {
 				String sql = "SELECT * FROM concert WHERE session = ?";
 				pres = conn.prepareStatement(sql);
 				pres.setString(1, session);
@@ -92,7 +92,6 @@ public class ConcertHelper {
 			}else {
 				String sql = "SELECT * FROM concert";
 				pres = conn.prepareStatement(sql);
-				pres.setString(1, session);
 				rs = pres.executeQuery();
 			}							
 			
