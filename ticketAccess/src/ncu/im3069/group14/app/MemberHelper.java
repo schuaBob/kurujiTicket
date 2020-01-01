@@ -215,8 +215,10 @@ public class MemberHelper {
 			System.err.format("SQL State: %s\n%s\n%s",sqlE.getErrorCode(),sqlE.getSQLState(),sqlE.getErrorCode());
 		} catch (Exception e) {
 			e.getStackTrace();
-		} 
-		MysqlConnect.close(result,pres, con);
+		} finally {
+			MysqlConnect.close(result,pres, con);
+		}
+		
 		return mysqlID;
 		
 	}
