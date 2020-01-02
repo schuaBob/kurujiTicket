@@ -36,11 +36,13 @@ public class TicketHelper {
 			
 			//讽竒玻ネ布ㄩぶ布ㄩ羆计磅︽
 			while(createamount < ticketamount) {
-				t.setSeatid(createamount+t.getSeatid());//眎布seatid穦ゑ玡眎
+				t.setSeatid(t.getSeatid()+1);//眎布seatid穦ゑ玡眎
+				
 				pres.setInt(4, t.getSeatid());
 				createamount++;
 				
-				row = pres.executeUpdate();
+				pres.executeUpdate();
+				row++;
 				execute_sql = pres.toString();
 				System.out.println(execute_sql);
 				
@@ -49,7 +51,7 @@ public class TicketHelper {
 				idticket = rs.getInt(1);
 				t.setIdticket(idticket);
 				data = t.toJsonData(idticket);
-				jsa.put(data);
+				jsa.put(data);//硂柑穦瞷眎璹虫t常琌object
 			}
 			
 		} catch (SQLException e) {

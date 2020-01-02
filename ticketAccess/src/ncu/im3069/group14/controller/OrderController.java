@@ -84,13 +84,13 @@ public class OrderController extends HttpServlet {
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			int seatid = ch.getSeatId("seatid");//跟concerthelper取得座位ID
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
-			//STEP5 把結果放數response裡面
+			//STEP5 把結果放response裡面
 	        resp.put("status", "200");
 	        resp.put("message", "建立訂單成功");
 	        resp.put("order result", result);
@@ -105,7 +105,7 @@ public class OrderController extends HttpServlet {
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			int seatid = ch.getSeatId("seatid");//跟concerthelper取得座位ID
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
@@ -174,7 +174,7 @@ public class OrderController extends HttpServlet {
 		
 		JSONObject resp = new JSONObject();
 
-        if ( resp.getString("result") == "delete order success") {
+        if ( result.getString("result") == "delete order success") {
             resp.put("status", "200");
             resp.put("message", "成功刪除訂單");
             resp.put("order result", result);
