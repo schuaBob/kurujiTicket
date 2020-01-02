@@ -53,10 +53,7 @@
            success: function(response){   
                 if(response.status == 200 && response.isEmpty == "false"){
                     let data = JSON.parse(response.data);                    
-                    //data是一個JSONArray，data = [JSONObject1,JSONObject2...];
-                    for(var i=0; i<data.length;i++){
-                        $("#text").append("<span>"+data[i].name+"</span><br>");
-                    }
+                    console.log(data)
                 }else{
                     alert("沒東西或有問題");
                 }
