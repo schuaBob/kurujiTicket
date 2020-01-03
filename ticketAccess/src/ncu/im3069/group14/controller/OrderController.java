@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/order")
+@WebServlet("/Auth/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
