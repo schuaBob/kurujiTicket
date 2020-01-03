@@ -186,11 +186,11 @@
 
                     //url加上concertid
                     $.ajax({
-                        url: "api/concert.do",
+                        url: "api/concert.do?session=chou",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {
-                            console.log(err);
+                            alert("沒有連上");
                         },
                         success: function (data) {
 
