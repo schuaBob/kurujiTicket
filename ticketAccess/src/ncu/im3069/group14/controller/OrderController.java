@@ -57,16 +57,16 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
-		//STEP1 嚙踝蕭嚙緻嚙緬嚙踝蕭捊嚙�
+		//STEP1 取得request的資料
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		int totalprice = jso.getInt("totalprice");
 		
-		//STEP2 嚙諍立訂嚙踝蕭
-		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
-		JSONObject result = oh.create(o);
+		//STEP2 創造order物件
+		Order d = new Order( memberid, payment, ticketamount, concertid, totalprice);
+		JSONObject result = oh.create(d);
 		
 		//STEP2.5 嚙瞑嚙稻嚙瞌嚙稻嚙踝蕭嚙穀嚙諍立，嚙緘嚙瘦嚙踝蕭嚙穀嚙諍立，嚙褒備建立莎蕭嚙踝蕭
 		if ( result.getString("result") == "create order success" || result.getString("result") == "update order success") {
@@ -110,7 +110,6 @@ public class OrderController extends HttpServlet {
 		
 		int idorder = jso.getInt("idorder");
 		JSONObject result = oh.getPaidOrder(idorder);
-		
 		JSONObject resp = new JSONObject();
 		resp.put("status", "200");
         resp.put("message", "嚙緬嚙踝蕭I嚙誹佗蕭嚙穀嚙瘢");

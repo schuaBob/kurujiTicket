@@ -157,12 +157,12 @@ public class OrderHelper {
 			
 			//checkTicketAmount回傳已經購買的數量，再加上這次的數量，如果大於4就不能買
 			//如果大於零但是小於4，可以購買，update order
-			//但是當每一筆都已經付款，那要重新新增一筆新的訂單
+			//但是當每一筆都已經付款，那要重新新增一筆新的訂單 
 			if (  ticketbuy + o.getTicketamount() > 4 ) {
 				System.out.println("已經超過購買的票數");
 				response.put("result", "already full");
 				
-			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && !getPaidStatus(o.getMemberid(),o.getConcertid())){
+			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && ! getPaidStatus(o.getMemberid(),o.getConcertid())){
 				
 				conn = Mysqlconnect.getConnect(); 
 				//STEP0 更新order物件的ticketamount
@@ -219,7 +219,7 @@ public class OrderHelper {
 				
 				ResultSet rs = pres.getGeneratedKeys();
 				rs.next();
-				idorder = rs.getInt(1);
+				idorder = rs.getInt(1); 
 				o.setIdorder(idorder);
 				data = o.toJsonData(idorder);
 				
