@@ -63,17 +63,20 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
-		
-		//STEP1 從request中取得資訊
+
+		//STEP1 取得request的資料
+
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		int totalprice = jso.getInt("totalprice");
 		
+
 		//STEP2 建立訂單
 		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
 		JSONObject result = oh.create(o); //會判斷是新建立訂單，還是
+
 		
 		//STEP2.5 判斷建立訂單的結果，是否成功建立、成功更新
 		if ( result.getString("result") == "create order success") {
@@ -141,7 +144,6 @@ public class OrderController extends HttpServlet {
 		
 		int idorder = jso.getInt("idorder");
 		JSONObject result = oh.getPaidOrder(idorder);
-		
 		JSONObject resp = new JSONObject();
 		if ( result.getString("result") == "order paid success") {
 			resp.put("status", "200");
