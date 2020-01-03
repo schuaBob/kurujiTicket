@@ -20,6 +20,7 @@ public class OrderController extends HttpServlet {
 
 	private OrderHelper oh = OrderHelper.getHelper();
 	private TicketHelper th = TicketHelper.getHelper();
+	private ConcertHelper ch = ConcertHelper.getHelper();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,10 +41,15 @@ public class OrderController extends HttpServlet {
 		JSONObject data = oh.getAllOrder(memberid);
 		JSONObject jsonObj = new JSONObject();
 		
-		jsonObj.put("message", "Query success.");
-		jsonObj.put("data", data);
-		rh.sendJsonRes(jsonObj, response);
-		
+		if ( data.getString("result") == "get member all data success") {
+			jsonObj.put("message", "查詢成功");
+			jsonObj.put("data", data);
+			rh.sendJsonRes(jsonObj, response);
+		}else {
+			jsonObj.put("message", "查詢失敗，沒有資料");
+			jsonObj.put("data", data);
+			rh.sendJsonErr(jsonObj, response);
+		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("finish doGet");
 	}
@@ -57,47 +63,75 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
+
 		//STEP1 取得request的資料
+
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		int totalprice = jso.getInt("totalprice");
 		
-		//STEP2 創造order物件
-		Order d = new Order( memberid, payment, ticketamount, concertid, totalprice);
-		JSONObject result = oh.create(d);
+
+		//STEP2 建立訂單
+		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
+		JSONObject result = oh.create(o); //會判斷是新建立訂單，還是
+
 		
-		//STEP2.5 嚙瞑嚙稻嚙瞌嚙稻嚙踝蕭嚙穀嚙諍立，嚙緘嚙瘦嚙踝蕭嚙穀嚙諍立，嚙褒備建立莎蕭嚙踝蕭
-		if ( result.getString("result") == "create order success" || result.getString("result") == "update order success") {
+		//STEP2.5 判斷建立訂單的結果，是否成功建立、成功更新
+		if ( result.getString("result") == "create order success") {
+			//成功建立新訂單
 			System.out.println("create order success");
-			//STEP3 嚙篁嚙緻嚙踝蕭嚙踝蕭捊嚙�
-			temp = result.getJSONObject("order");
 			
+			//STEP3 取得票券資料
+			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			//seatid嚙緯嚙踝蕭嚙篁嚙踝蕭concerthelper嚙緯 嚙緻嚙諉喉蕭嚙踝蕭嚙緯嚙踝蕭wjc
-			int seatid = jso.getInt("seatid");
-			//STEP4 嚙誹據訂嚙踝蕭A嚙諍立莎蕭嚙踝蕭 
-			Ticket t = new Ticket( concertid, orderid, seatarea, seatid);
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
+			
+			//STEP4 建立新的票券，同時取得建立新票券的結果
+			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
-			
+			//STEP5 把結果放response裡面
 	        resp.put("status", "200");
-	        resp.put("message", "嚙緬嚙踝蕭s嚙磕嚙踝蕭嚙穀嚙瘢");
+	        resp.put("message", "建立訂單成功");
 	        resp.put("order result", result);
 	        resp.put("ticket result", ticketresult);
 	        rh.sendJsonRes(resp, response);
+	        
+		}else if (result.getString("result") == "update order success") {
+			//成功更新訂單
+			System.out.println("update order success");
+			
+			//STEP3 取得票券資料
+			temp = result.getJSONObject("order");
+			int orderid = temp.getInt("idorder");
+			String seatarea = jso.getString("seatarea");
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
+			
+			//STEP4 建立新的票券，同時取得建立新票券的結果
+			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
+			JSONObject ticketresult = th.create(t, ticketamount);
+			
+			//STEP5 把結果放數response裡面
+	        resp.put("status", "200");
+	        resp.put("message", "更新訂單成功");
+	        resp.put("order result", result);
+	        resp.put("ticket result", ticketresult);
+	        rh.sendJsonRes(resp, response);
+			
 		}else {
-			//STEP3-1 嚙稷嚙褒伐蕭嚙諸蛛蕭嚙瘦
+			//失敗的結果
+			System.out.println("update/create order failed");
+			
+			//STEP3 如果失敗，回傳err
 			resp.put("status","200");
-			resp.put("message", "嚙緬嚙踝蕭s嚙磕嚙踝蕭嚙踝蕭");
+			resp.put("message", "建立訂單失敗");
 	        resp.put("order result",result);
 	        rh.sendJsonErr(resp, response);
 			System.out.println("finish doPut");
 		}
-		
-		
 	}
 
 	/**
@@ -111,11 +145,17 @@ public class OrderController extends HttpServlet {
 		int idorder = jso.getInt("idorder");
 		JSONObject result = oh.getPaidOrder(idorder);
 		JSONObject resp = new JSONObject();
-		resp.put("status", "200");
-        resp.put("message", "嚙緬嚙踝蕭I嚙誹佗蕭嚙穀嚙瘢");
-        resp.put("result", result);
-        rh.sendJsonRes(resp, response);
-        
+		if ( result.getString("result") == "order paid success") {
+			resp.put("status", "200");
+	        resp.put("message", "成功付款");
+	        resp.put("result", result);
+	        rh.sendJsonRes(resp, response);
+		}else {
+			resp.put("status", "200");
+	        resp.put("message", "付款失敗");
+	        resp.put("result", result);
+	        rh.sendJsonErr(resp, response);
+		}
 		System.out.println("finish doPost");
 		
 	}
@@ -135,12 +175,20 @@ public class OrderController extends HttpServlet {
 		
 		
 		JSONObject resp = new JSONObject();
-        resp.put("status", "200");
-        resp.put("message", "嚙緬嚙踝蕭R嚙踝蕭嚙踝蕭嚙穀嚙瘢");
-        resp.put("order result", result);
-        resp.put("ticket result", ticketresult);
-        rh.sendJsonRes(resp, response);
-        
+
+        if ( result.getString("result") == "delete order success") {
+            resp.put("status", "200");
+            resp.put("message", "成功刪除訂單");
+            resp.put("order result", result);
+            resp.put("ticket result", ticketresult);
+            rh.sendJsonRes(resp, response);
+        }else {
+            resp.put("status", "200");
+            resp.put("message", "刪除訂單失敗，查無訂單資料");
+            resp.put("order result", result);
+            resp.put("ticket result", ticketresult);
+            rh.sendJsonErr(resp, response);
+        }
 		System.out.println("finish doDelete");
 	}
 

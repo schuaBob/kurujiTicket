@@ -1,7 +1,7 @@
 package ncu.im3069.group14.app;
 
 
-import ncu.im3069.group14.util.Mysqlconnect;
+import ncu.im3069.group14.util.MysqlConnect;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -38,7 +38,7 @@ public class OrderHelper {
 		System.out.println("orderid:"+orderid);
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "SELECT * FROM `missa`.`order` as `a`inner join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where `memberid` = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, memberid);
@@ -70,7 +70,7 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close(rs, pres, conn);
+            MysqlConnect.close(rs, pres, conn);
         }
 		response.put("result", "get all data success");
 		response.put("row", row);
@@ -96,7 +96,7 @@ public class OrderHelper {
 		System.out.println("memberid:"+memberid);
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "SELECT * FROM `missa`.`order` as `a`inner join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where `memberid` = ? order by `concertid` ASC";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, memberid);
@@ -136,11 +136,17 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close(rs, pres, conn);
+            MysqlConnect.close(rs, pres, conn);
         }
-		response.put("result", "get all data success");
-		response.put("row", row);
-		response.put("orders", jsa);
+		if ( row > 0 ) {
+			response.put("result", "get member all data success");
+			response.put("row", row);
+			response.put("orders", jsa);
+		}else {
+			response.put("result", "no data or error happened");
+			response.put("row", row);
+		}
+		
 		return response;
 	}
 	public JSONObject create(Order o) {
@@ -164,9 +170,11 @@ public class OrderHelper {
 				
 			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && ! getPaidStatus(o.getMemberid(),o.getConcertid())){
 				
-				conn = Mysqlconnect.getConnect(); 
+				conn = MysqlConnect.getConnect(); 
+				
 				//STEP0 更新order物件的ticketamount
 				o.updateAmount(ticketbuy+ o.getTicketamount());
+				
 				//STEP1 更新order資料庫
 				query = "update `missa`.`order`  "
 				 		+ "inner join `missa`.`ticket` "
@@ -182,13 +190,13 @@ public class OrderHelper {
 				 row = pres.executeUpdate();
 				 exexcute_sql = pres.toString();
 				 System.out.println(exexcute_sql);
+				 
 				 //STEP2 查詢				 
 				 query = "SELECT * FROM `missa`.`order` as `a` inner join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where `memberid` = ? and `concertid` = ? ";
 				 pres = conn.prepareStatement(query);
 				 pres.setInt(1, o.getMemberid());
 				 pres.setInt(2, o.getConcertid());
 				 ResultSet rs = pres.executeQuery();
-				 
 				
 				 //STEP3 回傳結果
 				 response.put("result", "update order success");
@@ -201,7 +209,7 @@ public class OrderHelper {
 				 
 				 
 			}else {
-				conn = Mysqlconnect.getConnect();
+				conn = MysqlConnect.getConnect();
 				query = "INSERT INTO `missa`.`order`(`memberid`, `payment`, `paid`, `ticketamount`, `createtime`,`totalprice`)"
 				+" VALUES(?, ?, ?, ?, ?, ?)";
 				pres = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -237,7 +245,7 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
 		
 		return response;
@@ -254,7 +262,7 @@ public class OrderHelper {
 		String exexcute_sql = "";//mysql回傳執行的指令
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			//把兩個table結合再一起，然後再去撈資料
 			String query = "select * "
 					+ "from `missa`.`order`"
@@ -268,11 +276,7 @@ public class OrderHelper {
 			
 			exexcute_sql = pres.toString();
 			System.out.println(exexcute_sql);
-			// 這裡有另外一個選擇，就是回傳撈出的資料數量，因為一筆就代表有一個ticket
-//			if(rs.next()){
-//				amount = rs.getInt("ticketamount");
-//				System.out.println("ticketamount:"+amount);
-//			}
+			//回傳撈出的資料數量，因為一筆就代表有一個ticket
 			while(rs.next()) {
 				amount += 1;
 			}
@@ -286,7 +290,7 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close(rs, pres, conn);
+            MysqlConnect.close(rs, pres, conn);
         }
 		System.out.println("ticketamount:"+amount);
 		return amount;
@@ -298,7 +302,7 @@ public class OrderHelper {
 		JSONObject response = new JSONObject();
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "delete from `missa`.`order` where `idorder` = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, idorder);
@@ -306,7 +310,6 @@ public class OrderHelper {
 			row = pres.executeUpdate();
 			execute_sql = pres.toString();
 			System.out.println(execute_sql);
-			
 			
 		} catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
@@ -317,11 +320,18 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
-		response.put("result", "delete order success");
-		response.put("row", row);
-		response.put("orderid", idorder);
+		if ( row > 0 ) {
+			response.put("result", "delete order success");
+			response.put("row", row);
+			response.put("orderid", idorder);
+		}else {
+			response.put("result", "delete order failed");
+			response.put("row", row);
+			response.put("orderid", idorder);
+		}
+		
 		return response;
 		
 	}
@@ -334,7 +344,7 @@ public class OrderHelper {
 		ResultSet rs = null;
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "SELECT * FROM `missa`.`order` where `idorder` = ? ";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, idorder);
@@ -355,7 +365,7 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
 		
 		if (payment == "none") {
@@ -382,7 +392,7 @@ public class OrderHelper {
 		}
 		
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "update missa.order " + 
 					"set paid = true " + 
 					"where idorder = ? ";
@@ -402,11 +412,17 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
-		response.put("result", "order paid success");
-		response.put("payment", payment);
-		response.put("row", row);
+		if (row > 0) {
+			response.put("result", "order paid success");
+			response.put("payment", payment);
+			response.put("row", row);
+		}else {
+			response.put("result", "order paid failed");
+			response.put("row", row);
+		}
+		
 		return response;
 	}
 	public boolean getPaidStatus(int memberid, int concertid) {
@@ -415,7 +431,7 @@ public class OrderHelper {
 		boolean paid = false;
 		ResultSet rs = null;
 		try {
-			conn = Mysqlconnect.getConnect();
+			conn = MysqlConnect.getConnect();
 			query = "SELECT * FROM `missa`.`order` as `a` join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where memberid = ? and concertid = ?;";
 			pres = conn.prepareStatement(query);
 			pres.setInt(1, memberid);
@@ -441,7 +457,7 @@ public class OrderHelper {
             e.printStackTrace();
         } finally {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
-            Mysqlconnect.close( pres, conn);
+            MysqlConnect.close( pres, conn);
         }
 		
 		return paid;
