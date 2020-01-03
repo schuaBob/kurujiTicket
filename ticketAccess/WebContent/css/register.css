@@ -1,9 +1,10 @@
+
 body {
   background-image: url("https://img.tixbar.com/concert/concert-list.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  /* background-color: rgba(255, 255, 255, 0.8);
-  background-blend-mode: lighten; */
+  background-color: rgba(255, 255, 255, 0.8);
+  background-blend-mode: lighten; 
 }
 
 .ticket input {
@@ -93,7 +94,7 @@ body {
 .regemail label {
   font-size: 200%;
   color: black;
-  margin: 0 0 0 30%;
+  margin: 0 0 0 29.2%;
   font-weight: bold;
 }
 
@@ -135,7 +136,7 @@ body {
 .regdob label {
   font-size: 200%;
   color: black;
-  margin: 0 0 0 30%;
+  margin: 0 0 0 29.2%;
   font-weight: bold;
 }
 

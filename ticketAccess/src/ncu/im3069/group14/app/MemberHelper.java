@@ -216,8 +216,9 @@ public class MemberHelper {
 		} catch (Exception e) {
 			e.getStackTrace();
 		} finally {
-			MysqlConnect.close(result, pres,con);
+			MysqlConnect.close(result,pres, con);
 		}
+		
 		return mysqlID;
 		
 	}

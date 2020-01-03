@@ -18,14 +18,8 @@ public class Order {
 	
 	/**
 	 * 建立訂單，需要以下3筆資料
-	 * @param memberid
-	 * @param payment
-	 * @param ticketamount
 	 */
 	public Order(int memberid, String payment, int ticketamount, int concertid, int totalprice) {
-		//Date date = new Date();
-		//SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-		
 		this.memberid = memberid;
 		this.payment = payment; //credit, line, 7
 		this.paid = false ; //剛建立訂單一定還沒付錢
