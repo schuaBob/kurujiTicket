@@ -105,12 +105,12 @@
           <form>
             <div class="form-group">
               <label for="exampleFormControlInput1">演唱會名稱</label>
-              <input type="email" class="form-control" id="concertNameID" placeholder="concertname" required >
+              <input type="email" class="form-control" id="concertNameID" placeholder="concertname" required>
             </div>
 
             <div class="form-group">
               <label for="exampleFormControlInput1">地址</label>
-              <input type="email" class="form-control" id="addressID" placeholder="address" required >
+              <input type="email" class="form-control" id="addressID" placeholder="address" required>
               <div>
 
                 <div class="form-group">
@@ -130,19 +130,20 @@
                   <input type="datetime-local" id="endsellingtime" required>
                 </div>
                 <div id="demo">
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-3 aaa">
                     <div class="input-group-prepend">
                       <span class="input-group-text">票種及價格</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="區域" id="ticketarea" required>
-                    <input type="text" class="form-control" placeholder="票價" id="ticketprice" required>
-                    <input type="text" class="form-control" placeholder="數量" id="ticketammount" required>
+                    <input type="text" class="form-control area" placeholder="區域" id="ticketarea" required>
+                    <input type="text" class="form-control ticketprice " placeholder="票價" id="ticketprice" required>
+                    <input type="text" class="form-control seatamount" placeholder="數量" id="ticketammount" required>
                   </div>
-                
+
                 </div>
 
 
                 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="insertFunction()">+</button>
+
           </form>
         </p>
       </div>
@@ -174,7 +175,7 @@
           <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
         </div>
       </div>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button" id ="submitconcert" >Submit »</a></p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button" id="submitconcert">Submit »</a></p>
 
 
       <hr>
@@ -187,54 +188,63 @@
   </footer>
   <script type="text/javascript">
     function insertFunction() {
-                    document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3">
+      document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3 aaa">
                 <div class="input-group-prepend">
                   <span class="input-group-text">票種及價格</span>
                 </div>
-                <input type="text" class="form-control" placeholder="區域">
-                <input type="text" class="form-control" placeholder="票價">
-                <input type="text" class="form-control" placeholder="數量">
+                <input type="text" class="form-control area" placeholder="區域">
+                <input type="text" class="form-control ticketprice" placeholder="票價">
+                <input type="text" class="form-control seatamount" placeholder="數量">
               </div>`);
-                  }
-  
+    }
+
 
     $("#submitconcert").click(function () {
+      let statusArr = [];
+      $(".aaa").each(function () {
+        let temp = {
+          "Area": $(this).find(".area").val(),
+          "seattotal": $(this).find(".seatamount").val(),
+          "sold": 0,
+          "price": $(this).find(".ticketprice").val()
+        }
+        statusArr.push(temp);
+      });
+      console.log(statusArr);
+
       var obj = {
-          "concertName": $("#concertNameID").val(),
-          "supplierId": 001,
-          "location": $("#addressID").val(),
-          "picture": $("#poster").val(),
-          "seatpicture": $("#seatpic").val(),
-          "endsellingtime": $("#endsellingtime").val(),
-          "content": $("#descriptionID").val(),
-          "ticketstatus":{"data":[{ 
-                  Area : $("#ticketarea").val(),
-                  seattotal:$("#ticketammount").val(),
-                  sold : 0,
-                  price : $("#ticketprice").val()
-               }]},
-      
-          "concertstarttime": $("#starttime").val(),
-          "concertendtime": $("#endtime").val()
+        "concertName": "hello",
+        "supplierId": 001,
+        "location": "location",
+        "picture": "URL",
+        "seatpicture": "URL",
+        "endsellingtime": "2019-2-3 12:22:30",
+        "content": "content",
+        "ticketstatus": {
+          "data": statusArr
+        },
+
+        "concertstarttime": "2019-1-1 12:22:30",
+        "concertendtime": "2019-1-1 12:22:30"
       }
 
       $.ajax({
-            type: "POST",
-            url: "api/concert.do",            
-            cache: false,
-            dataType: "json",
-            contentType: "application/json",
-            timeout: 5000,
-            data:JSON.stringify(obj),
-            success: function(response){                
-                if(response.status == 200){
-                    alert("成功");
-                }                
-            },
-            error: function(err){
-                alert("無法連線到伺服器！");
-            }
-        });
+        type: "POST",
+        url: "api/concert.do",
+        cache: false,
+        dataType: "json",
+        contentType: "application/json",
+        timeout: 5000,
+        data: JSON.stringify(obj),
+        success: function (response) {
+          if (response.status == 200) {
+            alert("成功");
+          }
+        },
+        error: function (err) {
+          alert("無法連線到伺服器！");
+        }
+      });
       // $.ajax({
       //   type: "POST",
       //   url: " ",
@@ -249,6 +259,7 @@
       //   data: JSON.stringify(obj),
 
       // });
+
     });
   </script>
 </body>

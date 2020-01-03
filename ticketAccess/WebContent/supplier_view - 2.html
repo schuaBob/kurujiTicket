@@ -209,7 +209,14 @@
       date = tempDate.getDate();
       hour = tempDate.getHours();
       min = (tempDate.getMinutes()<10? '0':'') +tempDate.getMinutes();
-
+      var statusobject = JSON.parse(ticketstatus)
+      statusobject.data.forEach((a,b,statusArr) => {  //a 物件  b為 index
+        console.log(a)
+        area = a.Area
+        price = a.Price
+        ammount = a.Sold
+        //SeatTotal
+      });
       let info = $(`<div class="form-group">
               <table> 
                 <tr> <td>演唱會名稱:</td> <td>${concertname}</td> </tr>
@@ -242,7 +249,8 @@
               <table> 
                 <tr> <td>關閉售票日期與時間:</td> <td>${endsellingtime}</td> </tr>
               <table>
-            </div>
+            </div>`)
+      let ticketarea = $(`
             <div id="demo">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -258,22 +266,10 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row">1</th>
-                        <td>A區</td>
-                        <td>$6000</td>
-                        <td>120</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>B區</td>
-                        <td>$4100</td>
-                        <td>150</td>
-                      </tr>
-                      <tr>
-                        <th>3</th>
-                        <td>B區</td>
-                        <td>$2500</td>
-                        <td>300</td>
+                       <!-- <th scope="row">1</th>-->
+                        <td>${area}</td>
+                        <td>${price}</td>
+                        <td>${ammount}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -308,9 +304,9 @@
       if (direction) {
         // node4.find(".card-title").addClass(direction)
         pic.find(".card-text").addClass(direction);
-        struct.find(".row").append(pic).append(info);//struct為html , 取得class= row的位置
+        struct.find(".row").append(pic).append(ticketarea).append(info);//struct為html , 取得class= row的位置
       } else {
-        struct.find(".row").append(info).append(pic);
+        struct.find(".row").append(info).append(ticketarea).append(pic);
       }
       console.log(struct);
       return struct;
