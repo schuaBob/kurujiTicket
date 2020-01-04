@@ -53,20 +53,17 @@ public class ConcertController extends HttpServlet {
 		
 		RequestHandler jsr = new RequestHandler(request);
 		JSONArray result = new JSONArray();
-        /** 取出經解析到 JsonReader 之 Request 參數 */
+        /** ��蝬圾�� JsonReader 銋� Request �� */
 		if(!"".equals(jsr.getParameter("session"))){
-			System.out.println("a");
 			String session = jsr.getParameter("session");
 			result = ch.getConcertByAttr("session",session);     
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
-			System.out.println("b");
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
 		}else if( !"".equals(jsr.getParameter("getspecifyconcert")) && (jsr.getMemberIDinRequest()!="0")){
 			result = ch.getConcertByAttr("supplierid",jsr.getMemberIDinRequest());
 		}else {
-			System.out.println("c");
-			result = ch.getConcertByAttr("",""); //回傳全部
+			result = ch.getConcertByAttr("",""); //����
 		}
 		
 		if(result.isEmpty()) {
@@ -95,7 +92,7 @@ public class ConcertController extends HttpServlet {
 //		InputStream fileContent = seatPicFile.getInputStream();
 //		System.out.println(fileName);
 //		String[] fileNameSplit = fileName.split(".");
-		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
+		/** ��sonReader憿撠equest銋SON�撘��圾��蒂���� */
 		
 		
 		
@@ -106,10 +103,10 @@ public class ConcertController extends HttpServlet {
         JSONObject data = ch.createConcert(c);
     	JSONObject resp = new JSONObject();
     	resp.put("status", "200");
-        resp.put("message", "成功新增演唱會");
+        resp.put("message", "���憓����");
         resp.put("row-effect", data);
         
-        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        /** ��sonReader�隞嗅����垢嚗誑JSONObject�撘�� */
         jsr.sendJsonRes(resp, response);
 	}
 //	  public void upload(HttpServletRequest request, HttpServletResponse response)throws ServletException, java.io.IOException {
