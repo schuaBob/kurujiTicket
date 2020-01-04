@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-Hant-TW">
+
+
+<meta charset="UTF-8">
 
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -120,8 +124,9 @@
                             <h2 class="card-text" id="money">$18000</h2>
                         </div>
 
-                        <div class="col more" style="padding-left:30%;padding-top:4%;">
-                            <a href="#" class="btn btn-primary" id="detail">已付款</a>
+                        <div class="col more" style="padding-left:45%;padding-top:4%;">
+                            
+                            <a href="#" class="btn" id="detail">詳細資訊(已付款)>></a>
                         </div>
                     </div>
                 </div>
@@ -153,8 +158,6 @@
                             $.each(data, function (i, item) {
 
                                 var temp = "";
-
-
                                 temp += '<tr><th scope="row">' + item.concertname + '</th>';
                                 temp += '<td>' + item.seatarea + '</td>';
                                 temp += '<td>' + item.seatid + '</td>';
@@ -189,7 +192,7 @@
                             var temp = "";
                             temp += '<div class="order_content" id=" ' + item.idorder + '">';
                             temp += '<div class="card"><div class="card-header" >' + item.createtime + ' </div>';
-                            //ticketamount怪怪的
+
                             temp += ' <div class="row order_detail"><div class="col"><h4 class="card-title" >' + item.ticketamount + '張票</h4>';
                             if (item.payment == "credit") {
                                 temp += '<h6 class="card-title" >信用卡</h6>';
@@ -199,10 +202,10 @@
 
                             temp += '<h2 class="card-text" >$' + item.totalprice + '</h2>';
                             if (item.paid == 1) {
-                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">已付款</a></div></div></div></div>'
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(已付款)>></a></div></div></div></div>'
                             }
                             else {
-                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">待付款</a></div></div></div></div>'
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(待付款)>></a></div></div></div></div>'
                             }
 
                             $(".order_content").append(temp);

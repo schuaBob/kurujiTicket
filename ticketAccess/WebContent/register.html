@@ -15,8 +15,8 @@
       background-image: url("https://img.tixbar.com/concert/concert-list.jpg");
       background-repeat: no-repeat;
       background-size: cover;
-      /* background-color: rgba(255, 255, 255, 0.8);
-  background-blend-mode: lighten; */
+      background-color: rgba(255, 255, 255, 0.8);
+  background-blend-mode: lighten;
     }
 
     .ticket input {
@@ -170,86 +170,117 @@
 </head>
 
 <body class="ticket">
+    <div class="background">
+        <i class='fas fa-address-card' style="font-size:55px; color:#0088A8;margin: 0% 0% 0% 5.3%;"></i>
+        <h style="font-size: 36px; color:#EE7700;">哭嚕嘰</h>
+    </div>
 
-  <div class="background">
-    <i class='fas fa-address-card' style="font-size:55px; color:#0088A8;margin: 0% 0% 0% 5.3%;"></i>
-    <h style="font-size: 36px; color:#EE7700;">哭嚕嘰</h>
-  </div>
+    <div id="content">
+        <h1 style="margin: 0% 0% 0% 26%;">註冊會員</h1>
+        <form id="form1">
+            <div class="regname">
+                <label>姓名</label>
+                <input type="text" id="name" maxlength="50" required="required">
+                <br>
+                <br>
+            </div>
+            <div class="regpassword">
+                <label>密碼</label>
+                <input type="password" id="password" maxlength="100" required="required"><br></br>
+            </div>
+            <div class="regemail">\
+                <label>信箱</label>
+                <input type="text" id="email" maxlength="100" required="required"><br></br>
+            </div>
+            <div class="regdob">\
+                <label>生日</label>
+                <input type="text" id="dob" maxlength="10" required="required"><br></br>
+            </div>
+            <div class="regphone">
+                <label>手機</label>
+                <input type="text" id="phonenumber" maxlength="10" required="required"
+                    onkeyup="value=value.replace(/[^\d]/g,'') ">
+                <br></br>
+            </div>
+            <div class="regidnumber">
+                <label>身分證</label>
+                <input type="text" id="idnumber" maxlength="10" required="required">
+                <br><br>
+            </div>
+            <div class="regaddress">
+                <label>地址</label>
+                <input type="text" id="address" maxlength="100" required="required">
+                <br></br>
+            </div>
+            <div class="submit"><input type="button" id="submitForm" value="註冊"></div>
+        </form>
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function () {
+			$("#submitForm").click(function (e) {
+				e.preventDefault();
+				 var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                 var phone_rule = /^[09]{2}[0-9]{8}$/;
+                 var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                 var dob_rule = /^[0-9]{4}[./-][0-9]{2}[./-][0-9]{2}$/;
+                
+                 
+                 
+                 if (!password_rule.test($("#password").val())) {
+                     event.preventDefault();
+                     alert("密碼格式不符!");
+                 }
+                 if (!email_rule.test($("#email").val())) {
+                     event.preventDefault();
+                     alert("信箱格式不符！");
+                 }
+                 if (!dob_rule.test($("#dob").val())) {
+                     event.preventDefault();
+                     alert("生日日期格式為2020-01-01");
+                 }
+                 if (!phone_rule.test($("#phonenumber").val())) {
+                     event.preventDefault();
+                     alert("手機格式不符!");
+                 }
+                 if ($("#name").val()=="" || $("#password").val()=="" || $("#email").val()=="" || $("#dob").val()=="" || $("#phonenumber").val()=="" || $("#idnumber").val()=="" || $("#address").val()=="" ) {
+                     event.preventDefault();
+                     alert("尚未輸入完畢!");
+                 }
+                 
+             
+                 
 
-  <div id="content">
-    <h1 style="margin: 0% 0% 0% 26%;">註冊會員資料</h1>
-    <form id="form1">
-      <div class="regname">
-        <label>姓名</label>
-        <input type="text" id="name" maxlength="50" required="required">
-        <br>
-        <br>
-      </div>
-      <div class="regpassword">
-        <label>密碼</label>
-        <input type="text" id="password" maxlength="100" required="required">
-        <br></br>
-      </div>
-      <div class="regemail">\
-        <label>信箱</label>
-        <input type="text" id="email" maxlength="100" required="required">
-        <br></br>
-      </div>
-      <div class="regdob">\
-        <label>生日</label>
-        <input type="text" id="dob" maxlength="10" required="required">
-        <br></br>
-      </div>
-      <div class="regphone">
-        <label>手機</label>
-        <input type="text" id="phonenumber" maxlength="10" required="required"
-          onkeyup="value=value.replace(/[^\d]/g,'') ">
-        <br></br>
-      </div>
-      <div class="regidnumber">
-        <label>身分證</label>
-        <input type="text" id="idnumber" maxlength="10" required="required">
-        <br><br>
-      </div>
-      <div class="regaddress">
-        <label>地址</label>
-        <input type="text" id="address" maxlength="100" required="required">
-        <br></br>
-      </div>
-      <div class="submit"><input type="button" id="submitForm" value="註冊"></div>
-    </form>
-  </div>
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $("#submitForm").click(function (e) {
-        e.preventDefault();
-        console.log("Submit")
-        // console.log($("#name").val()())
-        console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
-        $.ajax({
-          url: "/Auth/member",
-          method: 'POST',
-          dataType: "JSON",
-          data: {
-            name: $("#name").val(),
-            password: $("#password").val(),
-            email: $("#email").val(),
-            dob: $("#dob").val(),
-            idnumber: $("#idnumber").val(),
-            phonenumber: $("#phonenumber").val(),
-            address: $("#address").val()
-          },
-          error: function (err) {
-            console.log(err)
-          },
-          success: function (res) {
-            console.log(res.message)
-            window.location.replace(res.redirect);
-          }
-        });
-      })
-    })
-  </script>
+
+				console.log("Submit")
+				// console.log($("#name").val()())
+				console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
+				
+                
+                $.ajax({
+					url: "/Auth/member",
+					method: 'POST',
+					dataType: "JSON",
+					data: {
+						name: $("#name").val(),
+						password: $("#password").val(),
+						email: $("#email").val(),
+						dob: $("#dob").val(),
+						idnumber: $("#idnumber").val(),
+						phonenumber: $("#phonenumber").val(),
+						address: $("#address").val()
+					},
+					error: function (err) {
+						console.log(err)
+					},
+					success: function (res) {
+						console.log(res.message)
+                        window.location.replace(res.redirect);
+					}
+				});
+			})
+		})
+	</script>
+
 
 </body>
 

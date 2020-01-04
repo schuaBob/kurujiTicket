@@ -183,12 +183,13 @@
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
                             "payment": paytype,
+                            "totalprice":  localStorage.totalprice
                         }
                         var data_string = JSON.stringify(data);
 
                         $.ajax({
-                            type: "POST",
-                            url: "order",
+                            type: "PUT",
+                            url: "Auth/order",
                             data: data_string,
                             crossDomain: true,
                             cache: false,
@@ -215,7 +216,8 @@
                             "name": localStorage.temp_name,
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
-                            "payment": paytype
+                            "payment": paytype,
+                            "totalprice":  localStorage.totalprice
                         }
 
                         var data_string = JSON.stringify(data);
@@ -249,6 +251,7 @@
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
                             "payment": paytype,
+                            "totalprice":  localStorage.totalprice
                         }
                         var data_string = JSON.stringify(data);
 

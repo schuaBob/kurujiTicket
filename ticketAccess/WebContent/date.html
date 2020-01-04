@@ -167,23 +167,25 @@
 
 
 
-                // getconcertdata();
+                getconcertdata();
                 change_botton();
                 storage();
 
                 //寫入頁面
                 //要有地方抓點入演唱會的id
                 function getconcertdata() {
+
                     $.ajax({
-                        url: "api/concert.do",
+                        url: "api/concert.do?session=chou",
                         method: 'get',
                         dataType: 'json',
-                        error: function (err) {
-                            alert("無法連線到伺服器！");
-                        },
-                        success: function (data) {
 
+                        success: function (response) {
 
+                            alert("連上！");
+
+                            //
+                            let data = JSON.parse(response.data);
                             //演唱會名字
                             $("#concert_name").html(data.name);
 
@@ -195,7 +197,11 @@
                             })
 
 
+                        },
+                        error: function (err) {
+                            alert("無法連線到伺服器！");
                         }
+
 
                     });
                 }
