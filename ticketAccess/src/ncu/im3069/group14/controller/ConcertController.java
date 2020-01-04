@@ -53,13 +53,20 @@ public class ConcertController extends HttpServlet {
 		
 		RequestHandler jsr = new RequestHandler(request);
 		JSONArray result = new JSONArray();
-        /** ¨ú¥X¸g¸ÑªR¨ì JsonReader ¤§ Request °Ñ¼Æ */
+        /** å–å‡ºç¶“è§£æåˆ° JsonReader ä¹‹ Request åƒæ•¸ */
 		if(!"".equals(jsr.getParameter("session"))){
+			System.out.println("a");
 			String session = jsr.getParameter("session");
 			result = ch.getConcertByAttr("session",session);     
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
+			System.out.println("b");
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
+		}else if( !"".equals(jsr.getParameter("getspecifyconcert")) && (jsr.getMemberIDinRequest()!="0")){
+			result = ch.getConcertByAttr("supplierid",jsr.getMemberIDinRequest());
+		}else {
+			System.out.println("c");
+			result = ch.getConcertByAttr("",""); //å›å‚³å…¨éƒ¨
 		}
 		
 		if(result.isEmpty()) {
@@ -88,7 +95,7 @@ public class ConcertController extends HttpServlet {
 //		InputStream fileContent = seatPicFile.getInputStream();
 //		System.out.println(fileName);
 //		String[] fileNameSplit = fileName.split(".");
-		/** ³z¹LJsonReaderÃş§O±NRequest¤§JSON®æ¦¡¸ê®Æ¸ÑªR¨Ã¨ú¦^ */
+		/** é€éJsonReaderé¡åˆ¥å°‡Requestä¹‹JSONæ ¼å¼è³‡æ–™è§£æä¸¦å–å› */
 		
 		
 		
@@ -99,10 +106,10 @@ public class ConcertController extends HttpServlet {
         JSONObject data = ch.createConcert(c);
     	JSONObject resp = new JSONObject();
     	resp.put("status", "200");
-        resp.put("message", "¦¨¥\·s¼Wºt°Û·|");
+        resp.put("message", "æˆåŠŸæ–°å¢æ¼”å”±æœƒ");
         resp.put("row-effect", data);
         
-        /** ³z¹LJsonReaderª«¥ó¦^¶Ç¨ì«eºİ¡]¥HJSONObject¤è¦¡¡^ */
+        /** é€éJsonReaderç‰©ä»¶å›å‚³åˆ°å‰ç«¯ï¼ˆä»¥JSONObjectæ–¹å¼ï¼‰ */
         jsr.sendJsonRes(resp, response);
 	}
 //	  public void upload(HttpServletRequest request, HttpServletResponse response)throws ServletException, java.io.IOException {
