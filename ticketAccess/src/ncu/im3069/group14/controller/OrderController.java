@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/order")
+@WebServlet("/Auth/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -63,17 +63,20 @@ public class OrderController extends HttpServlet {
 		JSONObject jso = rh.toJsonObj();
 		JSONObject resp = new JSONObject();
 		JSONObject temp = null;
-		
-		//STEP1 從request中取得資訊
+
+		//STEP1 取得request的資料
+
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		int totalprice = jso.getInt("totalprice");
 		
+
 		//STEP2 建立訂單
 		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
 		JSONObject result = oh.create(o); //會判斷是新建立訂單，還是
+
 		
 		//STEP2.5 判斷建立訂單的結果，是否成功建立、成功更新
 		if ( result.getString("result") == "create order success") {
@@ -84,13 +87,13 @@ public class OrderController extends HttpServlet {
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			int seatid = ch.getSeatId("seatid");//跟concerthelper取得座位ID
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
-			//STEP5 把結果放數response裡面
+			//STEP5 把結果放response裡面
 	        resp.put("status", "200");
 	        resp.put("message", "建立訂單成功");
 	        resp.put("order result", result);
@@ -105,7 +108,7 @@ public class OrderController extends HttpServlet {
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
 			String seatarea = jso.getString("seatarea");
-			int seatid = ch.getSeatId("seatid");//跟concerthelper取得座位ID
+			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
 			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
@@ -141,7 +144,6 @@ public class OrderController extends HttpServlet {
 		
 		int idorder = jso.getInt("idorder");
 		JSONObject result = oh.getPaidOrder(idorder);
-		
 		JSONObject resp = new JSONObject();
 		if ( result.getString("result") == "order paid success") {
 			resp.put("status", "200");
@@ -174,7 +176,7 @@ public class OrderController extends HttpServlet {
 		
 		JSONObject resp = new JSONObject();
 
-        if ( resp.getString("result") == "delete order success") {
+        if ( result.getString("result") == "delete order success") {
             resp.put("status", "200");
             resp.put("message", "成功刪除訂單");
             resp.put("order result", result);

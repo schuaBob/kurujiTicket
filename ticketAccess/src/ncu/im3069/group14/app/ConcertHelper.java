@@ -5,6 +5,7 @@ import org.json.*;
 import ncu.im3069.group14.util.MysqlConnect;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import ncu.im3069.group14.tools.RequestHandler;
 
 public class ConcertHelper {
 	
@@ -42,9 +43,9 @@ public class ConcertHelper {
 		int row = 0;
 				
 		try {
-			/** ¨ú±o¸ê®Æ®w¤§³s½u */
+			/** ï¿½ï¿½ï¿½oï¿½ï¿½Æ®wï¿½ï¿½ï¿½sï¿½u */
             conn = MysqlConnect.getConnect();
-            /** sql«ü¥O  */
+            /** sqlï¿½ï¿½ï¿½O  */
             String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
@@ -58,17 +59,17 @@ public class ConcertHelper {
             pres.setString(9, c.getConcertStartTime());
             pres.setString(10, c.getConcertEndTime());
             System.out.println(pres.toString());
-            /** °õ¦æ·s¼W¤§SQL«ü¥O¨Ã°O¿ý¼vÅT¤§¦æ¼Æ */
+            /** ï¿½ï¿½ï¿½ï¿½sï¿½Wï¿½ï¿½SQLï¿½ï¿½ï¿½Oï¿½Ã°Oï¿½ï¿½ï¿½vï¿½Tï¿½ï¿½ï¿½ï¿½ï¿½ */
             row = pres.executeUpdate();
             
 		}catch(SQLException e) {
-            /** ¦L¥XJDBC SQL«ü¥O¿ù»~ **/
+            /** ï¿½Lï¿½XJDBC SQLï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½~ **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** ­Y¿ù»~«h¦L¥X¿ù»~°T®§ */
+            /** ï¿½Yï¿½ï¿½ï¿½~ï¿½hï¿½Lï¿½Xï¿½ï¿½ï¿½~ï¿½Tï¿½ï¿½ */
             e.printStackTrace();
         } finally {
-            /** Ãö³¬³s½u¨ÃÄÀ©ñ©Ò¦³¸ê®Æ®w¬ÛÃö¤§¸ê·½ **/
+            /** ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½Æ®wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ **/
         	MysqlConnect.close(pres, conn);
         }
 		
@@ -109,19 +110,112 @@ public class ConcertHelper {
 			}
 			result = new JSONArray(arrayList);
 		}catch(SQLException e) {
-            /** ¦L¥XJDBC SQL«ü¥O¿ù»~ **/
+            /** ï¿½Lï¿½XJDBC SQLï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½~ **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** ­Y¿ù»~«h¦L¥X¿ù»~°T®§ */
+            /** ï¿½Yï¿½ï¿½ï¿½~ï¿½hï¿½Lï¿½Xï¿½ï¿½ï¿½~ï¿½Tï¿½ï¿½ */
             e.printStackTrace();
         } finally {
-            /** Ãö³¬³s½u¨ÃÄÀ©ñ©Ò¦³¸ê®Æ®w¬ÛÃö¤§¸ê·½ **/
+            /** ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½Æ®wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ **/
         	MysqlConnect.close(pres, conn);
         }			
 		return result;
 	}
 	
-	public JSONObject update(Concert c) {
+	
+	
+	//bobo ï¿½gï¿½ï¿½ï¿½Aorderï¿½Ý­nï¿½ï¿½ï¿½\ï¿½ï¿½
+	/**
+	 * ï¿½ï¿½ï¿½oï¿½sï¿½Wï¿½ï¿½ï¿½éªºï¿½ï¿½mID
+	 * @param concertid ï¿½ï¿½ï¿½@ï¿½ï¿½ï¿½tï¿½Û·|
+	 * @param seatarea ï¿½ï¿½ï¿½@ï¿½Ïªï¿½ï¿½yï¿½ï¿½
+	 * @param ticketamount ï¿½Î¨Ó§ï¿½sticketstatus
+	 */
+	public int getSeatId(int concertid, String seatarea, int ticketamount) {
+
+		int seatid = 0;
+		String query = "";
+		String execute_sql = "";
+		JSONObject ticketstatus = null;
+		JSONArray ticketstatusarray = new JSONArray();
+		ResultSet rs = null;
 		
+		//STEP1 ï¿½ï¿½ï¿½hï¿½ï¿½Æ®wï¿½ï¿½ï¿½oï¿½Óºtï¿½Û·|ï¿½ï¿½ticketstatus
+		try {
+			conn = MysqlConnect.getConnect();
+			query = "SELECT * FROM missa.concert where idconcert = ?";
+			pres = conn.prepareStatement(query);
+			pres.setInt(1, concertid);
+			
+			rs = pres.executeQuery();
+			execute_sql = pres.toString();
+			System.out.println(execute_sql);
+			
+			while(rs.next()) {
+				
+				// STEP1.5 ï¿½ï¿½ï¿½oticketstatusï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½Cticketstatusarray
+				ticketstatus = new JSONObject(rs.getString("ticketstatus"));
+				ticketstatusarray = ticketstatus.getJSONArray("data");
+			}
+		} catch (SQLException e) {
+            /** ï¿½Lï¿½XJDBC SQLï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½~ **/
+            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+		} catch (Exception e) {
+            /** ï¿½Yï¿½ï¿½ï¿½~ï¿½hï¿½Lï¿½Xï¿½ï¿½ï¿½~ï¿½Tï¿½ï¿½ */
+            e.printStackTrace();
+        } finally {
+            /** ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½Æ®wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ **/
+            MysqlConnect.close( pres, conn);
+        }
+
+		//STEP2 ï¿½qticketstatus ï¿½ï¿½ï¿½oï¿½Ó°Ï¦ìªºï¿½ï¿½T
+		for (int i = 0; i < ticketstatusarray.length(); i++ ) {
+			JSONObject jso = ticketstatusarray.getJSONObject(i);
+			String area = jso.getString("Area");//ï¿½ï¿½ï¿½oï¿½ï¿½array[i]ï¿½ï¿½ï¿½ï¿½area
+			
+			//STEP3 ï¿½ï¿½ï¿½ï¿½Oï¿½_ï¿½Pï¿½qï¿½ï¿½ï¿½ï¿½mï¿½Û¦Pï¿½Aï¿½pï¿½Gï¿½Û¦Pï¿½Aï¿½ï¿½ï¿½oï¿½_ï¿½lï¿½ï¿½m
+			if ( area.equals(seatarea) == true ) {
+				seatid = jso.getInt("Sold");
+				
+				//STEP4 ï¿½×§ï¿½ticketstausï¿½ï¿½ï¿½ï¿½soldï¿½Æ¶q(ï¿½ì¥»ï¿½ï¿½ï¿½[ï¿½Wï¿½oï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½Æ¶q)
+				jso.put("Sold", seatid+ticketamount);
+				
+			}
+		}
+		
+		//STEP5 ï¿½×§ï¿½ticketstatus
+		ticketstatus = new JSONObject();
+		ticketstatus.put("data", ticketstatusarray);
+		
+		//STEP6 ï¿½ï¿½sconcertï¿½ï¿½Æ®w
+		try {
+			
+			conn = MysqlConnect.getConnect();
+			query = "update missa.concert " + 
+					"set ticketstatus = ? " + 
+					"where idconcert = ? ";
+			pres = conn.prepareStatement(query);
+			pres.setString(1, ticketstatus.toString());
+			pres.setInt(2, concertid);
+			
+			pres.executeUpdate();
+			execute_sql = pres.toString();
+			System.out.println(execute_sql);
+			
+		} catch (SQLException e) {
+            /** ï¿½Lï¿½XJDBC SQLï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½~ **/
+            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+		} catch (Exception e) {
+            /** ï¿½Yï¿½ï¿½ï¿½~ï¿½hï¿½Lï¿½Xï¿½ï¿½ï¿½~ï¿½Tï¿½ï¿½ */
+            e.printStackTrace();
+        } finally {
+            /** ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¦ï¿½ï¿½ï¿½Æ®wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ **/
+            MysqlConnect.close( pres, conn);
+        }
+
+		System.out.println("finish getSeatID, return"+seatid);
+		return seatid;
 	}
 }

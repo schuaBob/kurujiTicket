@@ -315,13 +315,16 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="register.html">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="login">Login</a>
+          <a class="nav-link" href="signin.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="edit.html">Edit <span class="sr-only"></span></a>
         </li>
       </ul>
     </div>
@@ -369,7 +372,7 @@
       </div>
     </div>
     <div class="page" id="page2">
-      <div class="container all-concert">
+      <div class="container all-concert"> <!--塞入 ajax新增-->
         <div class="card bg-transparent">
           <div class="card-body">
             <div class="row">
@@ -427,9 +430,9 @@
   </main>
   <script>
     $(document).ready(() => {
-      initFunc();
+      initFunc();//觸發 撈資料 476
     });
-    var createConcertCard = function (idconcert, concertname, session, picture, starttime, endsellingtime, location, direction) {
+    var createConcertCard = function (idconcert, concertname, session, picture, starttime, endsellingtime, location, direction) {//船參數進去 合成html
       var tempDate = new Date(starttime);
       var year, month, date, hour, min;
       year = tempDate.getFullYear();
@@ -443,7 +446,7 @@
                           <a href="#${idconcert}">
                             <div class="conPic-text">
                               <div class="conPic-meta">${session}</div>
-                              <h2 class="conPic-title">${concertname} At ${location}</h2>
+                              <h2 class="conPic-title">${concertname} At ${location}</h2>  <!--鑲嵌變數在字串，放入jquery 變成html資料-->
                             </div>
                             <img class="conPic-image"
                               src="${picture}">
@@ -462,18 +465,18 @@
                           <div class="row">
                           </div>
                         </div>
-                      </div>`)
+                      </div>`) //純字串
       if (direction) {
         // node4.find(".card-title").addClass(direction)
         node4.find(".card-text").addClass(direction);
-        struct.find(".row").append(node4).append(node8);
+        struct.find(".row").append(node4).append(node8);//struct為html , 取得class= row的位置
       } else {
         struct.find(".row").append(node8).append(node4);
       }
       console.log(struct);
       return struct;
     };
-    var initFunc = function () {
+    var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
         url: "api/concert.do", //session代表場次代號
@@ -481,20 +484,20 @@
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-          if (response.status == 200 && response.isEmpty == "false") {
-            let data = JSON.parse(response.data);
+          if (response.status == 200 && response.isEmpty == "false") { //條件式
+            let data = JSON.parse(response.data);//抓資料
             data = data.sort((a,b)=>{
               return a.concertstarttime < b.concertstarttime? 1 : -1;
             })
-            data.forEach((e, i)=>{
-              console.log(e)
-              var direction = i%2 ? "text-right":"";
+            data.forEach((e, i)=>{  //i (0開始~4)第幾個 , e 值
+              console.log(e) //印出concert所有內容
+              var direction = i%2 ? "text-right":"";//免
               console.log(i%2)
               console.log(direction)
               var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
-              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);
-              $(".all-concert").append(card)
-            });
+              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
+              $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
+            }); //ajax抓資料 再放到html
 
             // for (i in data) {
             //   console.log(`Concert Number: ${data[i].idconcert}`)
