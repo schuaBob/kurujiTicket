@@ -40,11 +40,12 @@ public class TokenAuth implements Filter {
 		
 		String token = null;
 		Cookie[] cookies = httpRequest.getCookies();
-		
 		//STEP1 敺ookie銝剖��oken
+		System.out.println("In filter");
 		try {
 			for(Cookie c:cookies) {
 				if(c.getName().equals("Token")) {
+					System.out.println(c.getValue());
 					token = c.getValue();
 					System.out.println("Incoming token: "+token);
 					break;
@@ -59,12 +60,15 @@ public class TokenAuth implements Filter {
 //		} else {
 		
 			//STEP2 ���OKEN
+			System.out.println("Path:" + path + ", Method: " + httpRequest.getMethod());
 			if(token == null||token.isEmpty()) {
+				System.out.println("Token is null or empty");
 				//STEP2.1 憒�閮餃����靘停瘝�oken嚗�隞亙停銝���(��)
 				if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
 					chain.doFilter(request, response);//�脣雿輻�撓���雯��嚗X 頛詨auth/order > ��隞亥�蝙�� /order
 				} else {
 					httpResponse.sendRedirect("/login");//瘝�oken嚗�token�蝛箇��誨銵其����嚗��ogin��
+					return;
 				}
 			} else {
 				//STEP2.2 憒��oken��
@@ -79,22 +83,21 @@ public class TokenAuth implements Filter {
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//�����oken
 					httpResponse.sendRedirect("/login");//撠�ogin��
-
+					return;
 				} catch (ExpiredJwtException expE) {
 					//STEP3.2 憒���停�������
 					System.out.println("The token is out of date.");
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//�����oken
 					httpResponse.sendRedirect("/login");//撠�ogin��
-
+					return;
 				}
 				//STEP4 憒�瘝���停�������ookie嚗靘�摮�����
 				String id = clmBody.getSubject();
 				System.out.println(id);
 				String jwt = Token.createToken(id);
 				jwtCookie = new Cookie("Token",jwt);
-				Token.addTokentoCookie(jwtCookie, httpResponse);
-				
+				httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 				chain.doFilter(request, response);
 			}
 //		}

@@ -30,8 +30,9 @@ public class TicketController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("start ticket doGet");
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
 		int orderid = jso.getInt("orderid");
@@ -43,7 +44,7 @@ public class TicketController extends HttpServlet {
 		jsonObj.put("data", data);
 		rh.sendJsonRes(jsonObj, response);
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("finish doGet");
 	}
 
