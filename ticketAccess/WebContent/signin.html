@@ -234,34 +234,32 @@
 			$("#submitForm").click(function (e) {
 
 				var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-                
-        if (!password_rule.test($("#memberPassword").val())) {
-          alert("密碼格式不符!");
-        }
-        if (!email_rule.test($("#memberEmail").val())) {
-          alert("信箱格式不符！");
-        }
-        if ($("#password").val() == "" || $("#email").val() == "") {
-          alert("尚未輸入完畢!");
-        }
+				var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-				$.ajax({
-					url: "login",
-					method: "POST",
-					dataType: "JSON",
-					data: JSON.stringify({
-						account: $("#memberEmail").val(),
-						password: $("#memberPassword").val()
-					}),
-					error: function (err) {
-						console.log(err)
-					},
-					success: function (res) {
-						console.log(res.message)
-						window.location.replace(res.redirect);
-					}
-				})
+				if ($("#memberpassword").val() == "" || $("#memberemail").val() == "") {
+					alert("尚未輸入完畢!");
+				} else if (!email_rule.test($("#memberEmail").val())) {
+					alert("信箱格式不符！");
+				} else if (!password_rule.test($("#memberPassword").val())) {
+					alert("密碼格式不符!");
+				} else {
+					$.ajax({
+						url: "login",
+						method: "POST",
+						dataType: "JSON",
+						data: JSON.stringify({
+							account: $("#memberEmail").val(),
+							password: $("#memberPassword").val()
+						}),
+						error: function (err) {
+							console.log(err)
+						},
+						success: function (res) {
+							console.log(res.message)
+							window.location.replace(res.redirect);
+						}
+					})
+				}
 			})
 		})
 	</script>

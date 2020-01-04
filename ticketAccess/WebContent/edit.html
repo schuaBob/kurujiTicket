@@ -321,44 +321,6 @@
         <button type="button" class="submit" id="submitForm">Change</button>
       </div>
     </div>
-    <!-- <h1 style="margin: 0% 0% 0% 26%;">註冊會員</h1><br>
-    <form id="form1">
-      <div class="regname">
-        <label>姓名</label>
-        <input type="text" id="name" maxlength="50" required="required">
-        <br>
-        <br>
-      </div>
-      <div class="regpassword">
-        <label>密碼</label>
-        <input type="password" id="password" maxlength="100" required="required"><br></br>
-      </div>
-      <div class="regemail">\
-        <label>信箱</label>
-        <input type="text" id="email" maxlength="100" required="required"><br></br>
-      </div>
-      <div class="regdob">\
-        <label>生日</label>
-        <input type="text" id="dob" maxlength="10" required="required"><br></br>
-      </div>
-      <div class="regphone">
-        <label>手機</label>
-        <input type="text" id="phonenumber" maxlength="10" required="required"
-          onkeyup="value=value.replace(/[^\d]/g,'') ">
-        <br></br>
-      </div>
-      <div class="regidnumber">
-        <label>身分證</label>
-        <input type="text" id="idnumber" maxlength="10" required="required">
-        <br><br>
-      </div>
-      <div class="regaddress">
-        <label>地址</label>
-        <input type="text" id="address" maxlength="100" required="required">
-        <br></br>
-      </div>
-      <div class="submit"><input type="button" id="submitForm" value="註冊"></div>
-    </form> -->
   </div>
   <script type="text/javascript">
     $(document).ready(function () {
@@ -372,41 +334,32 @@
 
         if (!password_rule.test($("#password").val())) {
           alert("密碼格式不符!");
-        }
-        if (!phone_rule.test($("#phonenumber").val())) {
+        } else if (!phone_rule.test($("#phonenumber").val())) {
           alert("手機格式不符!");
-        }
-        if ($("#password").val() == "" || $("#phonenumber").val() == "" || $("#address").val() == "") {
+        } else if ($("#password").val() == "" || $("#phonenumber").val() == "" || $("#address").val() == "") {
           alert("尚未輸入完畢!");
+        } else {
+          $.ajax({
+            url: "/Auth/member",
+            method: 'PUT',
+            dataType: "JSON",
+            data: JSON.stringify({
+              password: $("#password").val(),
+              phonenumber: $("#phonenumber").val(),
+              address: $("#address").val()
+            }),
+            error: function (err) {
+              console.log(err)
+            },
+            success: function (res) {
+              console.log(res.message)
+              window.location.replace(res.redirect);
+            }
+          });
+
         }
-
-        console.log("Submit")
-        // console.log($("#name").val()())
-        console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
-
-        $.ajax({
-          url: "/Auth/member",
-          method: 'PUT',
-          dataType: "JSON",
-          data: JSON.stringify({
-            password: $("#password").val(),
-            phonenumber: $("#phonenumber").val(),
-            address: $("#address").val()
-          }),
-          error: function (err) {
-            console.log(err)
-          },
-          success: function (res) {
-            console.log(res.message)
-            window.location.replace(res.redirect);
-          }
-        });
-
-
-
       })
     })
-
     var initFunc = function () { //430放好
       console.log("start intiFunc");
       $.ajax({
@@ -422,8 +375,6 @@
           $("#dob").attr("value", data.dateofbirth);
           $("#phonenumber").attr("value", data.phonenumber);
           $("#address").attr("value", data.address);
-
-
         },
         error: function (err) {
           alert("無法連線到伺服器！");
