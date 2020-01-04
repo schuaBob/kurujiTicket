@@ -95,7 +95,7 @@ public class Order {
 		jTemp.put("ticketamount", getTicketamount());
 		jTemp.put("createtime", getCreatetime());
 		jTemp.put("concertid", getConcertid());
-		jTemp.put("totalprie", getTotalprice());
+		jTemp.put("totalprice", getTotalprice());
 		return jTemp;
 	}
 	

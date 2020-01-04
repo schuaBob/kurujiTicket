@@ -36,7 +36,7 @@ public class OrderController extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("start doGet");
 		RequestHandler rh = new RequestHandler(request);
-		JSONObject jso = rh.toJsonObj();
+
 
 		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
     
@@ -52,7 +52,7 @@ public class OrderController extends HttpServlet {
 			jsonObj.put("data", data);
 			rh.sendJsonErr(jsonObj, response);
 		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("finish doGet");
 	}
 

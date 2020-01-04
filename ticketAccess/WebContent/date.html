@@ -26,8 +26,40 @@
         <header>
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
+            <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <nav class="navbar navbar-light bg-transparent">
+                    <a class="navbar-brand" href="/">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+                    </a>
+                </nav>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index-signin.html">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="date.html">Buy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="order.html">MyOrder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="edit.html">MemberData</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
+            <!-- <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
 
                 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
@@ -41,7 +73,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
-                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
+                            <a class="nav-item nav-link  " id="space" href="index-signin.html">現正熱映</a>
                             <span class="border border-dark navv"></span>
                             <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
                             <span class="border border-dark"></span>
@@ -54,7 +86,7 @@
                         </div>
                     </div>
                 </nav>
-            </nav>
+            </nav> -->
         </header>
         <!-- 引入測試-->
         <div w3-include-html="navbar.html"></div>
@@ -105,7 +137,7 @@
                                             <p id="time1">2020/10/3 9:00 - 2020/10/3 9:00</p>
                                         </p>
                                     </div>
-                                    <p class="quantitynow1" style="text-align:center" >剩下3張</p>
+                                    <p class="quantitynow1" style="text-align:center">剩下3張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b1">立即訂購</a>
@@ -124,7 +156,7 @@
                                             <p id="time2">19:00-21:00</p>
                                         </p>
                                     </div>
-                                    <p class="quantitynow2" style="text-align:center" >剩下5張</p>
+                                    <p class="quantitynow2" style="text-align:center">剩下5張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b2">立即訂購</a>
@@ -143,7 +175,7 @@
                                             <p id="time3">19:00-21:00</p>
                                         </p>
                                     </div>
-                                    <p class="quantitynow3" style="text-align:center"  >剩下0張</p>
+                                    <p class="quantitynow3" style="text-align:center">剩下0張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b3">立即訂購</a>
@@ -196,12 +228,14 @@
                                 $("#location" + (i + 1)).html(data[i].location);
                                 let temp = (data[i].concertstarttime) + "-" + (data[i].concertendtime);
                                 $("#time" + (i + 1)).html(temp);
-                                $(".quantitynow" + (i + 1)).attr('id',data[i].concert_id);
+
+                                $(".quantitynow" + (i + 1)).attr('id', data[i].idconcert);
+                                // alert($('.quantitynow' + (i + 1)).attr('id'));
                             }
 
 
                             //票數
-                            
+
                             var a = 0;
 
                             data.forEach(e => {
@@ -212,7 +246,7 @@
                                 }
                                 );
                                 a++;
-                                $("#quantitynow" + a).html("剩下" + totalseat + "張");
+                                $(".quantitynow" + a).html("剩下" + totalseat + "張");
 
                             });
 
@@ -247,21 +281,21 @@
                 }
 
                 function storage() {
-                    localStorage.concert_id=0;
+                    localStorage.concert_id = 0;
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert1").html());
-                        localStorage.setItem("concert_id",$('#quantitynow1').attr('id') );
-                        alert($('#quantitynow3').attr('id'));
+                        localStorage.setItem("concert_id", $('.quantitynow1').attr('id'));
+
                     });
                     $("#order_b2").click(function () {
                         localStorage.setItem("concert_content", $("#concert2").html());
-                        localStorage.setItem("concert_id",$('#quantitynow2').attr('id'));
+                        localStorage.setItem("concert_id", $('.quantitynow2').attr('id'));
                     });
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert3").html());
-                        localStorage.setItem("concert_id",$('#quantitynow3').attr('id') );
+                        localStorage.setItem("concert_id", $('.quantitynow3').attr('id'));
                     });
-                   
+
                 }
 
 
