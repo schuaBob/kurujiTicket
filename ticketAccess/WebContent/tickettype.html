@@ -159,7 +159,9 @@
 
                 $("#datetab").removeClass("active");
                 $("#tickettab").addClass("active");
-
+               
+               // alert(localStorage.concert_id);
+                
 
                 //剩餘區域票數
 
@@ -186,7 +188,7 @@
 
                     //url加上concertid,為啥不行
                     $.ajax({
-                        url: "api/concert.do?idconcert=3",
+                        url: "api/concert.do?idconcert="+localStorage.concert_id,
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {
@@ -204,7 +206,7 @@
                                     // alert(areaquantity);
                                     q[i] = areaquantity;
                                     i++;
-                                    $("#area" + i).html(f.Area + "區");
+                                    $("#area" + i).html(f.Area );
 
                                     $("#price" + i).html(f.Price);
                                 }
@@ -224,8 +226,7 @@
 
 
                 function botton_change() {
-
-                    //預設
+                    
                     q[0] = 2;
                     q[1] = 3;
                     q[2] = 0;
@@ -354,7 +355,7 @@
                     //為啥
 
                     if (oq3 != 0) {
-                        alert("!");
+                      
                         localStorage.setItem("area3_q", oq3);
                         localStorage.setItem("area3", $("#area3").text());
                         first += $("#area3").text() + "票*" + oq3;

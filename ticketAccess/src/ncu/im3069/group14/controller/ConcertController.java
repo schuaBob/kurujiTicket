@@ -40,12 +40,17 @@ public class ConcertController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestHandler jsr = new RequestHandler(request);
+		JSONArray result = new JSONArray();
         /** 取出經解析到 JsonReader 之 Request 參數 */
-        String session = jsr.getParameter("session");
-        System.out.println("session="+session);
-        JSONArray result = ch.getConcertBySession(session); 
-        System.out.println(result.toString());
-        if(result.isEmpty()) {
+		if(!"".equals(jsr.getParameter("session"))){
+			String session = jsr.getParameter("session");
+			result = ch.getConcertByAttr("session",session);     
+		}else if(!"".equals(jsr.getParameter("concertid"))) {
+			String concertid = jsr.getParameter("concertid");
+			result = ch.getConcertByAttr("idconcert",concertid);			
+		}
+		
+		if(result.isEmpty()) {
         	JSONObject resp = new JSONObject();
         	resp.put("status", "200");
             resp.put("data", "{}");
@@ -57,7 +62,7 @@ public class ConcertController extends HttpServlet {
             resp.put("data", result.toString());
             resp.put("isEmpty", "false");
             jsr.sendJsonRes(resp, response);
-        }        
+        }     
 	}
 
 	
@@ -82,5 +87,4 @@ public class ConcertController extends HttpServlet {
         /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
         jsr.sendJsonRes(resp, response);
 	}
-
 }
