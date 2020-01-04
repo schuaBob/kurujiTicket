@@ -91,6 +91,86 @@
 		.submit{
 			text-align: center;
 		}
+		input,
+        button {
+            border: none;
+            outline: none;
+            background: none;
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        }
+
+        /* .cont {
+            overflow: hidden;
+            position: relative;
+            width: 900px;
+            height: 550px;
+            margin: 0 auto 100px;
+            background: #fff;
+        } */
+
+        .form {
+            position: relative;
+            width: 640px;
+            height: 100%;
+            transition: -webkit-transform 1.2s ease-in-out;
+            transition: transform 1.2s ease-in-out;
+            transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
+            padding: 50px 30px 0;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            width: 260px;
+            height: 36px;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        h2 {
+            width: 100%;
+            font-size: 26px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            width: 260px;
+            margin: 25px auto 0;
+            text-align: center;
+        }
+
+        label span {
+            font-size: 12px;
+            color: #cfcfcf;
+            text-transform: uppercase;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            margin-top: 5px;
+            padding-bottom: 5px;
+            font-size: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .forgot-pass {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 12px;
+            color: #cfcfcf;
+        }
+
+        .submit {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            background: #d4af7a;
+            text-transform: uppercase;
+        }
 	</style>
 </head>
 
@@ -104,7 +184,23 @@
 
 	<div id="content">
 		<h1 style="margin: 0% 0% 0% 26%;">會員登入</h1>
-		<form id="form1">
+		<div class="container">
+			<div class="form sign-in">
+				<h2>Welcome back,</h2>
+				<label>
+					<span>Email</span>
+					<input type="email" />
+				</label>
+				<label>
+					<span>Password</span>
+					<input type="password" />
+				</label>
+				<p class="forgot-pass">Forgot password?</p>
+				<button type="button" class="submit">Sign In</button>
+			</div>
+		</div>
+		
+		<!-- <form id="form1">
 			<div class="regemail">
 				<label for="memberemail">信箱</label>
 				<input name="email" type="text" id="memberEmail" maxlength="100" required="required">
@@ -117,7 +213,7 @@
 				<br></br>
 			</div>
 			<div class="submit"><input id="submitForm" type="button" value="登入"></div>
-		</form>
+		</form> -->
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function () {

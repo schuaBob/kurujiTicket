@@ -4,11 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src='https://kit.fontawesome.com/a076d05399.js'></script>
   <title>註冊會員</title>
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
   <style>
     body {
       background-image: url("https://img.tixbar.com/concert/concert-list.jpg");
@@ -91,7 +100,7 @@
     .regidnumber label {
       font-size: 200%;
       color: black;
-      margin: 0 0 0 28%;
+      margin: 0 0 0 27%;
       font-weight: bold;
     }
 
@@ -175,7 +184,7 @@
   </div>
 
   <div id="content">
-    <h1 style="margin: 0% 0% 0% 26%;">註冊會員</h1>
+    <h1 class="text-center">Register Member</h1>
     <form id="form1">
       <div class="regname">
         <label>姓名</label>
@@ -187,11 +196,11 @@
         <label>密碼</label>
         <input type="password" id="password" maxlength="100" required="required"><br></br>
       </div>
-      <div class="regemail">\
+      <div class="regemail">
         <label>信箱</label>
         <input type="text" id="email" maxlength="100" required="required"><br></br>
       </div>
-      <div class="regdob">\
+      <div class="regdob">
         <label>生日</label>
         <input type="text" id="dob" maxlength="10" required="required"><br></br>
       </div>
@@ -259,7 +268,7 @@
           url: "/Auth/member",
           method: 'POST',
           dataType: "JSON",
-          data: {
+          data: JSON.stringify({
             name: $("#name").val(),
             password: $("#password").val(),
             email: $("#email").val(),
@@ -267,7 +276,7 @@
             idnumber: $("#idnumber").val(),
             phonenumber: $("#phonenumber").val(),
             address: $("#address").val()
-          },
+          }),
           error: function (err) {
             console.log(err)
           },
