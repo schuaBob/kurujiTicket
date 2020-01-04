@@ -48,6 +48,8 @@ public class ConcertController extends HttpServlet {
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
+		}else {
+			result = ch.getConcertByAttr("",""); //回傳全部
 		}
 		
 		if(result.isEmpty()) {
