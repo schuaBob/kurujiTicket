@@ -76,10 +76,10 @@ public class IndexController extends HttpServlet {
 				Cookie emptyCookie = new Cookie("Token",null);
 				
 				//設定cookie為HttpOnly，防止cookie在前端被更改
-				emptyCookie.setHttpOnly(true);
+
 				
 				//將cookie加到response裡
-				response.addCookie(emptyCookie);
+				Token.addTokentoCookie(emptyCookie, response);
 				
 				//回傳首頁
 				response.sendRedirect("index.html");
@@ -92,10 +92,10 @@ public class IndexController extends HttpServlet {
 				Cookie emptyCookie = new Cookie("Token",null);
 				
 				//設定cookie為HttpOnly，防止cookie在前端被更改
-				emptyCookie.setHttpOnly(true);
+
 				
 				//將cookie加到response裡
-				response.addCookie(emptyCookie);
+				Token.addTokentoCookie(emptyCookie, response);
 				
 				//回傳首頁
 				response.sendRedirect("index.html");

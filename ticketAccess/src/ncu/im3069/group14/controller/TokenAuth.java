@@ -40,11 +40,12 @@ public class TokenAuth implements Filter {
 		
 		String token = null;
 		Cookie[] cookies = httpRequest.getCookies();
-		
 		//STEP1 敺ookie銝剖��oken
+		System.out.println("In filter");
 		try {
 			for(Cookie c:cookies) {
 				if(c.getName().equals("Token")) {
+					System.out.println(c.getValue());
 					token = c.getValue();
 					System.out.println("Incoming token: "+token);
 					break;
@@ -96,7 +97,6 @@ public class TokenAuth implements Filter {
 				System.out.println(id);
 				String jwt = Token.createToken(id);
 				jwtCookie = new Cookie("Token",jwt);
-				jwtCookie.setValue(jwt);
 				httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 				chain.doFilter(request, response);
 			}
