@@ -120,7 +120,7 @@ public class MemberController extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject req = rh.toJsonObj();
-		int id = req.getInt("id");
+		int id = Integer.parseInt(rh.getMemberIDinRequest());
 		String password = req.getString("password");
 		String phonenumber = req.getString("phonenumber");
 		String address = req.getString("address");
