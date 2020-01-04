@@ -44,12 +44,17 @@ public class ConcertController extends HttpServlet {
 		JSONArray result = new JSONArray();
         /** 取出經解析到 JsonReader 之 Request 參數 */
 		if(!"".equals(jsr.getParameter("session"))){
+			System.out.println("a");
 			String session = jsr.getParameter("session");
 			result = ch.getConcertByAttr("session",session);     
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
+			System.out.println("b");
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
+		}else if( !"".equals(jsr.getParameter("getspecifyconcert")) && (jsr.getMemberIDinRequest()!="0")){
+			result = ch.getConcertByAttr("supplierid",jsr.getMemberIDinRequest());
 		}else {
+			System.out.println("c");
 			result = ch.getConcertByAttr("",""); //回傳全部
 		}
 		
