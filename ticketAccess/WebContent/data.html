@@ -150,7 +150,7 @@
 
 
 
-                    memebercheck();
+                    SameAs();
                 });
 
 
@@ -160,36 +160,36 @@
                 });
 
                 //自動輸入member data
-                function memebercheck() {
+                // function memebercheck() {
 
 
 
 
-                    $("#order_name").val("111");
-                    $("#order_phone").val("0912334567");
-                    $("#order_email").val("a2333@gmail.com");
+                //     $("#order_name").val("111");
+                //     $("#order_phone").val("0912334567");
+                //     $("#order_email").val("a2333@gmail.com");
 
 
-                    //url加上memberid
-                    //session
-                    $.ajax({
-                        url: "Auth/member",
-                        method: 'get',
-                        dataType: 'json',
-                        error: function (err) {
-                            alert("玫璉上");
-                        },
-                        success: function (response) {
-                            let people = JSON.parse(response.data);
-                            $("#order_name").val(people[0].name);
-                            $("#order_phone").val(people[0].phonenumber);
-                            $("#order_mail").val(people[0].email);
+                //     //url加上memberid
+                //     //session
+                //     $.ajax({
+                //         url: "Auth/member",
+                //         method: 'get',
+                //         dataType: 'json',
+                //         error: function (err) {
+                //             alert("玫璉上");
+                //         },
+                //         success: function (response) {
+                //             let people = JSON.parse(response.data);
+                //             $("#order_name").val(people[0].name);
+                //             $("#order_phone").val(people[0].phonenumber);
+                //             $("#order_mail").val(people[0].email);
 
-                        }
-                    });
+                //         }
+                //     });
 
 
-                }
+                // }
 
 
                 function datasubmit() {
