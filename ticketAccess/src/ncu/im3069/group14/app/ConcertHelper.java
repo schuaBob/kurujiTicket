@@ -43,9 +43,9 @@ public class ConcertHelper {
 		int row = 0;
 				
 		try {
-			/** ���o��Ʈw���s�u */
+			/** 嚙踝蕭嚙緻嚙踝蕭w嚙踝蕭嚙編嚙線 */
             conn = MysqlConnect.getConnect();
-            /** sql���O  */
+            /** sql嚙踝蕭嚙瞌  */
             String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
@@ -59,17 +59,17 @@ public class ConcertHelper {
             pres.setString(9, c.getConcertStartTime());
             pres.setString(10, c.getConcertEndTime());
             System.out.println(pres.toString());
-            /** ����s�W��SQL���O�ðO���v�T����� */
+            /** 嚙踝蕭嚙踝蕭s嚙磕嚙踝蕭SQL嚙踝蕭嚙瞌嚙衛記嚙踝蕭嚙緞嚙確嚙踝蕭嚙踝蕭嚙� */
             row = pres.executeUpdate();
             
 		}catch(SQLException e) {
-            /** �L�XJDBC SQL���O���~ **/
+            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** �Y���~�h�L�X���~�T�� */
+            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** �����s�u������Ҧ���Ʈw�������귽 **/
+            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
         	MysqlConnect.close(pres, conn);
         }
 		
@@ -77,7 +77,7 @@ public class ConcertHelper {
         response.put("row", row);
         return response;
 	}
-	public JSONArray getConcertBySession(String session) {	
+	public JSONArray getConcertByAttr(String attr, String value) {	
 		
 		ArrayList<JSONObject> arrayList = new ArrayList<JSONObject>();
 		JSONArray result = new JSONArray();
@@ -85,10 +85,10 @@ public class ConcertHelper {
 			ResultSet rs = null;
 			conn = MysqlConnect.getConnect();
 			
-			if(!"".equals(session)) {
-				String sql = "SELECT * FROM concert WHERE session = ?";
+			if(!"".equals(value)) {
+				String sql = "SELECT * FROM concert WHERE "+attr+" = ?";
 				pres = conn.prepareStatement(sql);
-				pres.setString(1, session);
+				pres.setString(1, value);
 				rs = pres.executeQuery();	
 			}else {
 				String sql = "SELECT * FROM concert";
@@ -110,13 +110,13 @@ public class ConcertHelper {
 			}
 			result = new JSONArray(arrayList);
 		}catch(SQLException e) {
-            /** �L�XJDBC SQL���O���~ **/
+            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** �Y���~�h�L�X���~�T�� */
+            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** �����s�u������Ҧ���Ʈw�������귽 **/
+            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
         	MysqlConnect.close(pres, conn);
         }			
 		return result;
@@ -124,12 +124,12 @@ public class ConcertHelper {
 	
 	
 	
-	//bobo �g���Aorder�ݭn���\��
+	//bobo 嚙篇嚙踝蕭嚙璀order嚙豎要嚙踝蕭嚙穀嚙踝蕭
 	/**
-	 * ���o�s�W���骺��mID
-	 * @param concertid ���@���t�۷|
-	 * @param seatarea ���@�Ϫ��y��
-	 * @param ticketamount �Ψӧ�sticketstatus
+	 * 嚙踝蕭嚙緻嚙編嚙磕嚙踝蕭嚙賡的嚙踝蕭mID
+	 * @param concertid 嚙踝蕭嚙瑾嚙踝蕭嚙緣嚙諛會
+	 * @param seatarea 嚙踝蕭嚙瑾嚙誕迎蕭嚙緙嚙踝蕭
+	 * @param ticketamount 嚙諄來改蕭sticketstatus
 	 */
 	public int getSeatId(int concertid, String seatarea, int ticketamount) {
 
@@ -140,7 +140,7 @@ public class ConcertHelper {
 		JSONArray ticketstatusarray = new JSONArray();
 		ResultSet rs = null;
 		
-		//STEP1 ���h��Ʈw���o�Ӻt�۷|��ticketstatus
+		//STEP1 嚙踝蕭嚙篁嚙踝蕭w嚙踝蕭嚙緻嚙諉演嚙諛會嚙踝蕭ticketstatus
 		try {
 			conn = MysqlConnect.getConnect();
 			query = "SELECT * FROM missa.concert where idconcert = ?";
@@ -153,42 +153,42 @@ public class ConcertHelper {
 			
 			while(rs.next()) {
 				
-				// STEP1.5 ���oticketstatus�����}�Cticketstatusarray
+				// STEP1.5 嚙踝蕭嚙緻ticketstatus嚙踝蕭嚙踝蕭嚙罷嚙瘠ticketstatusarray
 				ticketstatus = new JSONObject(rs.getString("ticketstatus"));
 				ticketstatusarray = ticketstatus.getJSONArray("data");
 			}
 		} catch (SQLException e) {
-            /** �L�XJDBC SQL���O���~ **/
+            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
             e.printStackTrace();
 		} catch (Exception e) {
-            /** �Y���~�h�L�X���~�T�� */
+            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** �����s�u������Ҧ���Ʈw�������귽 **/
+            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
             MysqlConnect.close( pres, conn);
         }
 
-		//STEP2 �qticketstatus ���o�ӰϦ쪺��T
+		//STEP2 嚙緬ticketstatus 嚙踝蕭嚙緻嚙諉區位的嚙踝蕭T
 		for (int i = 0; i < ticketstatusarray.length(); i++ ) {
 			JSONObject jso = ticketstatusarray.getJSONObject(i);
-			String area = jso.getString("Area");//���o��array[i]����area
+			String area = jso.getString("Area");//嚙踝蕭嚙緻嚙踝蕭array[i]嚙踝蕭嚙踝蕭area
 			
-			//STEP3 ����O�_�P�q����m�ۦP�A�p�G�ۦP�A���o�_�l��m
+			//STEP3 嚙踝蕭嚙踝蕭O嚙稻嚙瞑嚙緬嚙踝蕭嚙踝蕭m嚙諛同嚙璀嚙緘嚙瘦嚙諛同嚙璀嚙踝蕭嚙緻嚙稻嚙締嚙踝蕭m
 			if ( area.equals(seatarea) == true ) {
 				seatid = jso.getInt("Sold");
 				
-				//STEP4 �ק�ticketstaus����sold�ƶq(�쥻���[�W�o���R���ƶq)
+				//STEP4 嚙論改蕭ticketstaus嚙踝蕭嚙踝蕭sold嚙複量(嚙趣本嚙踝蕭嚙稼嚙磕嚙緻嚙踝蕭嚙磋嚙踝蕭嚙複量)
 				jso.put("Sold", seatid+ticketamount);
 				
 			}
 		}
 		
-		//STEP5 �ק�ticketstatus
+		//STEP5 嚙論改蕭ticketstatus
 		ticketstatus = new JSONObject();
 		ticketstatus.put("data", ticketstatusarray);
 		
-		//STEP6 ��sconcert��Ʈw
+		//STEP6 嚙踝蕭sconcert嚙踝蕭w
 		try {
 			
 			conn = MysqlConnect.getConnect();
@@ -204,14 +204,14 @@ public class ConcertHelper {
 			System.out.println(execute_sql);
 			
 		} catch (SQLException e) {
-            /** �L�XJDBC SQL���O���~ **/
+            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
             e.printStackTrace();
 		} catch (Exception e) {
-            /** �Y���~�h�L�X���~�T�� */
+            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** �����s�u������Ҧ���Ʈw�������귽 **/
+            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
             MysqlConnect.close( pres, conn);
         }
 
