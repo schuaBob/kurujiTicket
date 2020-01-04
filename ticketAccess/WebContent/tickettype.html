@@ -195,26 +195,26 @@
                             alert("沒有連上");
                         },
                         success: function (response) {
-
+                            
                             alert("連上");
                             let data = JSON.parse(response.data);
+                            console.log(localStorage.concert_id);
+                            console.log(data);
 
-                            data.forEach(e => {
-                                let tmp = JSON.parse(e.ticketstatus).data;
-                                let i = 0;
-                                tmp.forEach(f => {
-                                    var areaquantity = (f.SeatTotal - f.Sold);
-                                    alert(areaquantity);
-                                    q[i] = areaquantity;
-                                    i++;
-                                    $("#area" + i).html(f.Area);
+                            
+                            // data.forEach(e => {
+                            //     let tmp = JSON.parse(e.ticketstatus).data;
+                            //     let i = 0;
+                            //     tmp.forEach(f => {
+                            //         var areaquantity = (f.SeatTotal - f.Sold);
+                            //         alert(areaquantity);
+                            //         q[i] = areaquantity;
+                            //         i++;
+                            //         $("#area" + i).html(f.Area);
 
-                                    $("#price" + i).html(f.Price);
-                                }
-                                );
-
-
-                            });
+                            //         $("#price" + i).html(f.Price);
+                            //     });
+                            // });
 
                             botton_change();
 

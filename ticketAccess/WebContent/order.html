@@ -142,9 +142,9 @@
             function ordershow() {
                 //把所有order放上去
                 $.ajax({
-                    url: `Auth/order`,
+                    url: '/Auth/order',
                     method: 'GET',
-                    dataType: 'json',
+                    dataType: 'JSON',
                     success: function (response) {
                         let order = JSON.parse(response.data);
 
