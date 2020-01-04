@@ -35,7 +35,9 @@
       -ms-user-select: none;
       user-select: none;
     }
-
+    #logout{
+      cursor: pointer;
+    }
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
@@ -62,20 +64,8 @@
           <a class="nav-link" href="supplier_view2.html">檢視新增票券</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="supplier_modify.html" tabindex="-1">修改活動內容</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">供應商專區</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">其他</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#">檢視其他供應商</a>
-            <a class="dropdown-item" href="#">Q&A</a>
-            <a class="dropdown-item" href="#">Logout</a>
-          </div>
-        </li>
+          <a class="nav-link" id="logout">Logout</a>
+        </li>        
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -194,6 +184,20 @@
               </div>`);
     }
 
+    $("#logout").click(function () {
+        $.ajax({
+          method:"DELETE",
+          url:"login",
+          success:function (res) {
+            console.log("success")
+            window.location.replace(res.redirect);
+          },
+          error:function (err) {
+            alert("Error");
+            console.log(err)
+          }
+        });
+      });
 
     $("#submitconcert").click(function () {
       let statusArr = [];
