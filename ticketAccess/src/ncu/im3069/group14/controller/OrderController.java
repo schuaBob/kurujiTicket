@@ -37,7 +37,7 @@ public class OrderController extends HttpServlet {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
 		
-		int memberid = jso.getInt("memberid");
+		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
 		JSONObject data = oh.getAllOrder(memberid);
 		JSONObject jsonObj = new JSONObject();
 		
@@ -65,13 +65,17 @@ public class OrderController extends HttpServlet {
 		JSONObject temp = null;
 
 		//STEP1 取得request的資料
-
+		//order要用的資料
 		int memberid = jso.getInt("memberid");
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
 		int totalprice = jso.getInt("totalprice");
-		
+		//ticket要用的資料
+		String name = jso.getString("name");
+		String phonenumber = jso.getString("phonenumber");
+		String email = jso.getString("email");
+		String seatarea = jso.getString("seatarea");
 
 		//STEP2 建立訂單
 		Order o = new Order( memberid, payment, ticketamount, concertid, totalprice);
@@ -86,11 +90,10 @@ public class OrderController extends HttpServlet {
 			//STEP3 取得票券資料
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
-			String seatarea = jso.getString("seatarea");
 			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
-			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
+			Ticket t = new Ticket( concertid, orderid, seatarea, seatid, email, phonenumber,name );
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
 			//STEP5 把結果放response裡面
@@ -107,11 +110,10 @@ public class OrderController extends HttpServlet {
 			//STEP3 取得票券資料
 			temp = result.getJSONObject("order");
 			int orderid = temp.getInt("idorder");
-			String seatarea = jso.getString("seatarea");
 			int seatid = ch.getSeatId(concertid, seatarea, ticketamount);//跟concerthelper取得座位ID
 			
 			//STEP4 建立新的票券，同時取得建立新票券的結果
-			Ticket t = new Ticket( concertid, orderid, seatarea, seatid );
+			Ticket t = new Ticket( concertid, orderid, seatarea, seatid, email, phonenumber,name );
 			JSONObject ticketresult = th.create(t, ticketamount);
 			
 			//STEP5 把結果放數response裡面

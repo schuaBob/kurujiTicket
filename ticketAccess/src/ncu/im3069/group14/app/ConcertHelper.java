@@ -218,4 +218,9 @@ public class ConcertHelper {
 		System.out.println("finish getSeatID, return"+seatid);
 		return seatid;
 	}
+	public int releaseSeat() {
+		
+		
+		return 0;
+	}
 }

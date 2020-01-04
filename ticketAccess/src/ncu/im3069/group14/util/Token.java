@@ -32,9 +32,9 @@ public class Token {
 		return jws;
 	}
 	
-	
 	public static Claims decode(String token) throws ExpiredJwtException, UnsupportedJwtException, MalformedJwtException, SignatureException, IllegalArgumentException, UnsupportedEncodingException {
-		Claims temp = Jwts.parser().setSigningKey(Token.Secret.getBytes("UTF-8")).parseClaimsJws(token).getBody();
+		//claims 就是jsontoken裡面的內容，EX:header, audience, ussuedAt, expiration等等，在上面一點點有寫
+		Claims temp = Jwts.parser().setSigningKey(Token.Secret.getBytes("UTF-8")).parseClaimsJws(token).getBody();//這邊就是不斷的驗證，被改過或是過期都會丟出錯誤
 		return temp;
 	}
 	
