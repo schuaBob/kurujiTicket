@@ -75,14 +75,18 @@ public class TokenAuth implements Filter {
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 					httpResponse.sendRedirect("/login");
+					return;
 				} catch (ExpiredJwtException expE) {
 					System.out.println("The token is out of date.");
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);
 					httpResponse.sendRedirect("/login");
+					return;
 				}
 				String id = clmBody.getSubject();
+				System.out.println(id);
 				String jwt = Token.createToken(id);
+				jwtCookie = new Cookie("Token",jwt);
 				jwtCookie.setValue(jwt);
 				httpResponse.addCookie(jwtCookie);
 				

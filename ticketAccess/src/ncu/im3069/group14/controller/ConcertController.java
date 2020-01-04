@@ -1,11 +1,15 @@
 package ncu.im3069.group14.controller;
 
 import java.io.*;
+import java.nio.file.Paths;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
@@ -19,6 +23,7 @@ import ncu.im3069.group14.tools.RequestHandler;
  * Servlet implementation class ConcertController
  */
 @WebServlet("/api/concert.do")
+@MultipartConfig
 public class ConcertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -58,6 +63,11 @@ public class ConcertController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+//		Part seatPicFile = request.getPart("seatpicture");
+//		String fileName = Paths.get(seatPicFile.getSubmittedFileName()).getFileName().toString();
+//		InputStream fileContent = seatPicFile.getInputStream();
+//		System.out.println(fileName);
+//		String[] fileNameSplit = fileName.split(".");
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
