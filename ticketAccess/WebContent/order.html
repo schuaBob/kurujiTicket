@@ -125,7 +125,7 @@
                         </div>
 
                         <div class="col more" style="padding-left:45%;padding-top:4%;">
-                            
+
                             <a href="#" class="btn" id="detail">詳細資訊(已付款)>></a>
                         </div>
                     </div>
@@ -176,18 +176,18 @@
             function ordershow() {
                 //把所有order放上去
                 $.ajax({
-                    url: "order",
+                    url: "Auth/order?memberid=",
                     method: 'get',
                     dataType: 'json',
                     error: function (err) {
                         console.log(err);
                     },
-                    success: function (data) {
+                    success: function (response) {
 
-
+                        let order = JSON.parse(response.data);
 
                         //order訂單顯現
-                        $.each(data, function (i, item) {
+                        $.each(order, function (i, item) {
 
                             var temp = "";
                             temp += '<div class="order_content" id=" ' + item.idorder + '">';
