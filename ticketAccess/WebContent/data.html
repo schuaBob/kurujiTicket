@@ -7,8 +7,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
@@ -106,12 +106,14 @@
                         </form-row>
                         <form-row>
                             <label for="validationDefault01">*EMAIL</label>
-                            <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
+                            <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com"
+                                required>
                         </form-row>
                         <form-row>
                             <label for="validationDefault01">*手機</label>
 
-                            <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                            <input type="tel" class="form-control" name="order_phone" id="order_phone"
+                                placeholder="0912345678" pattern="[0-9]{10}" required>
                         </form-row>
 
                         <form-row>
@@ -218,7 +220,24 @@
 
                     }
                 }
-
+                function SameAs() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Auth/member", //session代表場次代號
+                        dataType: "json",
+                        success: function (response) {
+                            var data = response.memberData;
+                            $("#order_name").attr("value", data.name);
+                            $("#order_email").attr("value", data.email);
+                            $("#name_phone").attr("value", data.phonenumber);
+                        },
+                        error: function (err) {
+                            alert("無法連線到伺服器！");
+                        }
+                    }).done(function (result) {
+                        console.log(result)
+                    })
+                }
 
             });
         </script>
