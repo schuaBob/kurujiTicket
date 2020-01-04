@@ -200,7 +200,7 @@
                         },
                         success: function (response) {
 
-                            alert("連上");
+                         //   alert("連上");
                             let data = JSON.parse(response.data);
 
                             console.log(data);
@@ -211,7 +211,7 @@
                                 let i = 0;
                                 tmp.forEach(f => {
                                     var areaquantity = (f.SeatTotal - f.Sold);
-                                    alert(areaquantity);
+                                 //   alert(areaquantity);
                                     q[i] = areaquantity;
                                     i++;
                                     $("#area" + i).html(f.Area);
