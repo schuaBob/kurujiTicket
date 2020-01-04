@@ -46,7 +46,7 @@ public class ConcertHelper {
 			/** 嚙踝蕭嚙緻嚙踝蕭w嚙踝蕭嚙編嚙線 */
             conn = MysqlConnect.getConnect();
             /** sql嚙踝蕭嚙瞌  */
-            String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime,session) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
             pres.setString(2, c.getSupplierId().toString());
@@ -58,6 +58,7 @@ public class ConcertHelper {
             pres.setString(8, c.getTicketStatus().toString());
             pres.setString(9, c.getConcertStartTime());
             pres.setString(10, c.getConcertEndTime());
+            pres.setString(11, c.getSession());
             System.out.println(pres.toString());
             /** 嚙踝蕭嚙踝蕭s嚙磕嚙踝蕭SQL嚙踝蕭嚙瞌嚙衛記嚙踝蕭嚙緞嚙確嚙踝蕭嚙踝蕭嚙� */
             row = pres.executeUpdate();
