@@ -28,7 +28,7 @@ public class TokenAuth implements Filter {
 	public void destroy() {
 	}
 
-	//檢查Token用的middleware
+	//瑼ＸToken���iddleware
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -41,7 +41,7 @@ public class TokenAuth implements Filter {
 		String token = null;
 		Cookie[] cookies = httpRequest.getCookies();
 		
-		//STEP1 從cookie中取得token
+		//STEP1 敺ookie銝剖��oken
 		try {
 			for(Cookie c:cookies) {
 				if(c.getName().equals("Token")) {
@@ -58,43 +58,42 @@ public class TokenAuth implements Filter {
 //			chain.doFilter(request, response);
 //		} else {
 		
-			//STEP2 處理TOKEN
+			//STEP2 ���OKEN
 			if(token == null||token.isEmpty()) {
-				//STEP2.1 如果是註冊，因為本來就沒有token，所以就不處理(判斷)
+				//STEP2.1 憒�閮餃����靘停瘝�oken嚗�隞亙停銝���(��)
 				if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
-					chain.doFilter(request, response);//進入使用者輸入的網址，EX 輸入auth/order > 這行可以讓使用者去 /order
+					chain.doFilter(request, response);//�脣雿輻�撓���雯��嚗X 頛詨auth/order > ��隞亥�蝙�� /order
 				} else {
-					httpResponse.sendRedirect("/login");//沒有token，或是token是空的，代表他沒有登入，導回login畫面
+					httpResponse.sendRedirect("/login");//瘝�oken嚗�token�蝛箇��誨銵其����嚗��ogin��
 				}
 			} else {
-				//STEP2.2 如果有token值
+				//STEP2.2 憒��oken��
 				Claims clmBody = null;
 				Cookie jwtCookie = null;
 				try {
-					//STEP3 token解碼
+					//STEP3 token閫�蝣�
 					clmBody = Token.decode(token);
 				} catch (SignatureException sigE) {
-					//STEP3.1 如果不安全(解碼出現問題)，就會把cookie裡面的token刪掉
+					//STEP3.1 憒���(閫�蝣澆�����)嚗停���ookie鋆⊿��oken����
 					System.out.println("The signature is invalid.");
 					jwtCookie = new Cookie("Token",null);
-					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//產生新的token
-					httpResponse.sendRedirect("/login");//導回login畫面
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//�����oken
+					httpResponse.sendRedirect("/login");//撠�ogin��
 
 				} catch (ExpiredJwtException expE) {
-					//STEP3.2 如果過期就做這些動作
+					//STEP3.2 憒���停�������
 					System.out.println("The token is out of date.");
 					jwtCookie = new Cookie("Token",null);
-					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//產生新的token
-					httpResponse.sendRedirect("/login");//導回login畫面
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//�����oken
+					httpResponse.sendRedirect("/login");//撠�ogin��
 
 				}
-				//STEP4 如果都沒問題，就產生一個新的cookie，用來刷新存在時間。
+				//STEP4 憒�瘝���停�������ookie嚗靘�摮�����
 				String id = clmBody.getSubject();
 				System.out.println(id);
 				String jwt = Token.createToken(id);
 				jwtCookie = new Cookie("Token",jwt);
-				jwtCookie.setValue(jwt);
-				httpResponse.addCookie(jwtCookie);
+				Token.addTokentoCookie(jwtCookie, httpResponse);
 				
 				chain.doFilter(request, response);
 			}
