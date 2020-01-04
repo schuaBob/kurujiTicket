@@ -173,7 +173,7 @@
                 function update() {
 
                     if (localStorage.area1 != 0) {
-                        alert(localStorage.memberid);
+                      //  alert(localStorage.memberid);
 
                         var data = {
                             "concertid": localStorage.concert_id,
@@ -210,8 +210,8 @@
                     }
 
                     if (localStorage.area2 != 0) {
-                        alert("b");
-                        /* var data = {
+                        
+                         var data = {
                              "concertid": localStorage.concert_id,
                              "seatarea": localStorage.area2,
                              "ticketamount": localStorage.area2_q,
@@ -219,12 +219,10 @@
                              "name": localStorage.temp_name,
                              "phonenumber": localStorage.temp_phone,
                              "email": localStorage.temp_mail,
-                             "payment": paytype,
+                             "payment": localStorage.payment,
                              "totalprice":  localStorage.totalprice
-                         }*/
-                        var data = {
-                            "memberid": 5, "payment": "credit", "ticketamount": 2, "concertid": 2, "seatarea": "E", "seatid": 10, "totalprice": 100
-                        }
+                         }
+
 
                         var data_string = JSON.stringify(data);
 
@@ -246,8 +244,8 @@
                         });
                     }
                     if (localStorage.area3 != 0) {
-                        alert("c");
-                        var data2 = {
+                        
+                        var data = {
                             "concertid": localStorage.concert_id,
                             "seatarea": localStorage.area3,
                             "ticketamount": localStorage.area3_q,
@@ -255,12 +253,10 @@
                             "name": localStorage.temp_name,
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
-                            "payment": paytype,
+                            "payment": localStorage.payment,
                             "totalprice": localStorage.totalprice
                         }
-                        var data = {
-                            "memberid": 5, "payment": "credit", "ticketamount": 2, "concertid": 2, "seatarea": "E", "seatid": 10, "totalprice": 100
-                        }
+                      
 
                         var data_string = JSON.stringify(data);
 

@@ -138,35 +138,7 @@
                 ordershow();
                 ticketshow();
             });
-            function ticketshow() {
-                $(".more").mousedown(function () {
-                    $.ajax({
-                        url: "ticket",
-                        method: 'get',
-                        error: function (err) {
-                            console.log(err);
-                            alert("ticket玫璉")
-                        },
-                        success: function (data) {
-                            $.each(data, function (i, item) {
 
-                                var temp = "";
-                                temp += '<tr><th scope="row">' + item.concertname + '</th>';
-                                temp += '<td>' + item.seatarea + '</td>';
-                                temp += '<td>' + item.seatid + '</td>';
-                                temp += '<td>' + item.name + '</td>';
-                                temp += '<td>' + item.email + '</td>';
-                                temp += '<td>' + item.phonenumber + '</td></tr>'
-
-                                $(tbody).append(temp);
-                            });
-
-                        }
-                    });
-                    let textid = this.id;
-                    $("#show").modal("show");
-                });
-            }
             function ordershow() {
                 //把所有order放上去
                 $.ajax({
@@ -174,7 +146,6 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function (response) {
-
                         let order = JSON.parse(response.data);
 
                         //order訂單顯現
@@ -211,6 +182,36 @@
                         alert("order玫璉");
                         console.log(err);
                     }
+                });
+            }
+            function ticketshow() {
+                $(".more").mousedown(function () {
+                    $.ajax({
+                        url: "Auth/ticket",
+                        method: 'get',
+                        error: function (err) {
+                            console.log(err);
+                            alert("ticket玫璉")
+                        },
+                        success: function (response) {
+                            let data = JSON.parse(response.data);
+                            $.each(data, function (i, item) {
+
+                                var temp = "";
+                                temp += '<tr><th scope="row">' + item.concertname + '</th>';
+                                temp += '<td>' + item.seatarea + '</td>';
+                                temp += '<td>' + item.seatid + '</td>';
+                                temp += '<td>' + item.name + '</td>';
+                                temp += '<td>' + item.email + '</td>';
+                                temp += '<td>' + item.phonenumber + '</td></tr>'
+
+                                $(tbody).append(temp);
+                            });
+
+                        }
+                    });
+                    let textid = this.id;
+                    $("#show").modal("show");
                 });
             }
         </script>
