@@ -28,7 +28,7 @@ public class TokenAuth implements Filter {
 	public void destroy() {
 	}
 
-	//ÀË¬dToken¥Îªºmiddleware
+	//æª¢æŸ¥Tokenç”¨çš„middleware
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
@@ -41,7 +41,7 @@ public class TokenAuth implements Filter {
 		String token = null;
 		Cookie[] cookies = httpRequest.getCookies();
 		
-		//STEP1 ±qcookie¤¤¨ú±otoken
+		//STEP1 å¾cookieä¸­å–å¾—token
 		try {
 			for(Cookie c:cookies) {
 				if(c.getName().equals("Token")) {
@@ -58,35 +58,35 @@ public class TokenAuth implements Filter {
 //			chain.doFilter(request, response);
 //		} else {
 		
-			//STEP2 ³B²zTOKEN
+			//STEP2 è™•ç†TOKEN
 			if(token == null||token.isEmpty()) {
-				//STEP2.1 ¦pªG¬Oµù¥U¡A¦]¬°¥»¨Ó´N¨S¦³token¡A©Ò¥H´N¤£³B²z(§PÂ_)
+				//STEP2.1 å¦‚æœæ˜¯è¨»å†Šï¼Œå› ç‚ºæœ¬ä¾†å°±æ²’æœ‰tokenï¼Œæ‰€ä»¥å°±ä¸è™•ç†(åˆ¤æ–·)
 				if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
-					chain.doFilter(request, response);//¶i¤J¨Ï¥ÎªÌ¿é¤Jªººô§}¡AEX ¿é¤Jauth/order > ³o¦æ¥i¥HÅı¨Ï¥ÎªÌ¥h /order
+					chain.doFilter(request, response);//é€²å…¥ä½¿ç”¨è€…è¼¸å…¥çš„ç¶²å€ï¼ŒEX è¼¸å…¥auth/order > é€™è¡Œå¯ä»¥è®“ä½¿ç”¨è€…å» /order
 				} else {
-					httpResponse.sendRedirect("/login");//¨S¦³token¡A©Î¬Otoken¬OªÅªº¡A¥Nªí¥L¨S¦³µn¤J¡A¾É¦^loginµe­±
+					httpResponse.sendRedirect("/login");//æ²’æœ‰tokenï¼Œæˆ–æ˜¯tokenæ˜¯ç©ºçš„ï¼Œä»£è¡¨ä»–æ²’æœ‰ç™»å…¥ï¼Œå°å›loginç•«é¢
 				}
 			} else {
-				//STEP2.2 ¦pªG¦³token­È
+				//STEP2.2 å¦‚æœæœ‰tokenå€¼
 				Claims clmBody = null;
 				Cookie jwtCookie = null;
 				try {
-					//STEP3 token¸Ñ½X
+					//STEP3 tokenè§£ç¢¼
 					clmBody = Token.decode(token);
 				} catch (SignatureException sigE) {
-					//STEP3.1 ¦pªG¤£¦w¥ş(¸Ñ½X¥X²{°İÃD)¡A´N·|§âcookie¸Ì­±ªºtoken§R±¼
+					//STEP3.1 å¦‚æœä¸å®‰å…¨(è§£ç¢¼å‡ºç¾å•é¡Œ)ï¼Œå°±æœƒæŠŠcookieè£¡é¢çš„tokenåˆªæ‰
 					System.out.println("The signature is invalid.");
 					jwtCookie = new Cookie("Token",null);
-					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//²£¥Í·sªºtoken
-					httpResponse.sendRedirect("/login");//¾É¦^loginµe­±
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//ç”¢ç”Ÿæ–°çš„token
+					httpResponse.sendRedirect("/login");//å°å›loginç•«é¢
 				} catch (ExpiredJwtException expE) {
-					//STEP3.2 ¦pªG¹L´Á´N°µ³o¨Ç°Ê§@
+					//STEP3.2 å¦‚æœéæœŸå°±åšé€™äº›å‹•ä½œ
 					System.out.println("The token is out of date.");
 					jwtCookie = new Cookie("Token",null);
-					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//²£¥Í·sªºtoken
-					httpResponse.sendRedirect("/login");//¾É¦^loginµe­±
+					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//ç”¢ç”Ÿæ–°çš„token
+					httpResponse.sendRedirect("/login");//å°å›loginç•«é¢
 				}
-				//STEP4 ¦pªG³£¨S°İÃD¡A´N²£¥Í¤@­Ó·sªºcookie¡A¥Î¨Ó¨ê·s¦s¦b®É¶¡¡C
+				//STEP4 å¦‚æœéƒ½æ²’å•é¡Œï¼Œå°±ç”¢ç”Ÿä¸€å€‹æ–°çš„cookieï¼Œç”¨ä¾†åˆ·æ–°å­˜åœ¨æ™‚é–“ã€‚
 				String id = clmBody.getSubject();
 				String jwt = Token.createToken(id);
 				jwtCookie.setValue(jwt);
