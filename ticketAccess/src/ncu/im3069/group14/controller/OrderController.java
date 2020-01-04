@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/order")
+@WebServlet("/Auth/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -37,7 +37,7 @@ public class OrderController extends HttpServlet {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
 		
-		int memberid = jso.getInt("memberid");
+		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
 		JSONObject data = oh.getAllOrder(memberid);
 		JSONObject jsonObj = new JSONObject();
 		
