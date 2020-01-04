@@ -130,10 +130,8 @@ public class MemberController extends HttpServlet {
 		JSONObject resObj = new JSONObject();
 		
 		if(memRes.getInt("row")>0) {
-			Cookie jwtCookie = new Cookie("Token",null);
-			Token.addTokentoCookie(jwtCookie, response);
 			resObj.put("message", "修改成功");
-			resObj.put("redirect", "signin.html");
+			resObj.put("redirect", "/");
 			rh.sendJsonRes(resObj, response);
 		} else {
 			resObj.put("message", "修改失敗");
