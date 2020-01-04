@@ -26,7 +26,7 @@ public class Concert {
 	private String concertstarttime;
 	//concertendtime 演唱會開始時間
 	private String concertendtime;
-	
+	private String session;
 	private ConcertHelper ch = ConcertHelper.getHelper();
 	
 	public Concert(String name) {		
@@ -60,6 +60,10 @@ public class Concert {
 		this.ticketstatus = obj.getJSONObject("ticketstatus");
 		this.concertstarttime = obj.getString("concertstarttime");
 		this.concertendtime = obj.getString("concertendtime");
+		this.session = obj.getString("session");
+	}
+	public String getSession() {
+		return session;
 	}
 	public String getConcertName() {
 		return name;

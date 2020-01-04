@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/order")
+@WebServlet("/Auth/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -36,7 +36,7 @@ public class OrderController extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("start doGet");
 		RequestHandler rh = new RequestHandler(request);
-		JSONObject jso = rh.toJsonObj();
+
 
 		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
     
@@ -52,7 +52,7 @@ public class OrderController extends HttpServlet {
 			jsonObj.put("data", data);
 			rh.sendJsonErr(jsonObj, response);
 		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		System.out.println("finish doGet");
 	}
 
@@ -68,7 +68,7 @@ public class OrderController extends HttpServlet {
 
 		//STEP1 取得request的資料
 		//order要用的資料
-		int memberid = jso.getInt("memberid");
+		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");

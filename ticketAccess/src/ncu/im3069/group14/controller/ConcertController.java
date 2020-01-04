@@ -1,7 +1,6 @@
 package ncu.im3069.group14.controller;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
@@ -15,16 +14,28 @@ import javax.servlet.http.Part;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.*;
 import ncu.im3069.group14.tools.RequestHandler;
+
+ 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.output.*;
 
 
 /**
  * Servlet implementation class ConcertController
  */
 @WebServlet("/api/concert.do")
-@MultipartConfig
+//@MultipartConfig
 public class ConcertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,15 +53,17 @@ public class ConcertController extends HttpServlet {
 		
 		RequestHandler jsr = new RequestHandler(request);
 		JSONArray result = new JSONArray();
-        /** ¨ú¥X¸g¸ÑªR¨ì JsonReader ¤§ Request °Ñ¼Æ */
+        /** ï¿½ï¿½î¡¼ïŠ¾è¬îš¨åœ¾ï¿½ï¿½î“ï‘ JsonReader éŠ‹ï¿½ Request ï¿½ï¿½ï¶î² */
 		if(!"".equals(jsr.getParameter("session"))){
 			String session = jsr.getParameter("session");
 			result = ch.getConcertByAttr("session",session);     
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
+		}else if( !"".equals(jsr.getParameter("getspecifyconcert")) && (jsr.getMemberIDinRequest()!="0")){
+			result = ch.getConcertByAttr("supplierid",jsr.getMemberIDinRequest());
 		}else {
-			result = ch.getConcertByAttr("",""); //¦^¶Ç¥ş³¡
+			result = ch.getConcertByAttr("",""); //ï¿½ï¿½îµ¤î¾¦ï¿½ï…²ï¿½ï€¸
 		}
 		
 		if(result.isEmpty()) {
@@ -70,17 +83,19 @@ public class ConcertController extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		Part main = request.getPart("obj");
+//		System.out.println(main);
 		
-//		Part seatPicFile = request.getPart("seatpicture");
+//		upload(request,response);
+		
 //		String fileName = Paths.get(seatPicFile.getSubmittedFileName()).getFileName().toString();
 //		InputStream fileContent = seatPicFile.getInputStream();
 //		System.out.println(fileName);
-//		String path= getServletContext().getRealPath("/WebContent/picture");
-//		System.out.println(path);
-//		File file = new File(path, fileName);
-//		System.out.println(file.getAbsolutePath());
+//		String[] fileNameSplit = fileName.split(".");
+		/** ï¿½îµï¿½îŒ›sonReaderæ†¿îµ¤ï†æ’ ï‰¸equestéŠ‹ï“¤SONï¿½î¹µæ’˜î´ï¿½ï‹ªï¿½î©–åœ¾ï¿½ï¿½î“è’‚ï¿½ï¿½î¡¼ï¿½ï¿½ */
 		
-		/** ³z¹LJsonReaderÃş§O±NRequest¤§JSON®æ¦¡¸ê®Æ¸ÑªR¨Ã¨ú¦^ */
+		
+		
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
         Concert c = new Concert(jso);
@@ -88,10 +103,87 @@ public class ConcertController extends HttpServlet {
         JSONObject data = ch.createConcert(c);
     	JSONObject resp = new JSONObject();
     	resp.put("status", "200");
-        resp.put("message", "¦¨¥\·s¼Wºt°Û·|");
+        resp.put("message", "ï¿½ï¿½î“ï¿½î¸‚î¡‡æ†“îµ¥ï¿½î‚îœï¿½ï¿½ï¿½");
         resp.put("row-effect", data);
         
-        /** ³z¹LJsonReaderª«¥ó¦^¶Ç¨ì«eºİ¡]¥HJSONObject¤è¦¡¡^ */
+        /** ï¿½îµï¿½îŒ›sonReaderï¿½ï§éšå—…ï¿½îµ¤î¾¦ï¿½ï‘ï¿½ï¿½ïš™å¢åš—ï…èª‘JSONObjectï¿½î¡æ’˜î»ï¿½ï¿½ */
         jsr.sendJsonRes(resp, response);
 	}
+//	  public void upload(HttpServletRequest request, HttpServletResponse response)throws ServletException, java.io.IOException {
+//		  
+//		  boolean isMultipart;
+//		  String filePath = getServletContext().getInitParameter("file-upload");
+//		  int maxFileSize = 1024 * 1024;
+//		  int maxMemSize = 1024 * 1024;
+//		  File file ;
+//		  // Check that we have a file upload request
+//	      isMultipart = ServletFileUpload.isMultipartContent(request);
+//	      response.setContentType("text/html");
+//	      java.io.PrintWriter out = response.getWriter( );
+//	   
+//	      if( !isMultipart ) {
+//	         out.println("<html>");
+//	         out.println("<head>");
+//	         out.println("<title>Servlet upload</title>");  
+//	         out.println("</head>");
+//	         out.println("<body>");
+//	         out.println("<p>No file uploaded</p>"); 
+//	         out.println("</body>");
+//	         out.println("</html>");
+//	         return;
+//	      }
+//	  
+//	      DiskFileItemFactory factory = new DiskFileItemFactory();
+//	   
+//	      // maximum size that will be stored in memory
+//	      factory.setSizeThreshold(maxMemSize);
+//	   
+//	      // Location to save data that is larger than maxMemSize.
+//	      factory.setRepository(new File("c:\\temp"));
+//
+//	      // Create a new file upload handler
+//	      ServletFileUpload upload = new ServletFileUpload(factory);
+//	   
+//	      // maximum file size to be uploaded.
+//	      upload.setSizeMax( maxFileSize );
+//
+//	      try { 
+//	         // Parse the request to get file items.
+//	         List fileItems = upload.parseRequest(request);
+//		
+//	         // Process the uploaded file items
+//	         Iterator i = fileItems.iterator();
+//
+//	         out.println("<html>");
+//	         out.println("<head>");
+//	         out.println("<title>Servlet upload</title>");  
+//	         out.println("</head>");
+//	         out.println("<body>");
+//	   
+//	         while ( i.hasNext () ) {
+//	            FileItem fi = (FileItem)i.next();
+//	            if ( !fi.isFormField () ) {
+//	               // Get the uploaded file parameters
+//	               String fieldName = fi.getFieldName();
+//	               String fileName = fi.getName();
+//	               String contentType = fi.getContentType();
+//	               boolean isInMemory = fi.isInMemory();
+//	               long sizeInBytes = fi.getSize();
+//	            
+//	               // Write the file
+//	               if( fileName.lastIndexOf("\\") >= 0 ) {
+//	                  file = new File( filePath + fileName.substring( fileName.lastIndexOf("\\"))) ;
+//	               } else {
+//	                  file = new File( filePath + fileName.substring(fileName.lastIndexOf("\\")+1)) ;
+//	               }
+//	               fi.write( file ) ;
+//	               out.println("Uploaded Filename: " + fileName + "<br>");
+//	            }
+//	         }
+//	         out.println("</body>");
+//	         out.println("</html>");
+//	         } catch(Exception ex) {
+//	            System.out.println(ex);
+//	         }
+//	      }
 }

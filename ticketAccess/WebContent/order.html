@@ -36,7 +36,7 @@
                         <table class="table">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">演唱會</th>
+                                    <th scope="col">演唱會id</th>
                                     <th scope="col">座位區</th>
                                     <th scope="col">座位編號</th>
                                     <th scope="col">名字</th>
@@ -44,23 +44,8 @@
                                     <th scope="col">手機</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>A區</td>
-                                    <td>23</td>
-                                    <td>余函倩</td>
-                                    <td>rubyyu2800@gamil.com</td>
-                                    <td>0928036709</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                </tr>
+                            <tbody id="tb">
+
                             </tbody>
                         </table>
                     </div>
@@ -79,80 +64,68 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
-
-
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
-                    <a href="index.html" class=" navbar-brand" id="brand">
-
-                        <img src='spotlights.png' id="logo">
+            <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <nav class="navbar navbar-light bg-transparent">
+                    <a class="navbar-brand" href="/">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
-                            <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link " id="space" href="#">登出</a>
-
-                        </div>
-                    </div>
                 </nav>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index-signin.html">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="date.html">Buy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="order.html">MyOrder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="edit.html">MemberData</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </header>
-        <h1 style="padding-top:3vh;padding-left:1%;font-size:12vh">我的訂單</h1>
+        <h1 style="padding-top:3vh;padding-left:5%;font-size:7vh">我的訂單</h1>
         <div class="order" style="padding-left:17%">
-            <div class="order_content" id="">
-                <div class="card order_card">
-                    <div class="card-header" id="createtime">
-                        2018/12/25 13:00
-                    </div>
-                    <div class="row order_detail">
-                        <div class="col">
-                            <h4 class="card-title" id="ticketamount">4張票</h4>
-                            <h6 class="card-title" id="payment">信用卡</h6>
 
-
-                            <h2 class="card-text" id="money">$18000</h2>
-                        </div>
-
-                        <div class="col more" style="padding-left:45%;padding-top:4%;">
-
-                            <a href="#" class="btn" id="detail">詳細資訊(已付款)>></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <script>
 
             $(document).ready(function () {
                 ordershow();
-                ticketshow();
+
             });
 
             function ordershow() {
                 //把所有order放上去
                 $.ajax({
-                    url: `Auth/order`,
+                    url: '/Auth/order',
                     method: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        let order = JSON.parse(response.data);
+                    dataType: 'JSON',
+                    success: function (order) {
+                        alert("success");
 
-                        //order訂單顯現
-                        $.each(order, function (i, item) {
+                        // let order = JSON.parse(response.data);
+
+
+                        $.each(order.data.orders, function (i, item) {
+
 
                             var temp = "";
-                            temp += '<div class="order_content" id=" ' + item.idorder + '">';
+
+                            temp += '<div class="order_content"  style="width:70%">';
                             temp += '<div class="card"><div class="card-header" >' + item.createtime + ' </div>';
 
                             temp += ' <div class="row order_detail"><div class="col"><h4 class="card-title" >' + item.ticketamount + '張票</h4>';
@@ -162,50 +135,62 @@
                                 temp += '<h6 class="card-title" >LINE PAY</h6>';
                             }
 
-                            temp += '<h2 class="card-text" >$' + item.totalprice + '</h2>';
+                            temp += '<h2 class="card-text" >$' + item.totalprice + '</h2></div>';
                             if (item.paid == 1) {
-                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(已付款)>></a></div></div></div></div>'
+                                temp += ' <div class="col more" id=" ' + item.idorder + ' style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(已付款)>></a></div></div></div></div>'
                             }
                             else {
-                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(待付款)>></a></div></div></div></div>'
+                                temp += ' <div class="col more" id=" ' + item.idorder + '" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(待付款)>></a></div></div></div></div>'
                             }
 
-                            $(".order_content").append(temp);
+                            $(".order").append(temp);
 
 
 
                         })
-
+                        ticketshow();
 
                     },
                     error: function (err) {
-                        alert("order玫璉");
+                        alert("order玫璉+bobo");
                         console.log(err);
+                        console.log(err.responsetext);
                     }
                 });
             }
             function ticketshow() {
                 $(".more").mousedown(function () {
+
+
+                    let id = parseInt(this.id);
+                    var data = {
+                        "orderid": id
+                    }
+                    var data_string = JSON.stringify(data);
+
                     $.ajax({
-                        url: "Auth/ticket",
-                        method: 'get',
+                        url: '/Auth/ticket',
+                        method: 'POST',
+
+                        data: data_string,
                         error: function (err) {
+
                             console.log(err);
                             alert("ticket玫璉")
                         },
                         success: function (response) {
-                            let data = JSON.parse(response.data);
-                            $.each(data, function (i, item) {
+                            console.log(response);
+                            $.each(response.data.tickets, function (i, item) {
 
                                 var temp = "";
-                                temp += '<tr><th scope="row">' + item.concertname + '</th>';
+                                temp += '<tr><th scope="row">' + item.concertid + '</th>';
                                 temp += '<td>' + item.seatarea + '</td>';
                                 temp += '<td>' + item.seatid + '</td>';
                                 temp += '<td>' + item.name + '</td>';
                                 temp += '<td>' + item.email + '</td>';
                                 temp += '<td>' + item.phonenumber + '</td></tr>'
 
-                                $(tbody).append(temp);
+                                $("#tb").append(temp);
                             });
 
                         }

@@ -27,33 +27,37 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top " id="navbar" style="padding-left:120vh">
-
-
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
-                    <a href="index.html" class=" navbar-brand" id="brand">
-
-                        <img src='spotlights.png' id="logo">
+            <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <nav class="navbar navbar-light bg-transparent">
+                    <a class="navbar-brand" href="/">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
-                            <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link " id="space" href="#">登出</a>
-
-                        </div>
-                    </div>
                 </nav>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index-signin.html">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="date.html">Buy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="order.html">MyOrder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="edit.html">MemberData</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </header>
         <!-- 引入測試-->
@@ -173,20 +177,20 @@
                 function update() {
 
                     if (localStorage.area1 != 0) {
-                      //  alert(localStorage.memberid);
+                        //  alert(localStorage.memberid);
 
                         var data = {
                             "concertid": localStorage.concert_id,
                             "seatarea": localStorage.area1,
                             "ticketamount": localStorage.area1_q,
-                            "memberid": localStorage.memberid,
+                        
                             "name": localStorage.temp_name,
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
-                            "payment":localStorage.payment,
+                            "payment": localStorage.payment,
                             "totalprice": localStorage.total_money
                         }
-                        alert(localStorage.area1+"區");
+                        //alert(localStorage.area1+"區");
 
                         var data_string = JSON.stringify(data);
 
@@ -210,18 +214,18 @@
                     }
 
                     if (localStorage.area2 != 0) {
-                        
-                         var data = {
-                             "concertid": localStorage.concert_id,
-                             "seatarea": localStorage.area2,
-                             "ticketamount": localStorage.area2_q,
-                             "memberid": localStorage.memberid,
-                             "name": localStorage.temp_name,
-                             "phonenumber": localStorage.temp_phone,
-                             "email": localStorage.temp_mail,
-                             "payment": localStorage.payment,
-                             "totalprice":  localStorage.totalprice
-                         }
+
+                        var data = {
+                            "concertid": localStorage.concert_id,
+                            "seatarea": localStorage.area2,
+                            "ticketamount": localStorage.area2_q,
+                            
+                            "name": localStorage.temp_name,
+                            "phonenumber": localStorage.temp_phone,
+                            "email": localStorage.temp_mail,
+                            "payment": localStorage.payment,
+                            "totalprice": localStorage.totalprice
+                        }
 
 
                         var data_string = JSON.stringify(data);
@@ -244,19 +248,19 @@
                         });
                     }
                     if (localStorage.area3 != 0) {
-                        
+
                         var data = {
                             "concertid": localStorage.concert_id,
                             "seatarea": localStorage.area3,
                             "ticketamount": localStorage.area3_q,
-                            "memberid": localStorage.memberid,
+                       
                             "name": localStorage.temp_name,
                             "phonenumber": localStorage.temp_phone,
                             "email": localStorage.temp_mail,
                             "payment": localStorage.payment,
                             "totalprice": localStorage.totalprice
                         }
-                      
+
 
                         var data_string = JSON.stringify(data);
 

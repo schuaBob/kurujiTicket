@@ -298,6 +298,9 @@
       z-index: 5000;
       position: relative;
     }
+    #logout:hover{
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -318,10 +321,13 @@
           <a class="nav-link" href="index-signin.html">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">Logout</a>
+          <a class="nav-link" id="logout">Logout</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="edit.html">Edit</a>
+            <a class="nav-link" href="order.html">MyOrder</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="edit.html">MemberData</a>
         </li>
       </ul>
     </div>
@@ -432,6 +438,20 @@
       window.setInterval(() => {
         plusSlides(1)
       }, 2500)
+      $("#logout").click(function () {
+        $.ajax({
+          method:"DELETE",
+          url:"login",
+          success:function (res) {
+            console.log("success")
+            window.location.replace(res.redirect);
+          },
+          error:function (err) {
+            alert("Error");
+            console.log(err)
+          }
+        })
+      })
     });
     var createConcertCard = function (idconcert, concertname, session, picture, starttime, endsellingtime, location, direction) {//船參數進去 合成html
       var tempDate = new Date(starttime);
@@ -482,7 +502,6 @@
       } else {
         struct.find(".row").append(node8).append(node4);
       }
-      console.log(struct);
       return struct;
     };
     var initFunc = function () { //430放好
@@ -499,25 +518,13 @@
               return a.concertstarttime < b.concertstarttime ? 1 : -1;
             })
             data.forEach((e, i) => {  //i (0開始~4)第幾個 , e 值
-              console.log(e) //印出concert所有內容
               var direction = i % 2 ? "text-right" : "";//免
-              console.log(i % 2)
-              console.log(direction)
               var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
               var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
               $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
             }); //ajax抓資料 再放到html
-
-            // for (i in data) {
-            //   console.log(`Concert Number: ${data[i].idconcert}`)
-            //   console.log(`Concert Name: ${data[i].name}`)
-            //   console.log(`Concert session: ${data[i].session}`)
-            //   console.log(`Concert picture: ${data[i].picture}`)
-            //   console.log(`Concert endsellingtime: ${data[i].endsellingtime}`)
-            //   console.log(`Concert Location ${data[i].location}`)
-            // }
           } else {
-            alert("沒東西或有問題");
+            //alert("沒東西或有問題");
           }
         },
         error: function (err) {
