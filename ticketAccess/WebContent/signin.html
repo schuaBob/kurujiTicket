@@ -231,20 +231,20 @@
 	</div>
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#submitForm").click(function () {
+			$("#submitForm").click(function (e) {
 
 				var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-				var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-				if (!email_rule.test($("#email").val())) {
-                   alert("信箱格式不符！");
-                }
-				if (!password_rule.test($("#password").val())) {
-                   alert("密碼格式不符!");
-                }
-				if ($("#password").val() == "" || $("#email").val() == "") {
-                   alert("尚未輸入完畢!");
-                }
+                var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                
+        if (!password_rule.test($("#memberPassword").val())) {
+          alert("密碼格式不符!");
+        }
+        if (!email_rule.test($("#memberEmail").val())) {
+          alert("信箱格式不符！");
+        }
+        if ($("#password").val() == "" || $("#email").val() == "") {
+          alert("尚未輸入完畢!");
+        }
 
 				$.ajax({
 					url: "login",
