@@ -210,7 +210,7 @@
                                 tmp.forEach(f => {
                                     totalseat += (f.SeatTotal - f.Sold);
                                 }
-                                )
+                                );
                                 a++;
                                 $("#quantitynow" + a).html("剩下" + totalseat + "張");
 
@@ -245,7 +245,7 @@
                         $("#order_b3").text("已售完");
                     };
                 }
-//concertid奧要
+
                 function storage() {
                     localStorage.concert_id=0;
                     $("#order_b1").click(function () {

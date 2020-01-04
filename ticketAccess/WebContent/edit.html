@@ -302,7 +302,7 @@
           <input type="text" maxlength="10" id="idnumber" disabled="disabled">
         </label>
         <label>
-          <span>Date of Birth</span>
+          <span>Date of Birt    h</span>
           <input type="text" id="dob" disabled="disabled">
         </label>
         <label>
@@ -361,6 +361,8 @@
   </div>
   <script type="text/javascript">
     $(document).ready(function () {
+        
+      initFunc();
       $("#submitForm").click(function (e) {
         var phone_rule = /^[09]{2}[0-9]{8}$/;
         var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -412,7 +414,16 @@
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-          
+            let data = JSON.parse(response.memberData)
+            $("#name").attr("value",data.name);
+            $("#email").attr("value",data.email);
+            $("#idnumber").attr("value",data.idnumber);
+            $("#password").attr("value",data.password);
+            $("#dob").attr("value",response.dateofbirth);
+            $("#phonenumber").attr("value",data.phonenumber);
+            $("#address").attr("value",data.address);
+
+            
         },
         error: function (err) {
           alert("無法連線到伺服器！");
