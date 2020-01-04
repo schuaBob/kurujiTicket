@@ -96,7 +96,12 @@
               <label for="exampleFormControlInput1">演唱會名稱</label>
               <input type="email" class="form-control" id="concertNameID" placeholder="concertname" required>
             </div>
-
+            
+			<div class="form-group">
+              <label for="exampleFormControlInput1">期別</label>
+              <input type="email" class="form-control" id="session" placeholder="session" required>
+            </div>
+            
             <div class="form-group">
               <label for="exampleFormControlInput1">地址</label>
               <input type="email" class="form-control" id="addressID" placeholder="address" required>
@@ -216,6 +221,7 @@
           "seatpicture": "URL",
           "endsellingtime": $("#endsellingtime").val(),
           "content": $("#descriptionID").val(),
+          "session":$("#session").val(),
         "ticketstatus": {
           "data": statusArr
         },
