@@ -206,9 +206,10 @@
                 //寫入頁面
                 //要有地方抓點入演唱會的id
                 function getconcertdata() {
-
+                    let params = new URL(window.location.href).searchParams
+                    
                     $.ajax({
-                        url: "api/concert.do?session=chou",
+                        url: `api/concert.do?session=${params.get('session')}`,
                         cache: false,
                         method: 'GET',
                         dataType: 'json',
