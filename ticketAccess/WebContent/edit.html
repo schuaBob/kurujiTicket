@@ -411,12 +411,9 @@
       $.ajax({
         type: "GET",
         url: "/Auth/member", //session代表場次代號
-        cache: false,
         dataType: "json",
-        timeout: 5000,
         success: function (response) {
             var data = response.memberData;
-            
             $("#name").attr("value",data.name);
             $("#email").attr("value",data.email);
             $("#idnumber").attr("value",data.idnumber);

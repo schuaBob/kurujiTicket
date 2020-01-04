@@ -18,7 +18,7 @@ import ncu.im3069.group14.util.Token;
 /**
  * Servlet implementation class IndexController
  */
-@WebServlet("/")
+@WebServlet("")
 public class IndexController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -48,6 +48,7 @@ public class IndexController extends HttpServlet {
 				System.out.println("Name:"+c.getName());
 				if(c.getName().equals("Token")) {
 					token = c.getValue();
+					System.out.println("Index");
 					System.out.println("Incoming token: "+token);
 					break;
 				}
@@ -66,7 +67,7 @@ public class IndexController extends HttpServlet {
 			 */
 			try {
 				Claims clmBody = Token.decode(token);
-				
+				System.out.println(clmBody.getSubject());
 				//如果token被串改過，那麼這個使用者是非法的，不能讓他進到登入後的首頁
 			} catch (SignatureException sigE) {
 				System.out.println("The signature is invalid.");
