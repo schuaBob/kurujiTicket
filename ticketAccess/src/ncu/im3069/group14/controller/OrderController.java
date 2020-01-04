@@ -68,7 +68,7 @@ public class OrderController extends HttpServlet {
 
 		//STEP1 取得request的資料
 		//order要用的資料
-		int memberid = jso.getInt("memberid");
+		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
 		String payment = jso.getString("payment");
 		int ticketamount = jso.getInt("ticketamount");
 		int concertid = jso.getInt("concertid");
