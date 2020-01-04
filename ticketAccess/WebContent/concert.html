@@ -48,7 +48,7 @@
     $("#getData").click(function(){
         $.ajax({
            type: "GET",
-           url: "api/concert.do", //session代表場次代號
+           url: "api/concert.do?session=", //session代表場次代號
            cache: false,
            dataType: "json",
            timeout: 5000,

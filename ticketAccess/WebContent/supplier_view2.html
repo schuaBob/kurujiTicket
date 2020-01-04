@@ -3,7 +3,8 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
    
@@ -99,13 +100,13 @@
             <form>
             <div class="form-group">
               <table> 
-                <tr> <td>演唱會名稱:</td> <td>Jay Chou concert</td> </tr>
+                <tr> <td>演唱會名稱:</td> <td id="Name"></td> </tr>
                 <table>
             </div>
 
             <div class="form-group">
               <table> 
-              <tr> <td>地址:</td> <td>105台北市松山區南京東路四段2號</td> </tr>
+              <tr> <td>地址:</td> <td id="Location"></td> </tr>
               <table>
             </div>
               
@@ -113,21 +114,21 @@
               <table> 
                 <tr>  
                   <td>演唱會描述:</td> 
-                  <td>周杰倫「嘉年華」世界巡迴演唱會在哭嚕嘰搶票系統 你可以購買到最新周杰倫演唱會門票了！</td> 
+                  <td id="Content"></td> 
                 </tr>
               <table>
             </div>
 
             <div class="form-group">
               <table> 
-                <tr> <td>演唱會時間:從</td> <td>2020/04/30 7:00pm</td> </tr>
-                <tr> <td>到</td> <td>2020/04/30 10:00pm</td> </tr>
+                <tr> <td>演唱會時間:從</td> <td id="Concertstarttime"></td> </tr>
+                <tr> <td>到</td> <td id="Concertendtime"></td> </tr>
               <table>
             </div>
 
             <div class="form-group">
               <table> 
-                <tr> <td>關閉售票日期與時間:</td> <td>2020/02/10 12:00am</td> </tr>
+                <tr> <td>關閉售票日期與時間:</td> <td id="Endsellingtime"></td> </tr>
               <table>
             </div>
             <div id="demo">
@@ -143,25 +144,8 @@
                         <th scope="col">數量</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>A區</td>
-                        <td>$8000</td>
-                        <td>120</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>B區</td>
-                        <td>$4100</td>
-                        <td>150</td>
-                      </tr>
-                      <tr>
-                        <th>3</th>
-                        <td>C區</td>
-                        <td>$2500</td>
-                        <td>300</td>
-                      </tr>
+                    <tbody id="_tbody">
+                      
                     </tbody>
                   </table>
                 </div>
@@ -315,7 +299,7 @@
       var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
-        url: "api/concert.do?idconcert=4", //session代表場次代號
+        url: "api/concert.do?concertid=1", //session代表場次代號
         cache: false,
         dataType: "json",
         timeout: 5000,
@@ -324,9 +308,23 @@
           if(response.status == 200 && response.isEmpty == "false"){
                     let data = JSON.parse(response.data); //[{Row1},{Row2}]
                     data.forEach(e => {
+                        $("#Name").text(e.name); 
+                        $("#Location").text(e.location);
+                        $("#Picture").text(e.picture);
+                        $("#Seatpicture").text(e.seatpicture);
+                        $("#Endsellingtime").text(e.endsellingtime);
+                        $("#Content").text(e.content);
+                        $("#Concertstarttime").text(e.concertstarttime);
+                        $("#Concertendtime").text(e.concertendtime);
+
                         let temp = JSON.parse(e.ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
+                        let count = 0;
                         temp.forEach(f =>{
-                            console.log(f.Area);
+                          count++;
+                          $("#_tbody").append("<tr><th scope='row'>"+count+"</th><td>"+f.Area+"</td><td>"+f.SeatTotal+"</td><td>"+f.Price+"</td></tr>");
+                          // $("#Area1").text(f.Area);
+                          // $("#SeatTotal1").text(f.SeatTotal);
+                          // $("#Price1").text(f.Price);
                         });                        
                     });
                 }else{
