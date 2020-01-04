@@ -120,4 +120,8 @@ public class ConcertHelper {
         }			
 		return result;
 	}
+	
+	public JSONObject update(Concert c) {
+		
+	}
 }

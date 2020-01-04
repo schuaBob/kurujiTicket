@@ -72,5 +72,13 @@ public class ConcertController extends HttpServlet {
         /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
         jsr.sendJsonRes(resp, response);
 	}
-
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestHandler jsr = new RequestHandler(request);
+        JSONObject jso = jsr.toJsonObj();
+        
+        Concert c = new Concert(jso);
+        JSONObject data = ch.update(c);
+        
+	}
 }
