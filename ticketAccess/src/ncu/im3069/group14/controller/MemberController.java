@@ -38,10 +38,10 @@ public class MemberController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		System.out.println("In member get");
 		RequestHandler rh = new RequestHandler(request);
 		String id = rh.getMemberIDinRequest();
-		
+		System.out.println(id);
 		JSONObject memberData = mh.readByID(id);
 		
 		JSONObject resObj = new JSONObject();

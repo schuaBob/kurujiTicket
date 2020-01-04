@@ -48,7 +48,7 @@
       font-size: 17px;
       border: 1px solid #ccc;
     } */
-/* 
+    /* 
     .ticket button {
       float: right;
       padding: 7px 10px;
@@ -173,7 +173,8 @@
       margin: 0 0 0 30%;
       font-weight: bold;
     }
-/* 
+
+    /* 
     .regdob input {
       width: 30%;
       padding: 5px;
@@ -302,20 +303,20 @@
           <input type="text" maxlength="10" id="idnumber" disabled="disabled">
         </label>
         <label>
-          <span>Date of Birt    h</span>
+          <span>Date of Birt h</span>
           <input type="text" id="dob" disabled="disabled">
         </label>
         <label>
-            <span>Password</span>
-            <input type="text" maxlength="100" id="password" >
-          </label>
+          <span>Password</span>
+          <input type="text" maxlength="100" id="password">
+        </label>
         <label>
           <span>PhoneNumber</span>
-          <input type="text" maxlength="10" id="phonenumber" >
+          <input type="text" maxlength="10" id="phonenumber">
         </label>
         <label>
           <span>Address</span>
-          <input type="text" maxlength="100" id="address" >
+          <input type="text" maxlength="100" id="address">
         </label>
         <button type="button" class="submit" id="submitForm">Change</button>
       </div>
@@ -366,7 +367,7 @@
       $("#submitForm").click(function (e) {
         var phone_rule = /^[09]{2}[0-9]{8}$/;
         var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        
+
 
 
         if (!password_rule.test($("#password").val())) {
@@ -375,7 +376,7 @@
         if (!phone_rule.test($("#phonenumber").val())) {
           alert("手機格式不符!");
         }
-        if ( $("#password").val() == "" || $("#phonenumber").val() == ""|| $("#address").val() == "") {
+        if ($("#password").val() == "" || $("#phonenumber").val() == "" || $("#address").val() == "") {
           alert("尚未輸入完畢!");
         }
 
@@ -384,48 +385,45 @@
         console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
 
         $.ajax({
-                url: "/Auth/member",
-                method: 'PUT',
-                dataType: "JSON",
-                data: {
-                    password: $("#password").val(),
-                    phonenumber: $("#phonenumber").val(),
-                    address: $("#address").val()
-                },
-                error: function (err) {
-                    console.log(err)
-                },
-                success: function (res) {
-                    console.log(res.message)
-                    window.location.replace(res.redirect);
-                }
-            });
+          url: "/Auth/member",
+          method: 'PUT',
+          dataType: "JSON",
+          data: {
+            password: $("#password").val(),
+            phonenumber: $("#phonenumber").val(),
+            address: $("#address").val()
+          },
+          error: function (err) {
+            console.log(err)
+          },
+          success: function (res) {
+            console.log(res.message)
+            window.location.replace(res.redirect);
+          }
+        });
 
-            
-        
+
+
       })
     })
 
     var initFunc = function () { //430放好
-    console.log("start intiFunc");
+      console.log("start intiFunc");
       $.ajax({
         type: "GET",
         url: "/Auth/member", //session代表場次代號
-        cache: false,
         dataType: "json",
-        timeout: 5000,
         success: function (response) {
-            var data = response.memberData;
-            
-            $("#name").attr("value",data.name);
-            $("#email").attr("value",data.email);
-            $("#idnumber").attr("value",data.idnumber);
-            $("#password").attr("value",data.password);
-            $("#dob").attr("value",data.dateofbirth);
-            $("#phonenumber").attr("value",data.phonenumber);
-            $("#address").attr("value",data.address);
+          var data = response.memberData;
+          $("#name").attr("value", data.name);
+          $("#email").attr("value", data.email);
+          $("#idnumber").attr("value", data.idnumber);
+          $("#password").attr("value", data.password);
+          $("#dob").attr("value", data.dateofbirth);
+          $("#phonenumber").attr("value", data.phonenumber);
+          $("#address").attr("value", data.address);
 
-            
+
         },
         error: function (err) {
           alert("無法連線到伺服器！");

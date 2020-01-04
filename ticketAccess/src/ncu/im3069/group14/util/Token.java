@@ -41,6 +41,7 @@ public class Token {
 	public static HttpServletResponse addTokentoCookie(Cookie jwtCookie,HttpServletResponse response) {
 		jwtCookie.setMaxAge(60*60);
 		jwtCookie.setHttpOnly(true);
+		jwtCookie.setPath("/");
 		response.addCookie(jwtCookie);
 		return response;
 	}
