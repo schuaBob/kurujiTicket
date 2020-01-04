@@ -7,7 +7,7 @@
 
 # BlueJ files
 *.ctxt
-/ticketAccess/src/ncu/im3069/group14/util/MysqlConnect.java
+ticketAccess/src/ncu/im3069/group14/util/MysqlConnect.java
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

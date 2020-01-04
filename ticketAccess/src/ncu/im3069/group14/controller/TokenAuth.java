@@ -79,16 +79,20 @@ public class TokenAuth implements Filter {
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//產生新的token
 					httpResponse.sendRedirect("/login");//導回login畫面
+
 				} catch (ExpiredJwtException expE) {
 					//STEP3.2 如果過期就做這些動作
 					System.out.println("The token is out of date.");
 					jwtCookie = new Cookie("Token",null);
 					httpResponse = Token.addTokentoCookie(jwtCookie, httpResponse);//產生新的token
 					httpResponse.sendRedirect("/login");//導回login畫面
+
 				}
 				//STEP4 如果都沒問題，就產生一個新的cookie，用來刷新存在時間。
 				String id = clmBody.getSubject();
+				System.out.println(id);
 				String jwt = Token.createToken(id);
+				jwtCookie = new Cookie("Token",jwt);
 				jwtCookie.setValue(jwt);
 				httpResponse.addCookie(jwtCookie);
 				

@@ -1,126 +1,151 @@
- 
-body{
-    font-family: 微軟正黑體,simsun, Comic Sans MS;
-    background-image:url("");
-    background-size: cover;
-    height:auto; max-height:100%; max-width:100%; width:auto;
+ body {
+     font-family: 微軟正黑體, simsun, Comic Sans MS;
+     background-image: url("");
+     background-size: cover;
+     height: auto;
+     max-height: 100%;
+     max-width: 100%;
+     width: auto;
 
-}
- 
+ }
+
  /*navbar行距*/
- #space{
-        width:17vh;
-        text-align: center;
-    }
-#navbar{
+ #space {
+     width: 17vh;
+     text-align: center;
+ }
+
+ /* #navbar{
     opacity:1;
-}
+} */
 
 
-#concert-name{
-    padding-left:4vh;
-    padding-top:16vh;
-    font-size:2.8rem;
-    font-weight: bold;
-}
-#concert-data{
-    padding-top:15vh;
-    font-size:1rem;
-}
-#logo{
-    width:7vh;
+ #concert-name {
+     padding-left: 4vh;
+     padding-top: 16vh;
+     font-size: 2.8rem;
+     font-weight: bold;
+ }
 
-}
-/*買票*/
-#concert_name{
-    padding-top:3%;
-    font-size:9vh;
-   font-weight:bold;
-}
-/*date*/
-/*tickettype*/
-#tickettype_concertdata{
-    padding-top:9%;
-}
+ #concert-data {
+     padding-top: 15vh;
+     font-size: 1rem;
+ }
 
-.area_choice{
-    width:80%;
-    padding-left: 16%;
-}
-.area_item{
-    padding-top:2%;
-}
-.area_button{
-    padding-left: 85%;
-}
-.area_title{
-    color:gray;
-    border-bottom: 1px solid gray ;
-}
-/*data 頁面*/
-.data_title{
-    border-bottom: 1px solid gray;
-    color:gray;
-    
-}
-.data_front{
-    width:70%;
-}
-.data_content{
-    padding-top:2vh;
-    width:57%;
-    padding-left:5%;
-}
-#dataset{
-    padding-left:18%;
-}
-.data_button{
-    padding-left:60%;
-}
-/*pay頁面*/
-.payset{
-    width:73%;
-    padding-left:15%;
-}
-.pay_title{
-    padding-top:3%;
-    
-    border-bottom: 5px double gray;
-    color:gray;
-    width:15%;
-}
-.payset_c{
-    
-    padding-left:1%;
-}
-.payment_choice{
-    
-    width:70%;
-    padding-top:3%;
-    padding-bottom:3%;
-}
+ #logo {
+     width: 7vh;
 
-.pay_content{
-   width:90%;
-    
-    padding-top:3%;
-    padding-bottom:3%;
-}
-.pay_button{
-    padding-left:80%;
-}
+ }
 
-/*order頁面*/
-.order_content{
-    padding-top:3%;
-}
+ /*買票*/
+ #concert_name {
+     padding-top: 3%;
+     font-size: 9vh;
+     font-weight: bold;
+ }
 
-.order_card{
-    width:73%;
-}
-.order_detail{
-    padding-left:2%;padding-top:1%;padding-bottom:1%;
-}
-.more{
-    padding-left:30%;padding-top:4%;
-}
+ /*date*/
+ /*tickettype*/
+ #tickettype_concertdata {
+     padding-top: 9%;
+ }
+
+ .area_choice {
+     width: 80%;
+     padding-left: 16%;
+ }
+
+ .area_item {
+     padding-top: 2%;
+ }
+
+ .area_button {
+     padding-left: 85%;
+ }
+
+ .area_title {
+     color: gray;
+     border-bottom: 1px solid gray;
+ }
+
+ /*data 頁面*/
+ .data_title {
+     border-bottom: 1px solid gray;
+     color: gray;
+
+ }
+
+ .data_front {
+     width: 70%;
+ }
+
+ .data_content {
+     padding-top: 2vh;
+     width: 57%;
+     padding-left: 5%;
+ }
+
+ #dataset {
+     padding-left: 18%;
+ }
+
+ .data_button {
+     padding-left: 60%;
+ }
+
+ /*pay頁面*/
+ .payset {
+     width: 73%;
+     padding-left: 15%;
+ }
+
+ .pay_title {
+     padding-top: 3%;
+
+     border-bottom: 5px double gray;
+     color: gray;
+     width: 15%;
+ }
+
+ .payset_c {
+
+     padding-left: 1%;
+ }
+
+ .payment_choice {
+
+     width: 70%;
+     padding-top: 3%;
+     padding-bottom: 3%;
+ }
+
+ .pay_content {
+     width: 90%;
+
+     padding-top: 3%;
+     padding-bottom: 3%;
+ }
+
+ .pay_button {
+     padding-left: 80%;
+ }
+
+ /*order頁面*/
+ .order_content {
+     padding-top: 3%;
+ }
+
+ .order_card {
+     width: 73%;
+ }
+
+ .order_detail {
+     padding-left: 2%;
+     padding-top: 1%;
+     padding-bottom: 1%;
+ }
+
+ .more {
+     padding-left: 30%;
+     padding-top: 4%;
+ }

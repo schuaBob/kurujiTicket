@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class OrderController2
  */
-@WebServlet("/Auth/order")
+@WebServlet("/order")
 public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -34,10 +34,12 @@ public class OrderController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("start doGet");
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject jso = rh.toJsonObj();
-		
+
 		int memberid = Integer.parseInt(rh.getMemberIDinRequest());
+    
 		JSONObject data = oh.getAllOrder(memberid);
 		JSONObject jsonObj = new JSONObject();
 		

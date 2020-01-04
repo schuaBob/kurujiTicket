@@ -27,10 +27,10 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-transparent" id="navbar" style="padding-left:120vh">
 
 
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+                <nav class="navbar navbar-expand-lg navbar-light">
                     <a href="index.html" class=" navbar-brand" id="brand">
 
                         <img src='spotlights.png' id="logo">
@@ -129,13 +129,20 @@
         <script>
             $(document).ready(function () {
 
+              localStorage.memberid=0;
+              
                 $("#datetab").removeClass("active");
                 $("#datatab").addClass("active");
                 $("#ticketdata").append(localStorage.display);
-
+                
+                //判斷會員
+                var member = 5;
+                localStorage.setItem("memberid", member);
 
 
                 $('#member').mousedown(function () {
+
+
 
                     memebercheck();
                 });
@@ -149,18 +156,18 @@
                 //自動輸入member data
                 function memebercheck() {
 
+
+
+
                     $("#order_name").val("111");
                     $("#order_phone").val("0912334567");
                     $("#order_email").val("a2333@gmail.com");
 
-                    //判斷會員
-                    var member = 1;
-                    localStorage.setItem("memberid", member);
 
                     //url加上memberid
                     //session
                     $.ajax({
-                        url: "Auth/member?idmember=5",
+                        url: "Auth/member",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {

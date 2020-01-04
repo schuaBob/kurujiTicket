@@ -227,15 +227,20 @@
         "concertstarttime": "2019-1-1 12:22:30",
         "concertendtime": "2019-1-1 12:22:30"
       }
-
+      var formData = new FormData()
+      var seatpicture = $('#seatpic').get(0).files[0];
+      var poster = $('#poster').get(0).files[0];
+      formData.append("seatpicture",seatpicture);
+      formData.append("picture",poster);
+      formData.append("obj",JSON.stringify(obj));
       $.ajax({
         type: "POST",
         url: "api/concert.do",
-        cache: false,
+        enctype: "multipart/form-data",
+        processData:false,
+        contentType:false,
         dataType: "json",
-        contentType: "application/json",
-        timeout: 5000,
-        data: JSON.stringify(obj),
+        data: formData,
         success: function (response) {
           if (response.status == 200) {
             alert("成功");
