@@ -1,20 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 
-<meta charset="UTF-8">
 
 
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css" />
 
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
     <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
         <nav class="navbar navbar-light bg-transparent">
             <a class="navbar-brand" href="/">
-                <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+                <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
+                    style="width:35vh">
             </a>
         </nav>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-            aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -91,7 +106,8 @@
                     <form-row>
                         <label for="validationDefault01">*手機</label>
 
-                        <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                        <input type="tel" class="form-control" name="order_phone" id="order_phone"
+                            placeholder="0912345678" pattern="[0-9]{10}" required>
                     </form-row>
 
                     <form-row>
@@ -99,73 +115,66 @@
                             <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
                             <label> 同會員資料 </label>
                         </div>
-                </div>
-                <div class="data_button">
-                    <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
-                </div>
-                </form-row>
 
+                        <div class="data_button">
+                            <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
+                        </div>
+                    </form-row>
+
+                </div>
             </div>
         </div>
 
-    </div>
-    </div>
-    <script>
-        $(document).ready(function () {
+        <script>
+            $(document).ready(function () {
 
-            localStorage.memberid = 0;
+                localStorage.memberid = 0;
 
-            $("#datetab").removeClass("active");
-            $("#datatab").addClass("active");
-            $("#ticketdata").append(localStorage.display);
+                $("#datetab").removeClass("active");
+                $("#datatab").addClass("active");
+                $("#ticketdata").append(localStorage.display);
 
-            //判斷會員
-            // var member = 5;
-            // localStorage.setItem("memberid", member);
+                //判斷會員
+                // var member = 5;
+                // localStorage.setItem("memberid", member);
 
 
-            $('#member').mousedown(function () {
+                $('#member').mousedown(function () {
 
 
 
-                memebercheck();
-            });
-
-
-            $("#data_b").click(function () {
-
-                datasubmit();
-            });
-
-            //自動輸入member data
-            function memebercheck() {
-
-
-
-
-
-
-                //url加上memberid
-                //session
-                $.ajax({
-                    url: "Auth/member",
-                    method: 'get',
-                    dataType: 'json',
-                    error: function (err) {
-                        alert("玫璉上");
-                    },
-                    success: function (response) {
-                        let people = JSON.parse(response.data);
-                        $("#order_name").val(people[0].name);
-                        $("#order_phone").val(people[0].phonenumber);
-                        $("#order_mail").val(people[0])
-                    }
-
+                    memebercheck();
                 });
-            }
-        });
-    </script>
-    </main>
-    </body>
+
+
+                $("#data_b").click(function () {
+
+                    datasubmit();
+                });
+
+                //自動輸入member data
+                function memebercheck() {
+                    //url加上memberid
+                    //session
+                    $.ajax({
+                        url: "Auth/member",
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (err) {
+                            alert("玫璉上");
+                        },
+                        success: function (response) {
+                            let people = JSON.parse(response.data);
+                            $("#order_name").val(people[0].name);
+                            $("#order_phone").val(people[0].phonenumber);
+                            $("#order_mail").val(people[0])
+                        }
+
+                    });
+                }
+            });
+        </script>
+        </main>
+</body>
 
 </html>
