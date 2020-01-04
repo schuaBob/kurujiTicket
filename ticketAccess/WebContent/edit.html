@@ -361,7 +361,7 @@
   </div>
   <script type="text/javascript">
     $(document).ready(function () {
-        
+      console.log("docuement ready");
       initFunc();
       $("#submitForm").click(function (e) {
         var phone_rule = /^[09]{2}[0-9]{8}$/;
@@ -407,6 +407,7 @@
     })
 
     var initFunc = function () { //430放好
+    console.log("start intiFunc");
       $.ajax({
         type: "GET",
         url: "/Auth/member", //session代表場次代號
@@ -414,12 +415,13 @@
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-            let data = JSON.parse(response.memberData)
+            var data = response.memberData;
+            
             $("#name").attr("value",data.name);
             $("#email").attr("value",data.email);
             $("#idnumber").attr("value",data.idnumber);
             $("#password").attr("value",data.password);
-            $("#dob").attr("value",response.dateofbirth);
+            $("#dob").attr("value",data.dateofbirth);
             $("#phonenumber").attr("value",data.phonenumber);
             $("#address").attr("value",data.address);
 
