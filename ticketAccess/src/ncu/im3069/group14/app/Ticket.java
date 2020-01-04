@@ -90,6 +90,10 @@ public class Ticket {
 		jTemp.put("seatarea", getSeatarea());
 		jTemp.put("seatid", getSeatid());
 		jTemp.put("idused", getIsused());
+		jTemp.put("name", getName());
+		jTemp.put("phonenumber", getPhonenumber());
+		jTemp.put("email", getEmail());
+		
 		return jTemp;
 	}
 	
