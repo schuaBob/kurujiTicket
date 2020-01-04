@@ -105,7 +105,7 @@
                                             <p id="time1">2020/10/3 9:00 - 2020/10/3 9:00</p>
                                         </p>
                                     </div>
-                                    <p id="quantitynow1" style="text-align:center">剩下3張</p>
+                                    <p id="quantitynow1" style="text-align:center" >剩下3張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b1">立即訂購</a>
@@ -124,7 +124,7 @@
                                             <p id="time2">19:00-21:00</p>
                                         </p>
                                     </div>
-                                    <p id="quantitynow2" style="text-align:center">剩下5張</p>
+                                    <p id="quantitynow2" style="text-align:center" >剩下5張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b2">立即訂購</a>
@@ -143,7 +143,7 @@
                                             <p id="time3">19:00-21:00</p>
                                         </p>
                                     </div>
-                                    <p id="quantitynow3" style="text-align:center">剩下0張</p>
+                                    <p id="quantitynow3" style="text-align:center"  >剩下0張</p>
                                     </p>
                                     <div style="text-align:center">
                                         <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b3">立即訂購</a>
@@ -196,6 +196,7 @@
                                 $("#location" + (i + 1)).html(data[i].location);
                                 let temp = (data[i].concertstarttime) + "-" + (data[i].concertendtime);
                                 $("#time" + (i + 1)).html(temp);
+                                $("#quantitynow" + (i + 1)).attr('id',data[i].concert_id);
                             }
 
 
@@ -244,20 +245,22 @@
                         $("#order_b3").text("已售完");
                     };
                 }
-
+//concertid奧要
                 function storage() {
+                    localStorage.concert_id=0;
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert1").html());
-                        localStorage.setItem("concert_id", 3);
+                        localStorage.setItem("concert_id",$('#quantitynow1').attr('id') );
                     });
                     $("#order_b2").click(function () {
                         localStorage.setItem("concert_content", $("#concert2").html());
-                        localStorage.setItem("concert_id", 4);
+                        localStorage.setItem("concert_id",$('#quantitynow2').attr('id'));
                     });
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert3").html());
-                        localStorage.setItem("concert_id", 5);
+                        localStorage.setItem("concert_id",$('#quantitynow3').attr('id') );
                     });
+                   
                 }
 
 
