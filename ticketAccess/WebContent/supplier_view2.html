@@ -299,7 +299,7 @@
       var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
-        url: "api/concert.do?concertid=1", //session代表場次代號
+        url: "api/concert.do?getspecifyconcert=true", //session代表場次代號
         cache: false,
         dataType: "json",
         timeout: 5000,
@@ -307,26 +307,21 @@
 
           if(response.status == 200 && response.isEmpty == "false"){
                     let data = JSON.parse(response.data); //[{Row1},{Row2}]
-                    data.forEach(e => {
-                        $("#Name").text(e.name); 
-                        $("#Location").text(e.location);
-                        $("#Picture").text(e.picture);
-                        $("#Seatpicture").text(e.seatpicture);
-                        $("#Endsellingtime").text(e.endsellingtime);
-                        $("#Content").text(e.content);
-                        $("#Concertstarttime").text(e.concertstarttime);
-                        $("#Concertendtime").text(e.concertendtime);
-
-                        let temp = JSON.parse(e.ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
-                        let count = 0;
-                        temp.forEach(f =>{
+                    let lastIndex = data.length - 1;
+                    $("#Name").text(data[lastIndex].name); 
+                    $("#Location").text(data[lastIndex].location);
+                    $("#Picture").text(data[lastIndex].picture);
+                    $("#Seatpicture").text(data[lastIndex].seatpicture);
+                    $("#Endsellingtime").text(data[lastIndex].endsellingtime);
+                    $("#Content").text(data[lastIndex].content);
+                    $("#Concertstarttime").text(data[lastIndex].concertstarttime);
+                    $("#Concertendtime").text(data[lastIndex].concertendtime);
+                    let temp = JSON.parse(data[lastIndex].ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
+                    let count = 0;
+                    temp.forEach(f =>{
                           count++;
                           $("#_tbody").append("<tr><th scope='row'>"+count+"</th><td>"+f.Area+"</td><td>"+f.SeatTotal+"</td><td>"+f.Price+"</td></tr>");
-                          // $("#Area1").text(f.Area);
-                          // $("#SeatTotal1").text(f.SeatTotal);
-                          // $("#Price1").text(f.Price);
-                        });                        
-                    });
+                    });           
                 }else{
                     alert("沒東西或有問題");
                 }
