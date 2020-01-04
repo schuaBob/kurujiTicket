@@ -126,64 +126,8 @@
 
                 <!--第一頁-->
                 <fieldset id="orderset">
-                    <div class="row" style="padding-left:5%;">
-                        <div class="w-30">
-                            <div class="card">
-                                <div class="card-body" style="text-align:center">
-                                    <div id="concert1">
-                                        <h5 class="card-title">第一場</h5>
-                                        <p class="card-text">
-                                            <p id="location1">台北小巨蛋</p>
-                                            <p id="time1">2020/10/3 9:00 - 2020/10/3 9:00</p>
-                                        </p>
-                                    </div>
-                                    <p class="quantitynow1" style="text-align:center">剩下3張</p>
-                                    </p>
-                                    <div style="text-align:center">
-                                        <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b1">立即訂購</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span style="width:2%;"></span>
-                        <div class="w-30">
-                            <div class="card">
-                                <div class="card-body" style="text-align:center">
-                                    <div id="concert2">
-                                        <h5 class="card-title">第二場</h5>
-                                        <p class="card-text">
-                                            <p id="location2">台北小巨蛋</p>
-                                            <p id="time2">19:00-21:00</p>
-                                        </p>
-                                    </div>
-                                    <p class="quantitynow2" style="text-align:center">剩下5張</p>
-                                    </p>
-                                    <div style="text-align:center">
-                                        <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b2">立即訂購</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <span style="width:2%;"></span>
-                        <div class="w-30">
-                            <div class="card">
-                                <div class="card-body" style="text-align:center">
-                                    <div id="concert3">
-                                        <h5 class="card-title">第三場</h5>
-                                        <p class="card-text">
-                                            <p id="location3">台北小巨蛋</p>
-                                            <p id="time3">19:00-21:00</p>
-                                        </p>
-                                    </div>
-                                    <p class="quantitynow3" style="text-align:center">剩下0張</p>
-                                    </p>
-                                    <div style="text-align:center">
-                                        <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b3">立即訂購</a>
+                    <div class="row order" style="padding-left:5%;">
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </fieldset>
 
@@ -200,14 +144,14 @@
 
 
                 getconcertdata();
-                change_botton();
-                storage();
+
+
 
                 //寫入頁面
                 //要有地方抓點入演唱會的id
                 function getconcertdata() {
                     let params = new URL(window.location.href).searchParams
-                    
+
                     $.ajax({
                         url: `api/concert.do?session=${params.get('session')}`,
                         cache: false,
@@ -223,33 +167,38 @@
                             //演唱會名字
                             //抓時間
 
-                            for (var i = 0; i < data.length; i++) {
-
-                                $("#concert_name").html(data[i].name);
-                                $("#location" + (i + 1)).html(data[i].location);
-                                let temp = (data[i].concertstarttime) + "-" + (data[i].concertendtime);
-                                $("#time" + (i + 1)).html(temp);
-
-                                $(".quantitynow" + (i + 1)).attr('id', data[i].idconcert);
-                                // alert($('.quantitynow' + (i + 1)).attr('id'));
-                            }
-
-
-                            //票數
-
-                            var a = 0;
 
                             data.forEach(e => {
+                                i = 0;
+                                var temp = "";
+                                temp += ' <div class="w-30"><div class="card"><div class="card-body" style="text-align:center">';
+                                temp += '  <div id ="concert' + (i + 1) + '" > <h5 class="card-title">第' + (i + 1) + '場</h5>';
+                                temp += '<p class="card-text"><p >' + (data[i].location) + '</p><p >' + (data[i].concertstarttime) + "-" + (data[i].concertendtime) + '</p></p></div >';
+
                                 var totalseat = 0;
                                 let tmp = JSON.parse(e.ticketstatus).data;
                                 tmp.forEach(f => {
                                     totalseat += (f.SeatTotal - f.Sold);
                                 }
                                 );
-                                a++;
-                                $(".quantitynow" + a).html("剩下" + totalseat + "張");
+                                temp += ' <p class="quantitynow' + (i + 1) + '" id="' + data[i].idconcert + '"style="text-align:center">剩下' + totalseat + '張</p>';
+                                temp += ' <div style="text-align:center"> <a href="tickettype.html" class="btn btn-primary" role="button" id="order_b' + (i + 1) + '">立即訂購</a></div></div ></div ></div >';
+                                temp += '<span style="width:2%;"></span>';
+                                $(".order").append(temp);
 
+
+                                i++;
+
+                                // $("#concert_name").html;
+                                // $("#location" + (i + 1)).html(data[i].location);
+                                // let temp = ;
+                                // $("#time" + (i + 1)).html(temp);
+
+                                // $(".quantitynow" + (i + 1)).attr('id', data[i].idconcert);
+                                // alert($('.quantitynow' + (i + 1)).attr('id'));
                             });
+                            change_botton();
+                            storage();
 
 
 
@@ -264,17 +213,19 @@
 
                 //改按鈕狀態
                 function change_botton() {
-                    if ($("#quantitynow1").html() == ("剩下" + 0 + "張")) {
+
+
+                    if ($(".quantitynow1").html() == ("剩下" + 0 + "張")) {
                         $("#order_b1").addClass("disabled");
                         $("#order_b1").prop('disabled', true);
                         $("#order_b1").text("已售完");
                     };
-                    if ($("#quantitynow2").html() == ("剩下" + 0 + "張")) {
+                    if ($(".quantitynow2").html() == ("剩下" + 0 + "張")) {
                         $("#order_b2").addClass("disabled");
                         $("#order_b2").prop('disabled', true);
                         $("#order_b2").text("已售完");
                     };
-                    if ($("#quantitynow3").html() == ("剩下" + 0 + "張")) {
+                    if ($(".quantitynow3").html() == ("剩下" + 0 + "張")) {
                         $("#order_b3").addClass("disabled");
                         $("#order_b3").prop('disabled', true);
                         $("#order_b3").text("已售完");
@@ -282,20 +233,25 @@
                 }
 
                 function storage() {
-                    localStorage.concert_id = 0;
+                    console.log("concertid");
                     $("#order_b1").click(function () {
+
                         localStorage.setItem("concert_content", $("#concert1").html());
                         localStorage.setItem("concert_id", $('.quantitynow1').attr('id'));
 
+
                     });
                     $("#order_b2").click(function () {
+
                         localStorage.setItem("concert_content", $("#concert2").html());
                         localStorage.setItem("concert_id", $('.quantitynow2').attr('id'));
                     });
-                    $("#order_b1").click(function () {
+                    $("#order_b3").click(function () {
+
                         localStorage.setItem("concert_content", $("#concert3").html());
                         localStorage.setItem("concert_id", $('.quantitynow3').attr('id'));
                     });
+
 
                 }
 

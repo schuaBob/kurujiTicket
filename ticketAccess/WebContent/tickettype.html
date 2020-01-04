@@ -100,55 +100,13 @@
                             </div>
 
                             <ul class="list-group ">
-                                <div class="area_item">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center ">
-                                        <p id="area1">A區</p>
-                                        <span class="badge badge-primary badge-pill" id="price1">8000</span>
-                                        <div class="dropdown">
 
-                                            <select class="custom-select" id="orderquantity1">
-                                                <option selected value="0" id="drop1">要幾張</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
-                                    </li>
-                                </div>
-                                <div class="area_item">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center area_item">
-                                        <p id="area2"> B區</p>
-                                        <span class="badge badge-primary badge-pill" id="price2">4200</span>
-                                        <div class="dropdown">
 
-                                            <select class="custom-select" id="orderquantity2">
-                                                <option selected value="0" id="drop2">要幾張</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
-                                    </li>
-                                </div>
-                                <div class="area_item">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center area_item">
-                                        <p id="area3">C區</p>
-                                        <span class="badge badge-primary badge-pill" id="price3">1500</span>
-                                        <div class="dropdown">
 
-                                            <select class="custom-select" id="orderquantity3">
-                                                <option selected value=0 id="drop3">要幾張</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                            </select>
-                                        </div>
 
-                                    </li>
-                                </div>
+
+
+
                             </ul>
                         </div>
                         <div class="area_button">
@@ -170,8 +128,8 @@
                 //剩餘區域票數
 
                 //購買區域票數，可以給function用嗎
-                var oq1, oq2, oq3;
-                var q = [0, 0, 0];
+                var oq = [0, 0, 0, 0, 0];
+                var q = [0, 0, 0, 0, 0];
                 //寫入幾區和票數和數量
                 getconcertdata();
 
@@ -190,6 +148,7 @@
                     var a = localStorage.concert_content;
                     $("#tickettype_concertdata").html(a);
 
+
                     //url加上concertid,為啥不行
                     $.ajax({
                         url: "api/concert.do?concertid=" + localStorage.concert_id,
@@ -200,7 +159,7 @@
                         },
                         success: function (response) {
 
-                         //   alert("連上");
+                            //   alert("連上");
                             let data = JSON.parse(response.data);
 
                             console.log(data);
@@ -211,12 +170,18 @@
                                 let i = 0;
                                 tmp.forEach(f => {
                                     var areaquantity = (f.SeatTotal - f.Sold);
-                                 //   alert(areaquantity);
+                                    //   alert(areaquantity);
                                     q[i] = areaquantity;
-                                    i++;
-                                    $("#area" + i).html(f.Area);
 
-                                    $("#price" + i).html(f.Price);
+                                    var temp = '';
+                                    temp += '<div class="area_item"><li class="list-group-item d-flex justify-content-between align-items-center "><p id="area' + (i + 1) + '">' + f.Area + '</p>';
+                                    temp += '<span class="badge badge-primary badge-pill" id="price' + (i + 1) + '">' + f.Price + '</span><div class="dropdown">';
+                                    temp += ' <select class="custom-select" id="orderquantity' + (i + 1) + '">';
+                                    temp += '<option selected value="0" id="drop' + (i + 1) + '">要幾張</option>';
+                                    temp += '<option value="1">1</option><option value="2">2</option> <option value="3">3</option><option value="4">4</option> </select></div> </li></div>';
+                                    $(".list-group").append(temp);
+                                    i++;
+
                                 });
                             });
 
@@ -233,49 +198,52 @@
                 function botton_change() {
 
 
-
-                    if (q[0] < 4) {
-                        if (q[0] == 0) {
-                            $('#orderquantity1').prop('disabled', 'true');
-                            $('#drop1').html('已售完');
-                        } else {
-                            $(" #orderquantity1 option[value]").prop('disabled', true);
-                            for (var i = 0; i < q[0]; i++) {
-                                var a = i + 1;
-                                $(" #orderquantity1 option[value*=" + a + "]").prop('disabled', false);
+                    for (var a = 0; a < q.length; a++) {
+                        if (q[a] < 4) {
+                            if (q[a] == 0) {
+                                $('#orderquantity1').prop('disabled', 'true');
+                                $('#drop' + (a + 1)).html('已售完');
+                            } else {
+                                $(" #orderquantity1 option[value]").prop('disabled', true);
+                                for (var i = 0; i < q[a]; i++) {
+                                    var a = i + 1;
+                                    $(" #orderquantity" + (a + 1) + " option[value*=" + a + "]").prop('disabled', false);
+                                }
                             }
-                        }
 
-
-                    }
-                    if (q[1] < 4) {
-                        if (q[1] == 0) {
-                            $('#orderquantity2').prop('disabled', 'true');
-                            $('#drop2').html('已售完');
-                        } else {
-                            $("  #orderquantity2 option[value]").prop('disabled', true);
-                            for (var i = 0; i < q[1]; i++) {
-                                var a = i + 1;
-                                $(" #orderquantity2 option[value*=" + a + "]").prop('disabled', false);
-                            }
 
                         }
 
                     }
-                    if (q[2] < 4) {
-                        if (q[2] == 0) {
-                            $('#orderquantity3').prop('disabled', 'true');
-                            $('#drop3').html('已售完');
-                        } else {
-                            $("#orderquantity3 option[value]").prop('disabled', true);
-                            for (var i = 0; i < q[3]; i++) {
-                                var a = i + 1;
-                                $("#orderquantity3 option[value*=" + a + "]").prop('disabled', false);
-                            }
-                        }
+
+                    // if (q[1] < 4) {
+                    //     if (q[1] == 0) {
+                    //         $('#orderquantity2').prop('disabled', 'true');
+                    //         $('#drop2').html('已售完');
+                    //     } else {
+                    //         $("  #orderquantity2 option[value]").prop('disabled', true);
+                    //         for (var i = 0; i < q[1]; i++) {
+                    //             var a = i + 1;
+                    //             $(" #orderquantity2 option[value*=" + a + "]").prop('disabled', false);
+                    //         }
+
+                    //     }
+
+                    // }
+                    // if (q[2] < 4) {
+                    //     if (q[2] == 0) {
+                    //         $('#orderquantity3').prop('disabled', 'true');
+                    //         $('#drop3').html('已售完');
+                    //     } else {
+                    //         $("#orderquantity3 option[value]").prop('disabled', true);
+                    //         for (var i = 0; i < q[3]; i++) {
+                    //             var a = i + 1;
+                    //             $("#orderquantity3 option[value*=" + a + "]").prop('disabled', false);
+                    //         }
+                    //     }
 
 
-                    }
+                    // }
 
 
                 }
@@ -286,29 +254,19 @@
                 function limit() {
 
                     //數量限制
-                    var total;
-
-
-                    if ($("#orderquantity1").val() == undefined) {
-                        oq1 = 0;
-                    } else {
-                        oq1 = ($("#orderquantity1").val() * 1);
-                    }
-
-                    if ($("#orderquantity2").val() == undefined) {
-                        oq2 = 0;
-
-                    } else {
-                        oq2 = ($("#orderquantity2").val() * 1);
+                    //   alert("fdf");
+                    var total = 0;
+                    for (var a = 0; a < q.length; a++) {
+                        if ($("#orderquantity" + (a + 1)).val() == undefined) {
+                            oq[a] = 0;
+                        } else {
+                            oq[a] = ($("#orderquantity" + (a + 1)).val() * 1);
+                        }
+                        // alert( oq[a] );
+                        total += oq[a];
 
                     }
-                    if ($("#orderquantity3").val() == undefined) {
-                        oq3 = 0;
-                    } else {
-                        oq3 = ($("#orderquantity3").val() * 1);
-                    }
 
-                    total = (oq1 + oq2 + oq3);
 
                     if (total > 4) {
                         event.preventDefault();
@@ -328,54 +286,49 @@
 
                 function storage() {
                     //先消除
-                    localStorage.setItem("area1", 0);
-                    localStorage.setItem("area2", 0);
-                    localStorage.setItem("area3", 0);
+                    // localStorage.setItem("area1", 0);
+                    // localStorage.setItem("area2", 0);
+                    // localStorage.setItem("area3", 0);
 
                     //要判斷有甚麼area，提前判斷，看是否有localstorage
                     var first = "";
                     var second = "";
                     //價錢
-                    var pr1 = ($("#price1").html() * 1);
-                    var pr2 = ($("#price2").html() * 1);
-                    var pr3 = ($("#price3").html() * 1);
+                    var pr = [0, 0, 0, 0, 0];
+                    for (var t = 0; t < q.length; t++) {
+                        pr[t] = ($("#price" + (t + 1)).html() * 1);
+
+
+                    }
+
+
+
 
                     //購買區域票數
                     //存買哪區、幾張、存顯示
-                    if (oq1 != 0) {
-                        localStorage.setItem("area1_q", oq1);
-                        localStorage.setItem("area1", $("#area1").text());
-                        first = $("#area1").text() + "票*" + oq1 + "&nbsp;&nbsp;";
-                        second = pr1 + "*" + oq1 + "&nbsp;&nbsp;";
-                    };
+                    var money=0;
+                    for (var b = 0; b < q.length; b++) {
+                        if (oq[b] != 0) {
+                            localStorage.setItem("area" + (b + 1) + "_q", oq[b]);
 
-                    if (oq2 != "0") {
-                        localStorage.setItem("area2_q", oq2);
-                        localStorage.setItem("area2", $("#area2").text());
-                        first += $("#area2").text() + "票*" + oq2 + "&nbsp;&nbsp;";
-                        second += pr2 + "*" + oq2 + "&nbsp;&nbsp;";
-                    };
-                    //為啥
+                            localStorage.setItem("area" + (b + 1), $("#area1").text());
+                            first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
 
-                    if (oq3 != 0) {
+                            second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
+                            money+=(oq[b] * pr[b]);
+                        }
 
-                        localStorage.setItem("area3_q", oq3);
-                        localStorage.setItem("area3", $("#area3").text());
-                        first += $("#area3").text() + "票*" + oq3;
-                        second += pr3 + "*" + oq3;
-                    };
-
-
+                    }
 
 
 
                     //總價錢
-                    var money = (oq1 * pr1) + (oq2 * pr2) + (oq3 * pr3);
                     localStorage.setItem("total_money", money);
 
                     //之後修space
                     var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
-
+                    //alert(first);
+                   // alert(display);
                     localStorage.setItem("display", display);
                 }
 
