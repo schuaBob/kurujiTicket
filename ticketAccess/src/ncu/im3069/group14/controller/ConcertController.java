@@ -1,6 +1,7 @@
 package ncu.im3069.group14.controller;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.servlet.ServletException;
@@ -74,7 +75,11 @@ public class ConcertController extends HttpServlet {
 //		String fileName = Paths.get(seatPicFile.getSubmittedFileName()).getFileName().toString();
 //		InputStream fileContent = seatPicFile.getInputStream();
 //		System.out.println(fileName);
-//		String[] fileNameSplit = fileName.split(".");
+//		String path= getServletContext().getRealPath("/WebContent/picture");
+//		System.out.println(path);
+//		File file = new File(path, fileName);
+//		System.out.println(file.getAbsolutePath());
+		
 		/** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
 		RequestHandler jsr = new RequestHandler(request);
         JSONObject jso = jsr.toJsonObj();
