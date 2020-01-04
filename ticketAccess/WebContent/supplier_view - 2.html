@@ -92,9 +92,10 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
+          <div class="container all-concert">
           <h6 class="display-4">檢視新增票券</h6>
           <p>
-  
+            
             <form>
             <div class="form-group">
               <table> 
@@ -146,7 +147,7 @@
                       <tr>
                         <th scope="row">1</th>
                         <td>A區</td>
-                        <td>$6000</td>
+                        <td>$8000</td>
                         <td>120</td>
                       </tr>
                       <tr>
@@ -157,7 +158,7 @@
                       </tr>
                       <tr>
                         <th>3</th>
-                        <td>B區</td>
+                        <td>C區</td>
                         <td>$2500</td>
                         <td>300</td>
                       </tr>
@@ -170,6 +171,7 @@
               </script>
             </form>
           </p>
+         </div>
         </div>
       </div>
     
@@ -202,13 +204,14 @@
       });
       
       var createConcertCard = function (concertname, supplierid, location, picture,seatpicture, endsellingtime, content, ticketstatus, concertstarttime, concertendtime) {//船參數進去 合成html
-      var tempDate = new Date(starttime);
+      var tempDate = new Date(concertstarttime);
       var year, month, date, hour, min;
       year = tempDate.getFullYear();
       month = tempDate.getMonth()+1;
       date = tempDate.getDate();
       hour = tempDate.getHours();
       min = (tempDate.getMinutes()<10? '0':'') +tempDate.getMinutes();
+
       var statusobject = JSON.parse(ticketstatus)
       statusobject.data.forEach((a,b,statusArr) => {  //a 物件  b為 index
         console.log(a)
@@ -301,13 +304,9 @@
                           </div>
                         </div>
                       </div>`) //純字串
-      if (direction) {
-        // node4.find(".card-title").addClass(direction)
-        pic.find(".card-text").addClass(direction);
-        struct.find(".row").append(pic).append(ticketarea).append(info);//struct為html , 取得class= row的位置
-      } else {
+      
         struct.find(".row").append(info).append(ticketarea).append(pic);
-      }
+     
       console.log(struct);
       return struct;
     };
@@ -316,17 +315,16 @@
       var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
-        url: "api/concert.do", //session代表場次代號
+        url: "api/concert.do?session=chou", //session代表場次代號
         cache: false,
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-          if (response.status == 200 && response.isEmpty == "false") { //條件式
+          if (response.status == 200 && response.isEmpty == "false") { 
             let data = JSON.parse(response.data);//抓資料
             
             data.forEach((e, i)=>{  //i (0開始~4)第幾個 , e 值
-              console.log(e) //印出concert所有內容
-              var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
+              console.log(e) //取出concert所有內容
               var card = createConcertCard(e.concertName, e.supplierid, e.location, e.picture, e.seatpicture, e.endsellingtime, e.content, e.ticketstatus, e.concertstarttime,e.concertendtime);//取值，合成好介面
               $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
             }); //ajax抓資料 再放到html

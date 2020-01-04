@@ -70,7 +70,7 @@
           <a class="nav-link" href="#">新增活動 <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="supplier_view.html">檢視新增票券</a>
+          <a class="nav-link" href="supplier_view - 2.html">檢視新增票券</a>
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="supplier_modify.html" tabindex="-1">修改活動內容</a>
@@ -124,7 +124,7 @@
                   <label for="bookdate">到</label>
                   <input type="datetime-local" id="endtime" required>
                 </div>
-
+                
                 <div class="form-group">
                   <label for="bookdate">關閉售票日期與時間</label>
                   <input type="datetime-local" id="endsellingtime" required>
@@ -261,6 +261,19 @@
       // });
 
     });
+
+    if ( $('#starttime').prop('type') != 'date' ) {
+      var opt1={dateFormat: 'yy-mm-dd',
+                 defaultDate: '2013-03-17',
+                 showSecond: true,
+                 timeFormat: 'HH:mm:ss',
+                 hour:13,   
+                 minute:25,   
+                 second:10  
+                 };
+   $('#datetimepicker1').datetimepicker(opt1);
+ }
+
   </script>
 </body>
 
