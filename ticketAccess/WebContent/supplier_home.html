@@ -105,55 +105,45 @@
           <form>
             <div class="form-group">
               <label for="exampleFormControlInput1">演唱會名稱</label>
-              <input type="email" class="form-control" id="concertNameID" placeholder="concertname">
+              <input type="email" class="form-control" id="concertNameID" placeholder="concertname" required>
             </div>
 
             <div class="form-group">
               <label for="exampleFormControlInput1">地址</label>
-              <input type="email" class="form-control" id="addressID" placeholder="address">
+              <input type="email" class="form-control" id="addressID" placeholder="address" required>
               <div>
 
                 <div class="form-group">
-                  <label for="exampleFormControlTextarea1">演唱會描述</label>
-                  <textarea class="form-control" id="descriptionID" rows="3"></textarea>
+                  <label for="exampleFormControlTextarea1" maxlength="200">演唱會描述</label>
+                  <textarea class="form-control" id="descriptionID" rows="3" required></textarea>
                 </div>
 
                 <div class="form-group">
                   <label for="bookdate">演唱會時間: 從</label>
-                  <input type="datetime-local" id="starttime">
+                  <input type="datetime-local" id="starttime" required>
                   <label for="bookdate">到</label>
-                  <input type="datetime-local" id="endtime">
+                  <input type="datetime-local" id="endtime" required>
                 </div>
 
                 <div class="form-group">
                   <label for="bookdate">關閉售票日期與時間</label>
-                  <input type="datetime-local" id="endsellingtime">
+                  <input type="datetime-local" id="endsellingtime" required>
                 </div>
                 <div id="demo">
-                  <div class="input-group mb-3">
+                  <div class="input-group mb-3 aaa">
                     <div class="input-group-prepend">
                       <span class="input-group-text">票種及價格</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="區域" id="ticketarea">
-                    <input type="text" class="form-control" placeholder="票價" id="ticketprice">
-                    <input type="text" class="form-control" placeholder="數量" id="ticketammount">
+                    <input type="text" class="form-control area" placeholder="區域" id="ticketarea" required>
+                    <input type="text" class="form-control ticketprice " placeholder="票價" id="ticketprice" required>
+                    <input type="text" class="form-control seatamount" placeholder="數量" id="ticketammount" required>
                   </div>
+
                 </div>
 
 
                 <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="insertFunction()">+</button>
-                <script>
-                  function insertFunction() {
-                    document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">票種及價格</span>
-                </div>
-                <input type="text" class="form-control" placeholder="區域">
-                <input type="text" class="form-control" placeholder="票價">
-                <input type="text" class="form-control" placeholder="數量">
-              </div>`);
-                  }
-                </script>
+
           </form>
         </p>
       </div>
@@ -185,7 +175,7 @@
           <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
         </div>
       </div>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button" onclick="submitFunction()">Submit »</a></p>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button" id="submitconcert">Submit »</a></p>
 
 
       <hr>
@@ -196,37 +186,80 @@
   <footer class="container">
     <p>© KuluGi 2019</p>
   </footer>
-  <script>
-    address = addressID.value;
-    description = descriptionID.value;
-    constarttime = starttime.value;
-    conendtime = endtime.value;
-    estime = endsellingtime.value;
-    poster1 = poster.value;
-    seatpic1 = seatpic.value;
+  <script type="text/javascript">
+    function insertFunction() {
+      document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3 aaa">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">票種及價格</span>
+                </div>
+                <input type="text" class="form-control area" placeholder="區域">
+                <input type="text" class="form-control ticketprice" placeholder="票價">
+                <input type="text" class="form-control seatamount" placeholder="數量">
+              </div>`);
+    }
 
 
-    $("button").click(function () {
+    $("#submitconcert").click(function () {
+      let statusArr = [];
+      $(".aaa").each(function () {
+        let temp = {
+          "Area": $(this).find(".area").val(),
+          "seattotal": $(this).find(".seatamount").val(),
+          "sold": 0,
+          "price": $(this).find(".ticketprice").val()
+        }
+        statusArr.push(temp);
+      });
+      console.log(statusArr);
+
+      var obj = {
+        "concertName": "hello",
+        "supplierId": 001,
+        "location": "location",
+        "picture": "URL",
+        "seatpicture": "URL",
+        "endsellingtime": "2019-2-3 12:22:30",
+        "content": "content",
+        "ticketstatus": {
+          "data": statusArr
+        },
+
+        "concertstarttime": "2019-1-1 12:22:30",
+        "concertendtime": "2019-1-1 12:22:30"
+      }
+
       $.ajax({
         type: "POST",
-        url: " ",
-
-        dataType: 'json',
-
-        data: {
-          "concertName": $("#concertNameID").val(),
-          "supplierId": 001,
-          "location": address,
-          "picture": poster1,
-          "seatpicture": seatpic1,
-          "endsellingtime": estime,
-          "content": description,
-          "ticketstatus": [{}],
-          "concertstarttime": constarttime,
-          "concertendtime": conendtime
-
+        url: "api/concert.do",
+        cache: false,
+        dataType: "json",
+        contentType: "application/json",
+        timeout: 5000,
+        data: JSON.stringify(obj),
+        success: function (response) {
+          if (response.status == 200) {
+            alert("成功");
+          }
+        },
+        error: function (err) {
+          alert("無法連線到伺服器！");
         }
       });
+      // $.ajax({
+      //   type: "POST",
+      //   url: " ",
+      //   dataType: 'json',
+      //   error: function(err){
+      //   console.log(err)
+      //   },
+      //   success: function(data){
+      //     console.log(data.message)
+      //     indow.location.replace(data.redirect);
+      //   },
+      //   data: JSON.stringify(obj),
+
+      // });
+
     });
   </script>
 </body>

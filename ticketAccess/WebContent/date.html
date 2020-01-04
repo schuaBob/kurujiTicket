@@ -94,15 +94,15 @@
 
                 <!--第一頁-->
                 <fieldset id="orderset">
-                    <div class="row" style="padding-left:20%;">
+                    <div class="row" style="padding-left:5%;">
                         <div class="w-30">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="text-align:center">
                                     <div id="concert1">
-                                        <h5 class="card-title">2020/10/3星期六</h5>
+                                        <h5 class="card-title">第一場</h5>
                                         <p class="card-text">
-                                            <p>台北小巨蛋</p>
-                                            <p>19:00-21:00</p>
+                                            <p id="location1">台北小巨蛋</p>
+                                            <p id="time1">2020/10/3 9:00 - 2020/10/3 9:00</p>
                                         </p>
                                     </div>
                                     <p id="quantitynow1" style="text-align:center">剩下3張</p>
@@ -116,12 +116,12 @@
                         <span style="width:2%;"></span>
                         <div class="w-30">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="text-align:center">
                                     <div id="concert2">
-                                        <h5 class="card-title">2020/10/4星期日</h5>
+                                        <h5 class="card-title">第二場</h5>
                                         <p class="card-text">
-                                            <p>台北小巨蛋</p>
-                                            <p>19:00-21:00</p>
+                                            <p id="location2">台北小巨蛋</p>
+                                            <p id="time2">19:00-21:00</p>
                                         </p>
                                     </div>
                                     <p id="quantitynow2" style="text-align:center">剩下5張</p>
@@ -135,12 +135,12 @@
                         <span style="width:2%;"></span>
                         <div class="w-30">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="text-align:center">
                                     <div id="concert3">
-                                        <h5 class="card-title">2020/10/10星期六</h5>
+                                        <h5 class="card-title">第三場</h5>
                                         <p class="card-text">
-                                            <p>台北小巨蛋</p>
-                                            <p>19:00-21:00</p>
+                                            <p id="location3">台北小巨蛋</p>
+                                            <p id="time3">19:00-21:00</p>
                                         </p>
                                     </div>
                                     <p id="quantitynow3" style="text-align:center">剩下0張</p>
@@ -177,24 +177,44 @@
 
                     $.ajax({
                         url: "api/concert.do?session=chou",
-                        method: 'get',
+                        cache: false,
+                        method: 'GET',
                         dataType: 'json',
 
                         success: function (response) {
 
-                            alert("連上！");
+
 
                             //
                             let data = JSON.parse(response.data);
                             //演唱會名字
-                            $("#concert_name").html(data.name);
+                            //抓時間
 
-                            //逐一顯示
-                            $.each(data.ticketstatus, function (i, item) {
-                                $("#quantitynow" + i).html("剩下" + item.quantity + "張");
+                            for (var i = 0; i < data.length; i++) {
 
-                                $("#concert" + i).html(item.content);
-                            })
+                                $("#concert_name").html(data[i].name);
+                                $("#location" + (i + 1)).html(data[i].location);
+                                let temp = (data[i].concertstarttime) + "-" + (data[i].concertendtime);
+                                $("#time" + (i + 1)).html(temp);
+                            }
+
+
+                            //票數
+                            
+                            var a = 0;
+
+                            data.forEach(e => {
+                                var totalseat = 0;
+                                let tmp = JSON.parse(e.ticketstatus).data;
+                                tmp.forEach(f => {
+                                    totalseat += (f.SeatTotal - f.Sold);
+                                }
+                                )
+                                a++;
+                                $("#quantitynow" + a).html("剩下" + totalseat + "張");
+
+                            });
+
 
 
                         },
@@ -228,15 +248,15 @@
                 function storage() {
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert1").html());
-                        localStorage.setItem("concert_id", 1);
+                        localStorage.setItem("concert_id", 3);
                     });
                     $("#order_b2").click(function () {
                         localStorage.setItem("concert_content", $("#concert2").html());
-                        localStorage.setItem("concert_id", 2);
+                        localStorage.setItem("concert_id", 4);
                     });
                     $("#order_b1").click(function () {
                         localStorage.setItem("concert_content", $("#concert3").html());
-                        localStorage.setItem("concert_id", 3);
+                        localStorage.setItem("concert_id", 5);
                     });
                 }
 
