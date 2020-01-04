@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	<title>登入會員</title>
-	<script src="js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -33,14 +33,6 @@
 			background-size: 100% 100%;
 		}
 
-		/* .background { 
-			background-color: #FFEE99;
-			border: 13px solid #FFEE99;
-			padding: 13px;
-			opacity: 0.7;
-
-		 } */
-
 		.brand-pic {
            width: 15vw;
            margin-left: 40px;
@@ -60,13 +52,13 @@
 			margin: 0 0 0 30%;
 			font-weight: bold;
 		}
-
+/* 
 		.regemail input {
 			width: 30%;
 			padding: 5px;
 			border: 2px black solid;
 			margin: 0 35% 0 0;
-		}
+		} */
 
 		.regpassword label {
 			font-size: 200%;
@@ -75,37 +67,28 @@
 			font-weight: bold;
 		}
 
-		.regpassword input {
+		/* .regpassword input {
 			width: 30%;
 			padding: 5px;
 			border: 2px black solid;
 			margin: 0 35% 0 0;
-		}
+		} */
 
-		.submit input {
+		/* .submit input {
 			cursor: pointer;
 			width: 60px;
 			background-color: #CCEEFF;
 			border: 2px solid#CCDDFF;
-		}
+		} */
 
-		.ticket input {
+		/* .ticket input {
 			padding: 6px;
 			border: none;
 			margin: 1% 0 0;
 			font-size: 17px;
 			border: 1px solid #ccc;
-		}
+		} */
 
-		.ticket button {
-			float: right;
-			padding: 7px 10px;
-			margin: 1% 0 0;
-			font-size: 17px;
-			border: none;
-			cursor: pointer;
-			background-color: #DDDDDD;
-		}
 
 		.ticket button:hover {
 			background: #ccc;
@@ -118,26 +101,15 @@
             border: none;
             outline: none;
             background: none;
-            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
         }
 
-        /* .cont {
-            overflow: hidden;
-            position: relative;
-            width: 900px;
-            height: 550px;
-            margin: 0 auto 100px;
-            background: #fff;
-        } */
 
         .form {
             position: relative;
             width: 640px;
             height: 100%;
-            transition: -webkit-transform 1.2s ease-in-out;
-            transition: transform 1.2s ease-in-out;
-            transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
             padding: 50px 30px 0;
+			margin: auto;
         }
 
         button {
@@ -224,19 +196,17 @@
 	</div>
 
 	<div id="content">
-		<h1 style="margin: 0% 0% 0% 26%;">會員登入</h1>
 		<div class="container">
 			<div class="form sign-in">
-				<h2>Welcome back,</h2>
+				<h2>Login</h2>
 				<label>
 					<span>Email</span>
-					<input type="email" />
+					<input type="email" id="memberEmail">
 				</label>
 				<label>
 					<span>Password</span>
-					<input type="password" />
+					<input type="password" id="memberPassword">
 				</label>
-				<p class="forgot-pass">Forgot password?</p>
 				<button type="button" class="submit">Sign In</button>
 			</div>
 		</div>
