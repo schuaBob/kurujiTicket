@@ -27,10 +27,10 @@
             <!--應該要匯入navbar ktml-->
             <div id="include"></div>
 
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
+            <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-transparent" id="navbar" style="padding-left:120vh">
 
 
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
+                <nav class="navbar navbar-expand-lg navbar-light">
                     <a href="index.html" class=" navbar-brand" id="brand">
 
                         <img src='spotlights.png' id="logo">
@@ -158,18 +158,19 @@
                     localStorage.setItem("memberid", member);
 
                     //url加上memberid
+                    //session
                     $.ajax({
-                        url: "Auth/member",
+                        url: "Auth/member?idmember=5",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {
-                            console.log(err);
+                            alert("玫璉上");
                         },
-                        success: function (data) {
-
-                            $("#order_name").val(data.name);
-                            $("#order_phone").val(data.phonenumber);
-                            $("#order_mail").val(data.email);
+                        success: function (response) {
+                            let people = JSON.parse(response.data);
+                            $("#order_name").val(people[0].name);
+                            $("#order_phone").val(people[0].phonenumber);
+                            $("#order_mail").val(people[0].email);
 
                         }
                     });

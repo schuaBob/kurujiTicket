@@ -263,7 +263,7 @@
       flex-wrap: wrap;
       align-content: flex-end;
       transition: all 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      width:-webkit-fill-available;
+      width: -webkit-fill-available;
       min-width: 494px;
     }
 
@@ -302,7 +302,7 @@
 </head>
 
 <body>
-  <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+  <nav id="kurujiNav" class="navbar navbar-sm navbar-light bg-transparent">
     <nav class="navbar navbar-light bg-transparent">
       <a class="navbar-brand" href="/">
         <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic">
@@ -322,9 +322,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="signin.html">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="edit.html">Edit <span class="sr-only"></span></a>
         </li>
       </ul>
     </div>
@@ -373,6 +370,7 @@
     </div>
     <div class="page" id="page2">
       <div class="container all-concert">
+        <!--塞入 ajax新增-->
         <div class="card bg-transparent">
           <div class="card-body">
             <div class="row">
@@ -431,22 +429,32 @@
   <script>
     $(document).ready(() => {
       initFunc();
+      window.setInterval(() => {
+        plusSlides(1)
+      }, 5000)
     });
-    var createConcertCard = function (idconcert, concertname, session, picture, starttime, endsellingtime, location, direction) {
+    var createConcertCard = function (idconcert, concertname, session, picture, starttime, endsellingtime, location, direction) {//船參數進去 合成html
       var tempDate = new Date(starttime);
       var year, month, date, hour, min;
       year = tempDate.getFullYear();
-      month = tempDate.getMonth()+1;
+      month = tempDate.getMonth() + 1;
       date = tempDate.getDate();
       hour = tempDate.getHours();
-      min = (tempDate.getMinutes()<10? '0':'') +tempDate.getMinutes();
+      min = (tempDate.getMinutes() < 10 ? '0' : '') + tempDate.getMinutes();
+      var tempDate2 = new Date(endsellingtime);
+      var year2, month2, date2, hour2, min2;
+      year2 = tempDate2.getFullYear();
+      month2 = tempDate2.getMonth() + 1;
+      date2 = tempDate2.getDate();
+      hour2 = tempDate2.getHours();
+      min2 = (tempDate2.getMinutes() < 10 ? '0' : '') + tempDate2.getMinutes();
       let node8 = $(`<div class="col-8">
                       <div id="wrapper">
                         <article class="conPic" role="article">
-                          <a href="#${idconcert}">
+                          <a href="/date.html?session=${session}">
                             <div class="conPic-text">
                               <div class="conPic-meta">${session}</div>
-                              <h2 class="conPic-title">${concertname} At ${location}</h2>
+                              <h2 class="conPic-title">${concertname} At ${location}</h2>  <!--鑲嵌變數在字串，放入jquery 變成html資料-->
                             </div>
                             <img class="conPic-image"
                               src="${picture}">
@@ -455,9 +463,10 @@
                       </div>
                     </div>`)
       let node4 = $(`<div class="col-4 align-self-center">
-                      <p class="card-text h4">${year}/${month}/${date} ${new Intl.DateTimeFormat('zh-TW', {weekday:"long"}).format(tempDate)}</p>
-                      <p class="card-text h4">${hour}:${min}</p>
-                      <p class="card-text h4">${endsellingtime}</p>
+                      <p class="card-text h4">日期</p>
+                      <p class="card-text h4">${year}/${month}/${date} ${new Intl.DateTimeFormat('zh-TW', { weekday: "long" }).format(tempDate)}</p>
+                      <p class="card-text h4">售票截止</p>
+                      <p class="card-text h4">${year2}/${month2}/${date2} ${hour2}:${min2}</p>
                       <p class="card-text h4">${location}</p>
                     </div>`)
       let struct = $(`<div class="card bg-transparent">
@@ -465,18 +474,18 @@
                           <div class="row">
                           </div>
                         </div>
-                      </div>`)
+                      </div>`) //純字串
       if (direction) {
         // node4.find(".card-title").addClass(direction)
         node4.find(".card-text").addClass(direction);
-        struct.find(".row").append(node4).append(node8);
+        struct.find(".row").append(node4).append(node8);//struct為html , 取得class= row的位置
       } else {
         struct.find(".row").append(node8).append(node4);
       }
       console.log(struct);
       return struct;
     };
-    var initFunc = function () {
+    var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
         url: "api/concert.do", //session代表場次代號
@@ -484,20 +493,20 @@
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-          if (response.status == 200 && response.isEmpty == "false") {
-            let data = JSON.parse(response.data);
-            data = data.sort((a,b)=>{
-              return a.concertstarttime < b.concertstarttime? 1 : -1;
+          if (response.status == 200 && response.isEmpty == "false") { //條件式
+            let data = JSON.parse(response.data);//抓資料
+            data = data.sort((a, b) => {
+              return a.concertstarttime < b.concertstarttime ? 1 : -1;
             })
-            data.forEach((e, i)=>{
-              console.log(e)
-              var direction = i%2 ? "text-right":"";
-              console.log(i%2)
+            data.forEach((e, i) => {  //i (0開始~4)第幾個 , e 值
+              console.log(e) //印出concert所有內容
+              var direction = i % 2 ? "text-right" : "";//免
+              console.log(i % 2)
               console.log(direction)
               var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
-              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);
-              $(".all-concert").append(card)
-            });
+              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
+              $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
+            }); //ajax抓資料 再放到html
 
             // for (i in data) {
             //   console.log(`Concert Number: ${data[i].idconcert}`)

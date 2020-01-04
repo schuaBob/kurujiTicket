@@ -94,7 +94,7 @@
         <div class="container">
           <h6 class="display-4">檢視新增票券</h6>
           <p>
-   <div id="addconcert">
+  
             <form>
             <div class="form-group">
               <table> 
@@ -197,23 +197,150 @@
         <hr>
     </main>
     <script>
-      $.ajax({
-      url:`/documents/require_data/?id=${id}`,
-      method:'GET',
-      dataType:'JSON',
-      error: function(err){
-        console.log(err)
-      },
-      success:  function(response){
-          $.each( obj, function( key, value ) {
-          alert( key + ": " + value );
-        });
-      }
+      $(document).ready(() => {
+      initFunc();//觸發 撈資料 476
       });
-      function dynamicFunction() {
-                    document.getElementById("addconcert").insertAdjacentHTML("beforeend", `<div class="input-group mb-3">`);
-                
-                  }
+      
+      var createConcertCard = function (concertname, supplierid, location, picture,seatpicture, endsellingtime, content, ticketstatus, concertstarttime, concertendtime) {//船參數進去 合成html
+      var tempDate = new Date(starttime);
+      var year, month, date, hour, min;
+      year = tempDate.getFullYear();
+      month = tempDate.getMonth()+1;
+      date = tempDate.getDate();
+      hour = tempDate.getHours();
+      min = (tempDate.getMinutes()<10? '0':'') +tempDate.getMinutes();
+      var statusobject = JSON.parse(ticketstatus)
+      statusobject.data.forEach((a,b,statusArr) => {  //a 物件  b為 index
+        console.log(a)
+        area = a.Area
+        price = a.Price
+        ammount = a.Sold
+        //SeatTotal
+      });
+      let info = $(`<div class="form-group">
+              <table> 
+                <tr> <td>演唱會名稱:</td> <td>${concertname}</td> </tr>
+                <table>
+            </div>
+
+            <div class="form-group">
+              <table> 
+              <tr> <td>地址:</td> <td>${location}</td> </tr>
+              <table>
+            </div>
+              
+            <div class="form-group">
+              <table> 
+                <tr>  
+                  <td>演唱會描述:</td> 
+                  <td>${content}</td> 
+                </tr>
+              <table>
+            </div>
+
+            <div class="form-group">
+              <table> 
+                <tr> <td>演唱會時間:從</td> <td>${concertstarttime}</td> </tr>
+                <tr> <td>到</td> <td>${concertendtime}</td> </tr>
+              <table>
+            </div>
+
+            <div class="form-group">
+              <table> 
+                <tr> <td>關閉售票日期與時間:</td> <td>${endsellingtime}</td> </tr>
+              <table>
+            </div>`)
+      let ticketarea = $(`
+            <div id="demo">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">票種及價格</span>
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">區域</th>
+                        <th scope="col">票價</th>
+                        <th scope="col">數量</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                       <!-- <th scope="row">1</th>-->
+                        <td>${area}</td>
+                        <td>${price}</td>
+                        <td>${ammount}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>`)
+      let pic = $(`<div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+          <div class="col-md-4">
+            <h2>主視覺</h2>
+            <figure class="figure">
+              <img src="${picture}" class="figure-img img-fluid rounded" alt="...">
+              <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>
+          </div>
+          <div class="col-md-4">
+            <h2>座位圖</h2>
+            <figure class="figure">
+              <img src="${seatpicture}" class="figure-img img-fluid rounded" alt="...">
+              <figcaption class="figure-caption">A caption for the above image.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>`)
+      let struct = $(`<div class="card bg-transparent">
+                        <div class="card-body">
+                          <div class="row">
+                          </div>
+                        </div>
+                      </div>`) //純字串
+      if (direction) {
+        // node4.find(".card-title").addClass(direction)
+        pic.find(".card-text").addClass(direction);
+        struct.find(".row").append(pic).append(ticketarea).append(info);//struct為html , 取得class= row的位置
+      } else {
+        struct.find(".row").append(info).append(ticketarea).append(pic);
+      }
+      console.log(struct);
+      return struct;
+    };
+
+
+      var initFunc = function () { //430放好
+      $.ajax({
+        type: "GET",
+        url: "api/concert.do", //session代表場次代號
+        cache: false,
+        dataType: "json",
+        timeout: 5000,
+        success: function (response) {
+          if (response.status == 200 && response.isEmpty == "false") { //條件式
+            let data = JSON.parse(response.data);//抓資料
+            
+            data.forEach((e, i)=>{  //i (0開始~4)第幾個 , e 值
+              console.log(e) //印出concert所有內容
+              var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
+              var card = createConcertCard(e.concertName, e.supplierid, e.location, e.picture, e.seatpicture, e.endsellingtime, e.content, e.ticketstatus, e.concertstarttime,e.concertendtime);//取值，合成好介面
+              $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
+            }); //ajax抓資料 再放到html
+          } else {
+            alert("沒東西或有問題");
+          }
+        },
+        error: function (err) {
+          alert("無法連線到伺服器！");
+        }
+      }).done(function (result) {
+        console.log(result)
+      })
+    }
 
     </script>
     <footer class="container">
