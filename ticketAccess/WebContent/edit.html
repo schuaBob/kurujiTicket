@@ -388,11 +388,11 @@
           url: "/Auth/member",
           method: 'PUT',
           dataType: "JSON",
-          data: {
+          data: JSON.stringify({
             password: $("#password").val(),
             phonenumber: $("#phonenumber").val(),
             address: $("#address").val()
-          },
+          }),
           error: function (err) {
             console.log(err)
           },
