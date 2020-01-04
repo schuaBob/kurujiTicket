@@ -27,12 +27,15 @@ public class TicketHelper {
 		
 		try {
 			conn = MysqlConnect.getConnect();
-			query = "insert into missa.ticket (concertid,orderid,seatarea,seatid,isused) values(?,?,?,?,?);";
+			query = "insert into missa.ticket (concertid,orderid,seatarea,seatid,isused,email,phonenumber,name) values(?,?,?,?,?,?,?,?);";
 			pres = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			pres.setInt(1, t.getConcertid());
 			pres.setInt(2, t.getOrderid());
 			pres.setString(3, t.getSeatarea());
 			pres.setBoolean(5, t.getIsused());
+			pres.setString(6, t.getEmail());
+			pres.setString(7, t.getPhonenumber());
+			pres.setString(8, t.getName());
 			
 			//當已經產生的票券少於票券總數時執行
 			while(createamount < ticketamount) {
@@ -88,7 +91,7 @@ public class TicketHelper {
             
             while(rs.next()) {
             	row++;
-            	Ticket t = new Ticket(rs.getInt("idticket"), rs.getInt("concertid"), orderid, rs.getString("seatarea"), rs.getInt("seatid"), rs.getBoolean("isused"));
+            	Ticket t = new Ticket(rs.getInt("idticket"), rs.getInt("concertid"), orderid, rs.getString("seatarea"), rs.getInt("seatid"), rs.getBoolean("isused"),rs.getString("email"),rs.getString("phonenumber"),rs.getString("name"));
             	jsa.put(t.toJsonData(t.getIdticket()));
             }
 			
@@ -143,6 +146,8 @@ public class TicketHelper {
 		String execute_sql = "";
 		JSONObject response = new JSONObject();
 		
+		
+		//STEP1 讀取票券資訊
 		try {
 			conn = MysqlConnect.getConnect();
 			query = "delete from `missa`.`ticket` where `orderid` = ? ";
@@ -152,6 +157,32 @@ public class TicketHelper {
 			row = pres.executeUpdate();
 			execute_sql = pres.toString();
 			System.out.println(execute_sql);
+			
+			
+			
+		} catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+		} catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            MysqlConnect.close( pres, conn);
+        }
+		
+		//STEP2 取消票券
+		try {
+			conn = MysqlConnect.getConnect();
+			query = "delete from `missa`.`ticket` where `orderid` = ? ";
+			pres = conn.prepareStatement(query);
+			pres.setInt(1, idorder);
+			
+			row = pres.executeUpdate();
+			execute_sql = pres.toString();
+			System.out.println(execute_sql);
+			
 			
 			
 		} catch (SQLException e) {
@@ -167,6 +198,9 @@ public class TicketHelper {
         }
 		response.put("result", "delete ticket success");
 		response.put("row", row);
+		
+		//STEP3 釋出位子
+		
 		return response;
 	}
 }

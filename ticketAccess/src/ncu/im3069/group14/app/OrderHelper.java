@@ -153,6 +153,7 @@ public class OrderHelper {
 		int row = 0;//用來記錄改變了幾行Mysql
 		int idorder = 0;//用來記錄新增order的pk id
 		int ticketbuy = 0;//已經+買了幾張ticket
+		int originprice = 0;//原本的價格
 		String query = ""; //要執行的query
 		String exexcute_sql = ""; //mysql執行的query
 		JSONObject response = new JSONObject();;
@@ -170,22 +171,27 @@ public class OrderHelper {
 				
 			}else if (ticketbuy + o.getTicketamount() <= 4 && ticketbuy > 0 && ! getPaidStatus(o.getMemberid(),o.getConcertid())){
 				
-				conn = MysqlConnect.getConnect(); 
-				
 				//STEP0 更新order物件的ticketamount
 				o.updateAmount(ticketbuy+ o.getTicketamount());
+				
+				//STEP0.5 取得原始的totalprice
+				originprice = getTotalprice(o.getMemberid(), o.getConcertid());
+				System.out.println("originprice:"+originprice);
+				
+				conn = MysqlConnect.getConnect(); 
 				
 				//STEP1 更新order資料庫
 				query = "update `missa`.`order`  "
 				 		+ "inner join `missa`.`ticket` "
 				 		+ "on `order`.`idorder` = `ticket`.`orderid` "
-				 		+ "set `ticketamount` = ? "
+				 		+ "set `ticketamount` = ? ,totalprice = ? "
 				 		+ "where `memberid` = ? and `concertid` = ? ";
 				 pres = conn.prepareStatement(query);
 				 
 				 pres.setInt(1, o.getTicketamount());
-				 pres.setInt(2, o.getMemberid());
-				 pres.setInt(3, o.getConcertid());
+				 pres.setInt(2, originprice + o.getTotalprice());
+				 pres.setInt(3, o.getMemberid());
+				 pres.setInt(4, o.getConcertid());
 				 
 				 row = pres.executeUpdate();
 				 exexcute_sql = pres.toString();
@@ -249,6 +255,32 @@ public class OrderHelper {
         }
 		
 		return response;
+	}
+	public int getTotalprice(int memberid, int concertid) {
+		int totalprice = 0;
+		ResultSet rs = null;
+		try {
+			conn = MysqlConnect.getConnect();
+			pres = conn.prepareStatement("select totalprice from missa.order inner join missa.ticket on order.idorder = ticket.orderid where memberid = ? and concertid = ? and paid = false");
+			pres.setInt(1, memberid);
+			pres.setInt(2, concertid);
+			rs = pres.executeQuery();
+            System.out.println(pres.toString());
+            rs.next();
+			totalprice = rs.getInt("totalprice");
+		} catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            e.printStackTrace();
+		} catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            MysqlConnect.close(pres, conn);
+        }
+		System.out.println("print total price: "+totalprice);
+		return totalprice;
 	}
 	/**
 	 * 
