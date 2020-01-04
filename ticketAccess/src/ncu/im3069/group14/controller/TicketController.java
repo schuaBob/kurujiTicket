@@ -13,7 +13,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class TicketController
  */
-@WebServlet("/ticket")
+@WebServlet("/Auth/ticket")
 public class TicketController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
       

@@ -10,27 +10,37 @@ public class Ticket {
 	private int seatid;
 	private boolean isused;
 	
+	private String email;
+	private String phonenumber;
+	private String name;
+	
 	/**
 	 * 建立一張新票券
 	 * @isused 一定還沒用
 	 */
-	public Ticket(int concertid, int orderid, String seatarea, int seatid) {
+	public Ticket(int concertid, int orderid, String seatarea, int seatid, String email, String phonenumber, String name) {
 		this.concertid = concertid;
 		this.orderid = orderid;
 		this.seatarea = seatarea;
 		this.seatid = seatid;
 		this.isused = false;
+		this.email = email;
+		this.phonenumber = phonenumber;
+		this.name = name;
 	}
 	/**
 	 * 用來查詢票券
 	 */
-	public Ticket(int idticket, int concertid, int orderid, String seatarea, int seatid, boolean isused) {
+	public Ticket(int idticket, int concertid, int orderid, String seatarea, int seatid, boolean isused, String email, String phonenumber, String name) {
 		this.idticket = idticket;
 		this.concertid = concertid;
 		this.orderid = orderid;
 		this.seatarea = seatarea;
 		this.seatid = seatid;
 		this.isused = isused;
+		this.email = email;
+		this.phonenumber = phonenumber;
+		this.name = name;
 	}
 	public int getIdticket() {
 		return this.idticket;
@@ -49,6 +59,15 @@ public class Ticket {
 	}
 	public boolean getIsused() {
 		return this.isused;
+	}
+	public String getEmail() {
+		return this.email;
+	}
+	public String getPhonenumber() {
+		return this.phonenumber;
+	}
+	public String getName() {
+		return this.name;
 	}
 	public void setSeatid(int seatid) {
 		this.seatid = seatid;

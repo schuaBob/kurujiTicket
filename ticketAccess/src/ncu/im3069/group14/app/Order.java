@@ -14,7 +14,7 @@ public class Order {
 	private int ticketamount; //訂單總數(1~4)
 	private Timestamp createtime; //訂單建立時間 YYYY-MM-DD HH:MM:SS
 	private int concertid;
-	private int totalprice;
+	private int totalprice = 0;
 	
 	/**
 	 * 建立訂單，需要以下3筆資料

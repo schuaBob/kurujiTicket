@@ -129,13 +129,20 @@
         <script>
             $(document).ready(function () {
 
+              localStorage.memberid=0;
+              
                 $("#datetab").removeClass("active");
                 $("#datatab").addClass("active");
                 $("#ticketdata").append(localStorage.display);
-
+                
+                //判斷會員
+                var member = 5;
+                localStorage.setItem("memberid", member);
 
 
                 $('#member').mousedown(function () {
+
+
 
                     memebercheck();
                 });
@@ -149,18 +156,18 @@
                 //自動輸入member data
                 function memebercheck() {
 
+
+
+
                     $("#order_name").val("111");
                     $("#order_phone").val("0912334567");
                     $("#order_email").val("a2333@gmail.com");
 
-                    //判斷會員
-                    var member = 1;
-                    localStorage.setItem("memberid", member);
 
                     //url加上memberid
                     //session
                     $.ajax({
-                        url: "Auth/member?idmember=5",
+                        url: "Auth/member",
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {

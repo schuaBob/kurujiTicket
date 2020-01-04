@@ -135,24 +135,17 @@
         <script>
 
             $(document).ready(function () {
+                ordershow();
                 ticketshow();
-
-
-
             });
-
             function ticketshow() {
-
                 $(".more").mousedown(function () {
-
-                    let textid = this.id;
-                    $("#show").modal("show");
-
                     $.ajax({
-                        url: "ticket" + textid,
+                        url: "ticket",
                         method: 'get',
                         error: function (err) {
                             console.log(err);
+                            alert("ticket玫璉")
                         },
                         success: function (data) {
                             $.each(data, function (i, item) {
@@ -170,18 +163,16 @@
 
                         }
                     });
-
+                    let textid = this.id;
+                    $("#show").modal("show");
                 });
             }
             function ordershow() {
                 //把所有order放上去
                 $.ajax({
-                    url: "Auth/order?memberid=",
-                    method: 'get',
+                    url: `Auth/order`,
+                    method: 'GET',
                     dataType: 'json',
-                    error: function (err) {
-                        console.log(err);
-                    },
                     success: function (response) {
 
                         let order = JSON.parse(response.data);
@@ -215,6 +206,10 @@
                         })
 
 
+                    },
+                    error: function (err) {
+                        alert("order玫璉");
+                        console.log(err);
                     }
                 });
             }
