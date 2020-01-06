@@ -293,7 +293,7 @@
 
                     //購買區域票數
                     //存買哪區、幾張、存顯示
-                    var money = 0;
+                    var money = [];
                     var tempoq = [];
                     var temparea = [];
                     var temp = 0;
@@ -306,7 +306,7 @@
                             temp++;
                             first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
                             second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
-                            money += (oq[b] * pr[b]);
+                            money[b] = (oq[b] * pr[b]);
                         }
 
                     }
@@ -315,13 +315,11 @@
 
                     localStorage.setItem("area", JSON.stringify(temparea));
 
-
-
                     //總價錢
-                    localStorage.setItem("total_money", money);
+                    localStorage.setItem("total_money", JSON.stringify(money));
 
                     //之後修space
-                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money.reduce((a,b)=>a+b);
                     //alert(first);
                     // alert(display);
                     localStorage.setItem("display", display);
