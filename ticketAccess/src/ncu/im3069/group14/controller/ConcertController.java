@@ -27,7 +27,7 @@ import ncu.im3069.group14.tools.RequestHandler;
  * Servlet implementation class ConcertController
  */
 @WebServlet("/Auth/concert.do")
-@MultipartConfig(fileSizeThreshold=1024*1024*10, maxFileSize=1024*1024*50, maxRequestSize=1024*1024*100,location="ticketAccess/picture")
+@MultipartConfig(fileSizeThreshold=1024*1024*10, maxFileSize=1024*1024*50, maxRequestSize=1024*1024*100)
 public class ConcertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -85,13 +85,13 @@ public class ConcertController extends HttpServlet {
 		String seatPicName = seatPicPart.getSubmittedFileName();
 		String posterName = posterPart.getSubmittedFileName();
 		
-		System.out.println(request.getServletContext().getRealPath("/WebContent/picture"));
+		String path = request.getServletContext().getRealPath(File.separator+"picture");
+		System.out.println(path);
 
-		seatPicPart.write(seatPicName);
-		posterPart.write(posterName);
+		seatPicPart.write(path+File.separator+seatPicName);
+		posterPart.write(path+File.separator+posterName);
 		temp.put("picture",File.separator+"picture"+File.separator+posterName);
 		temp.put("seatpicture", File.separator+"picture"+File.separator+seatPicName);
-		temp.put("supplierId", jsr.getMemberIDinRequest());
 		/** ��sonReader憿撠equest銋SON�撘��圾��蒂���� */
 		
         Concert c = new Concert(temp);
