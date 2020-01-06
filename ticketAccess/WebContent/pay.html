@@ -12,7 +12,11 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-
+    <style>
+        #logout:hover {
+            cursor: pointer;
+        }
+    </style>
 
 
 </head>
@@ -55,7 +59,7 @@
                             <a class="nav-link" href="edit.html">MemberData</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Logout</a>
+                            <a class="nav-link" id="logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -134,7 +138,20 @@
                 $("#datetab").removeClass("active");
                 $("#paytab").addClass("active");
                 $("#ticket").append(localStorage.display);
-
+                $("#logout").click(function () {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "login",
+                        success: function (res) {
+                            console.log("success")
+                            window.location.replace(res.redirect);
+                        },
+                        error: function (err) {
+                            alert("Error");
+                            console.log(err)
+                        }
+                    })
+                })
                 //alert時間
                 $("#pay_b").click(function () {
 
@@ -182,8 +199,8 @@
                     var json_area = JSON.parse(localStorage.getItem("area"));
                     //alert(json_areaq.length);
 
-                    for (var v = 0; v <json_areaq.length ; v++) {
-                        
+                    for (var v = 0; v < json_areaq.length; v++) {
+
 
                         if (json_area[v] != 0) {
                             //  alert(localStorage.memberid);
@@ -192,7 +209,7 @@
                             var data = {
                                 "concertid": localStorage.concert_id,
                                 "seatarea": json_area[v],
-                                "ticketamount":json_areaq[v],
+                                "ticketamount": json_areaq[v],
                                 "name": localStorage.temp_name,
                                 "phonenumber": localStorage.temp_phone,
                                 "email": localStorage.temp_mail,

@@ -8,9 +8,10 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 
 </head>
@@ -67,11 +68,12 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
+                            style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -106,6 +108,7 @@
             $(document).ready(function () {
                 ordershow();
 
+
             });
 
             function ordershow() {
@@ -115,7 +118,6 @@
                     method: 'GET',
                     dataType: 'JSON',
                     success: function (order) {
-                      //  alert("success");
 
                         // let order = JSON.parse(response.data);
 
@@ -137,10 +139,10 @@
 
                             temp += '<h2 class="card-text" >$' + item.totalprice + '</h2></div>';
                             if (item.paid == 1) {
-                                temp += ' <div class="col more" id=" ' + item.idorder + ' style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(已付款)>></a></div></div></div></div>'
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a class="btn btn-primary see" orderid="' + item.idorder + '">詳細資訊(已付款)>></a></div></div></div></div>'
                             }
                             else {
-                                temp += ' <div class="col more" id=" ' + item.idorder + '" style="padding-left:30%;padding-top:4%;"><a href="#" class="btn btn-primary" id="' + item.idorder + '">詳細資訊(待付款)>></a></div></div></div></div>'
+                                temp += ' <div class="col more" style="padding-left:30%;padding-top:4%;"><a class="btn btn-primary see" orderid="' + item.idorder + '">詳細資訊(待付款)>></a></div></div></div></div>'
                             }
 
                             $(".order").append(temp);
@@ -148,56 +150,51 @@
 
 
                         })
-                        ticketshow();
+                        $(".see").on('click',function (e) {
+                            console.log(e.currentTarget.attributes.orderid.value)
 
+                            let id = parseInt(e.currentTarget.attributes.orderid.value);
+                            var data = {
+                                "orderid": id
+                            }
+                            var data_string = JSON.stringify(data);
+
+                            $.ajax({
+                                url: '/Auth/ticket',
+                                method: 'POST',
+
+                                data: data_string,
+                                error: function (err) {
+
+                                    console.log(err);
+                                    alert("ticket玫璉")
+                                },
+                                success: function (response) {
+                                    console.log(response);
+                                    $("#tb").empty()
+                                    $.each(response.data.tickets, function (i, item) {
+                                        console.log(item)
+                                        var temp = "";
+                                        temp += '<tr><th scope="row">' + item.concertid + '</th>';
+                                        temp += '<td>' + item.seatarea + '</td>';
+                                        temp += '<td>' + item.seatid + '</td>';
+                                        temp += '<td>' + item.name + '</td>';
+                                        temp += '<td>' + item.email + '</td>';
+                                        temp += '<td>' + item.phonenumber + '</td></tr>'
+
+                                        $("#tb").append(temp);
+                                    });
+
+                                }
+                            });
+                            $("#show").modal("show");
+                        });
                     },
                     error: function (err) {
                         alert("沒有訂單喔");
                         console.log(err);
                         console.log(err.responsetext);
                     }
-                });
-            }
-            function ticketshow() {
-                $(".more").mousedown(function () {
-
-
-                    let id = parseInt(this.id);
-                    var data = {
-                        "orderid": id
-                    }
-                    var data_string = JSON.stringify(data);
-
-                    $.ajax({
-                        url: '/Auth/ticket',
-                        method: 'POST',
-
-                        data: data_string,
-                        error: function (err) {
-
-                            console.log(err);
-                            alert("ticket玫璉")
-                        },
-                        success: function (response) {
-                            console.log(response);
-                            $.each(response.data.tickets, function (i, item) {
-
-                                var temp = "";
-                                temp += '<tr><th scope="row">' + item.concertid + '</th>';
-                                temp += '<td>' + item.seatarea + '</td>';
-                                temp += '<td>' + item.seatid + '</td>';
-                                temp += '<td>' + item.name + '</td>';
-                                temp += '<td>' + item.email + '</td>';
-                                temp += '<td>' + item.phonenumber + '</td></tr>'
-
-                                $("#tb").append(temp);
-                            });
-
-                        }
-                    });
-                    let textid = this.id;
-                    $("#show").modal("show");
-                    $("#tb").empty();
                 });
             }
         </script>

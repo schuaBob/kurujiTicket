@@ -21,62 +21,7 @@ public class OrderHelper {
 		}
 		return oh;
 	}
-	/**
-	 * 給訂單id，去ticketid撈資料，用jsonarray包起來後，回傳該會員所有的訂單
-	 * @param orderid
-	 * @return
-	 */
-	//這個還沒完成
-	public JSONObject getOrder(int orderid) {
-		int row = 0;
-		String query = ""; //要執行的query
-		String exexcute_sql = ""; //mysql執行的query
-		JSONObject response = new JSONObject();;
-		JSONObject temp = null;
-		Order o = null;
-		ResultSet rs = null;
-		System.out.println("orderid:"+orderid);
-		
-		try {
-			conn = MysqlConnect.getConnect();
-			query = "SELECT * FROM `missa`.`order` as `a`inner join `missa`.`ticket` as `b` on `a`.`idorder` = `b`.`orderid` where `memberid` = ? ";
-			pres = conn.prepareStatement(query);
-			pres.setInt(1, memberid);
-			
-			rs = pres.executeQuery();
-			exexcute_sql = pres.toString();
-            System.out.println(exexcute_sql);
-            
-            while(rs.next()) {
-            	row++;
-            	int idorder = rs.getInt("idorder");
-            	String payment = rs.getString("payment");
-            	Boolean paid = rs.getBoolean("paid");
-            	int ticketamount = rs.getInt("ticketamount");
-            	Timestamp createtime = rs.getTimestamp("createtime");
-            	int concertid = rs.getInt("concertid");
-            	
-            	o = new Order(idorder, memberid, payment, paid, ticketamount, createtime, concertid);
-            	temp = o.toJsonData(idorder);
-            	jsa.put(temp);
-            }
-			
-		} catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
-            System.err.format("SQL State: %s\n%s\n%s\n", e.getErrorCode(), e.getSQLState(), e.getMessage());
-            e.printStackTrace();
-		} catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
-            e.printStackTrace();
-        } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
-            MysqlConnect.close(rs, pres, conn);
-        }
-		response.put("result", "get all data success");
-		response.put("row", row);
-		response.put("dataset", jsa);
-		return response;
-	}
+	
 	/**
 	 * 給會員id，去order撈資料，用jsonarray包起來後，回傳該會員所有的訂單
 	 * 目前這樣查詢會是以ticket為結果

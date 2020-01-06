@@ -7,10 +7,14 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <style>
+        #logout:hover {
+            cursor: pointer;
+        }
+    </style>
 
 
 
@@ -30,11 +34,12 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
+                            style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -54,7 +59,7 @@
                             <a class="nav-link" href="edit.html">MemberData</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html">Logout</a>
+                            <a class="nav-link" id="logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -123,7 +128,20 @@
                 $("#tickettab").addClass("active");
 
                 // alert(localStorage.concert_id);
-
+                $("#logout").click(function () {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "login",
+                        success: function (res) {
+                            console.log("success")
+                            window.location.replace(res.redirect);
+                        },
+                        error: function (err) {
+                            alert("Error");
+                            console.log(err)
+                        }
+                    })
+                })
 
                 //剩餘區域票數
 
@@ -163,7 +181,7 @@
                             let data = JSON.parse(response.data);
 
                             console.log(data);
-                            $("#pic").attr("src",data[0].seatpicture)
+                            $("#pic").attr("src", data[0].seatpicture)
 
                             data.forEach(e => {
                                 let tmp = JSON.parse(e.ticketstatus).data;
@@ -197,8 +215,6 @@
 
                 function botton_change() {
 
-                   // alert(q.length);
-                  
                     for (var a = 0; a < q.length; a++) {
                         if (q[a] < 4) {
                             if (q[a] == 0) {
@@ -217,7 +233,7 @@
 
                     }
 
-        
+
 
 
                 }
@@ -259,8 +275,8 @@
                 }
 
                 function storage() {
-                   
-                  
+
+
                     //要判斷有甚麼area，提前判斷，看是否有localstorage
                     var first = "";
                     var second = "";
@@ -277,26 +293,26 @@
 
                     //購買區域票數
                     //存買哪區、幾張、存顯示
-                    var money=0;
-                    var tempoq=[];
-                    var temparea=[];
-                    var temp=0;
+                    var money = 0;
+                    var tempoq = [];
+                    var temparea = [];
+                    var temp = 0;
                     for (var b = 0; b < q.length; b++) {
-                        
+
                         if (oq[b] != 0) {
-                           
-                            tempoq[temp]=oq[b];
-                            temparea[temp]=$("#area"+ (b + 1)).text();
+
+                            tempoq[temp] = oq[b];
+                            temparea[temp] = $("#area" + (b + 1)).text();
                             temp++;
                             first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
                             second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
-                            money+=(oq[b] * pr[b]);
+                            money += (oq[b] * pr[b]);
                         }
 
                     }
                     localStorage.setItem("areaq", JSON.stringify(tempoq));
-                   
-                   
+
+
                     localStorage.setItem("area", JSON.stringify(temparea));
 
 
@@ -307,7 +323,7 @@
                     //之後修space
                     var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
                     //alert(first);
-                   // alert(display);
+                    // alert(display);
                     localStorage.setItem("display", display);
                 }
 
