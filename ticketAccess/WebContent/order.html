@@ -115,7 +115,7 @@
                     method: 'GET',
                     dataType: 'JSON',
                     success: function (order) {
-                        alert("success");
+                      //  alert("success");
 
                         // let order = JSON.parse(response.data);
 
@@ -152,7 +152,7 @@
 
                     },
                     error: function (err) {
-                        alert("order玫璉+bobo");
+                        alert("沒有訂單喔");
                         console.log(err);
                         console.log(err.responsetext);
                     }
@@ -197,6 +197,7 @@
                     });
                     let textid = this.id;
                     $("#show").modal("show");
+                    $("#tb").empty();
                 });
             }
         </script>
