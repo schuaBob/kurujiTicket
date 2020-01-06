@@ -169,8 +169,7 @@
                             //抓時間
 
 
-                            data.forEach(e => {
-                                i = 0;
+                            data.forEach((e,i) => {
                                 var temp = "";
                                 temp += ' <div class="w-30"><div class="card"><div class="card-body" style="text-align:center">';
                                 temp += '  <div id ="concert' + (i + 1) + '" > <h5 class="card-title">第' + (i + 1) + '場</h5>';
@@ -188,7 +187,6 @@
                                 $(".order").append(temp);
 
 
-                                i++;
 
                                 // $("#concert_name").html;
                                 // $("#location" + (i + 1)).html(data[i].location);
