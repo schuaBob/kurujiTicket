@@ -467,7 +467,13 @@
             })
             data.forEach((e, i) => {  //i (0開始~4)第幾個 , e 值
               var direction = i % 2 ? "text-right" : "";//免
-              var card = createConcertCard(e.idconcert, e.name, e.session, e.picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
+              var pic;
+              if(e.picture == "") {
+                pic = "index\silhouette-of-dancing-people-inside-club-1677710.jpg"
+              } else {
+                pic = e.picture
+              }
+              var card = createConcertCard(e.idconcert, e.name, e.session, pic, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
               $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
             }); //ajax抓資料 再放到html
           } else {
