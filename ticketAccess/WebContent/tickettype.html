@@ -311,9 +311,9 @@
                         if (oq[b] != 0) {
                             localStorage.setItem("area" + (b + 1) + "_q", oq[b]);
 
-                            localStorage.setItem("area" + (b + 1), $("#area1").text());
+                            localStorage.setItem("area" + (b + 1), $("#area"+ (b + 1)).text());
                             first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
-
+                            
                             second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
                             money+=(oq[b] * pr[b]);
                         }
