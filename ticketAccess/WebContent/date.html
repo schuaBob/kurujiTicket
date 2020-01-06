@@ -139,11 +139,12 @@
         </div>
         <script>
             //想替他們加名字
+            // localStorage.clear();
             $(document).ready(function () {
 
                 //一開始跳轉此頁面
                 //ajax load資料concertname,location,ticketstatus(價錢、幾區),座位數量?
-                localStorage.clear();
+                
 
 
                 getconcertdata();
@@ -183,7 +184,7 @@
                             //
                             let data = JSON.parse(response.data);
                             //演唱會名字
-                            $("#concert_name").html(data[0].name);
+                            $("#concert_name").html(data[0].session);
                             //抓時間
 
 
@@ -251,7 +252,7 @@
 
                 function storage() {
                     console.log("concertid");
-
+                    
 
                     $("#order_b1").click(function () {
 
