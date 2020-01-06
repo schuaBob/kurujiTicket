@@ -91,7 +91,7 @@
 
                     </div>
                 </div>
-                <div style="height:6vh;"></div>
+                <div class="text-center"><img src="" id="pic" style="max-width: 350px;"></div>
                 <form>
                     <fieldset id="ticketset">
                         <div class="area_choice">
@@ -163,7 +163,7 @@
                             let data = JSON.parse(response.data);
 
                             console.log(data);
-
+                            $("#pic").attr("src",data[0].seatpicture)
 
                             data.forEach(e => {
                                 let tmp = JSON.parse(e.ticketstatus).data;
