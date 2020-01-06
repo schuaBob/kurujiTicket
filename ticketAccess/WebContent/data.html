@@ -9,8 +9,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         #logout:hover {
@@ -23,12 +23,11 @@
     <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
         <nav class="navbar navbar-light bg-transparent">
             <a class="navbar-brand" href="/">
-                <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
-                    style="width:35vh">
+                <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
             </a>
         </nav>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -105,8 +104,7 @@
                     <form-row>
                         <label for="validationDefault01">*手機</label>
 
-                        <input type="tel" class="form-control" name="order_phone" id="order_phone"
-                            placeholder="0912345678" pattern="[0-9]{10}" required>
+                        <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
                     </form-row>
 
                     <form-row>
@@ -161,7 +159,10 @@
 
                 $("#data_b").click(function () {
 
-                    datasubmit();
+                    localStorage.setItem("temp_name", $("#order_name").val());
+                    localStorage.setItem("temp_phone", $("#order_phone").val());
+                    localStorage.setItem("temp_mail", $("#order_email").val());
+                   // alert(localStorage.temp_name);
                 });
 
                 //自動輸入member data
@@ -181,10 +182,15 @@
                             $("#order_name").val(people.name);
                             $("#order_phone").val(people.phonenumber);
                             $("#order_email").val(people.email)
+
+
                         }
 
                     });
+
+
                 }
+
             });
         </script>
         </main>

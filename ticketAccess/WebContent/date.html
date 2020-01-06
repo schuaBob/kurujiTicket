@@ -7,8 +7,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <style>
@@ -33,12 +33,11 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
-                            style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -149,6 +148,7 @@
 
 
                 getconcertdata();
+
                 $("#logout").click(function () {
                     $.ajax({
                         method: "DELETE",
@@ -163,6 +163,7 @@
                         }
                     })
                 })
+
 
 
                 //寫入頁面
@@ -183,10 +184,12 @@
                             //
                             let data = JSON.parse(response.data);
                             //演唱會名字
+                            $("#concert_name").html(data[0].name);
                             //抓時間
 
 
                             data.forEach((e, i) => {
+
                                 var temp = "";
                                 temp += ' <div class="w-30"><div class="card"><div class="card-body" style="text-align:center">';
                                 temp += '  <div id ="concert' + (i + 1) + '" > <h5 class="card-title">第' + (i + 1) + '場</h5>';
@@ -203,17 +206,15 @@
                                 temp += '<span style="width:2%;"></span>';
                                 $(".order").append(temp);
 
+                                // if ($(".quantitynow" + (i + 1)).html() == ("剩下" + 0 + "張")) {
+                                //     $("#order_b" + (i + 1)).addClass("disabled");
+                                //     $("#order_b" + (i + 1)).prop('disabled', true);
+                                //     $("#order_b" + (i + 1)).text("已售完");
+                                // };
 
-
-                                // $("#concert_name").html;
-                                // $("#location" + (i + 1)).html(data[i].location);
-                                // let temp = ;
-                                // $("#time" + (i + 1)).html(temp);
-
-                                // $(".quantitynow" + (i + 1)).attr('id', data[i].idconcert);
-                                // alert($('.quantitynow' + (i + 1)).attr('id'));
+                                // number++;
                             });
-                            change_botton();
+                            change_button();
                             storage();
 
 
@@ -228,7 +229,8 @@
                 }
 
                 //改按鈕狀態
-                function change_botton() {
+                function change_button() {
+
 
 
                     if ($(".quantitynow1").html() == ("剩下" + 0 + "張")) {
@@ -250,13 +252,14 @@
 
                 function storage() {
                     console.log("concertid");
+
+
                     $("#order_b1").click(function () {
 
                         localStorage.setItem("concert_content", $("#concert1").html());
                         localStorage.setItem("concert_id", $('.quantitynow1').attr('id'));
-
-
                     });
+
                     $("#order_b2").click(function () {
 
                         localStorage.setItem("concert_content", $("#concert2").html());
@@ -267,6 +270,28 @@
                         localStorage.setItem("concert_content", $("#concert3").html());
                         localStorage.setItem("concert_id", $('.quantitynow3').attr('id'));
                     });
+
+                    //var temp_content = ['0', '0'];
+
+
+                    // for (var r = 0; r < number; r++) {
+
+
+                    //     temp_content[r]=$("#concert" + (r + 1)).html();
+                    //     console.log(temp_content);
+                    //     $("#order_b" + (r + 1)).click(function () {
+
+                    //         alert("sdfsd");
+                    //         alert(temp_content[r]);
+                    //         localStorage.setItem("concert_content",temp_content[r]);
+                    //         localStorage.setItem("concert_id", $('.quantitynow' + (r + 1)).attr('id'));
+
+
+
+                    //     });
+
+
+                    // }
 
 
                 }
