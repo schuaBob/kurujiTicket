@@ -3,12 +3,10 @@ package ncu.im3069.group14.controller;
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ncu.im3069.group14.tools.*;
-import ncu.im3069.group14.util.Token;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
 

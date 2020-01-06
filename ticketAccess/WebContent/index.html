@@ -370,59 +370,6 @@
     </div>
     <div class="page" id="page2">
       <div class="container all-concert">
-        <!--塞入 ajax新增-->
-        <div class="card bg-transparent">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-8">
-                <div id="wrapper">
-                  <article class="conPic" role="article">
-                    <a href="#">
-                      <div class="conPic-text">
-                        <div class="conPic-meta">Architecture</div>
-                        <h2 class="conPic-title">A Photographer’s Weekend House By General Design</h2>
-                      </div>
-                      <img class="conPic-image"
-                        src="https://www.nownews.com/wp-content/uploads/2018/10/1539710050-79305df2140840e66e56f56d4aa37ee8-696x464.jpg" />
-                    </a>
-                  </article>
-                </div>
-              </div>
-              <div class="col-4 align-self-center">
-                <h1 class="card-title">防彈少年團</h1>
-                <p class="card-text h4">2020/10/04星期日</p>
-                <p class="card-text h4">19:00-21:00</p>
-                <p class="cart-text h4">桃園棒球場</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card bg-transparent">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-4 align-self-center">
-                <h1 class="card-title text-right">五月天</h1>
-                <p class="card-text h4 text-right">2020/01/01星期三</p>
-                <p class="card-text h4 text-right">19:00-21:00</p>
-                <p class="cart-text h4 text-right">桃園棒球場</p>
-              </div>
-              <div class="col-8">
-                <div id="wrapper">
-                  <article class="conPic" role="article">
-                    <a href="#">
-                      <div class="conPic-text">
-                        <div class="conPic-meta">Architecture</div>
-                        <h2 class="conPic-title">A Photographer’s Weekend House By General Design</h2>
-                      </div>
-                      <img class="conPic-image"
-                        src="https://static.tixcraft.com/images/activity/19_JRI_5299f9a281d1735a23844ca8ed85f090.jpg" />
-                    </a>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </main>
@@ -499,25 +446,14 @@
               return a.concertstarttime < b.concertstarttime ? 1 : -1;
             })
             data.forEach((e, i) => {  //i (0開始~4)第幾個 , e 值
-              console.log(e) //印出concert所有內容
+
               var direction = i % 2 ? "text-right" : "";//免
-              console.log(i % 2)
-              console.log(direction)
-              var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
-              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
+
+              var card = createConcertCard(e.idconcert, e.name, e.session, e.picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
               $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
             }); //ajax抓資料 再放到html
-
-            // for (i in data) {
-            //   console.log(`Concert Number: ${data[i].idconcert}`)
-            //   console.log(`Concert Name: ${data[i].name}`)
-            //   console.log(`Concert session: ${data[i].session}`)
-            //   console.log(`Concert picture: ${data[i].picture}`)
-            //   console.log(`Concert endsellingtime: ${data[i].endsellingtime}`)
-            //   console.log(`Concert Location ${data[i].location}`)
-            // }
           } else {
-            //alert("沒東西或有問題");
+            alert("沒東西或有問題");
           }
         },
         error: function (err) {
