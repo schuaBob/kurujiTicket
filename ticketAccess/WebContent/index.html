@@ -435,7 +435,7 @@
     var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
-        url: "api/concert.do", //session代表場次代號
+        url: "Auth/concert.do", //session代表場次代號
         cache: false,
         dataType: "json",
         timeout: 5000,
@@ -449,8 +449,8 @@
 
               var direction = i % 2 ? "text-right" : "";//免
               var pic;
-              if(e.picture == "") {
-                pic = "index\silhouette-of-dancing-people-inside-club-1677710.jpg"
+              if(e.picture == ""||e.picture == "no picture" || e.picture == "URL") {
+                pic = "index\\silhouette-of-dancing-people-inside-club-1677710.jpg"
               } else {
                 pic = e.picture
               }

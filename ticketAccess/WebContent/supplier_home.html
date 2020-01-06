@@ -15,9 +15,11 @@
       -ms-user-select: none;
       user-select: none;
     }
-    #logout{
+
+    #logout {
       cursor: pointer;
     }
+
     @media (min-width: 768px) {
       .bd-placeholder-img-lg {
         font-size: 3.5rem;
@@ -45,7 +47,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" id="logout">Logout</a>
-        </li>        
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -66,12 +68,12 @@
               <label for="exampleFormControlInput1">演唱會名稱</label>
               <input type="email" class="form-control" id="concertNameID" placeholder="concertname" required>
             </div>
-            
-			<div class="form-group">
+
+            <div class="form-group">
               <label for="exampleFormControlInput1">期別</label>
               <input type="email" class="form-control" id="session" placeholder="session" required>
             </div>
-            
+
             <div class="form-group">
               <label for="exampleFormControlInput1">地址</label>
               <input type="email" class="form-control" id="addressID" placeholder="address" required>
@@ -88,7 +90,7 @@
                   <label for="bookdate">到</label>
                   <input type="datetime-local" id="endtime" required>
                 </div>
-                
+
                 <div class="form-group">
                   <label for="bookdate">關閉售票日期與時間</label>
                   <input type="datetime-local" id="endsellingtime" required>
@@ -153,10 +155,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
+    </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
+    </script>
   <script type="text/javascript">
     function insertFunction() {
       document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3 aaa">
@@ -170,19 +172,19 @@
     }
 
     $("#logout").click(function () {
-        $.ajax({
-          method:"DELETE",
-          url:"login",
-          success:function (res) {
-            console.log("success")
-            window.location.replace(res.redirect);
-          },
-          error:function (err) {
-            alert("Error");
-            console.log(err)
-          }
-        });
+      $.ajax({
+        method: "DELETE",
+        url: "login",
+        success: function (res) {
+          console.log("success")
+          window.location.replace(res.redirect);
+        },
+        error: function (err) {
+          alert("Error");
+          console.log(err)
+        }
       });
+    });
 
     $("#submitconcert").click(function () {
       let statusArr = [];
@@ -199,37 +201,38 @@
 
       var obj = {
         "concertName": $("#concertNameID").val(),
-          "supplierId": 001,
-          "location": $("#addressID").val(),
-          "picture": "URL",
-          "seatpicture": "URL",
-          "endsellingtime": $("#endsellingtime").val(),
-          "content": $("#descriptionID").val(),
-          "session":$("#session").val(),
+        "supplierId": 001,
+        "location": $("#addressID").val(),
+        "picture": "URL",
+        "seatpicture": "URL",
+        "endsellingtime": $("#endsellingtime").val(),
+        "content": $("#descriptionID").val(),
+        "session": $("#session").val(),
         "ticketstatus": {
           "data": statusArr
         },
 
-        "concertstarttime": "2019-1-1 12:22:30",
-        "concertendtime": "2019-1-1 12:22:30"
+        "concertstarttime": $("#starttime").val(),
+        "concertendtime": $("#endtime").val()
       }
       var formData = new FormData()
       var seatpicture = $('#seatpic').get(0).files[0];
       var poster = $('#poster').get(0).files[0];
-      formData.append("seatpicture",seatpicture);
-      formData.append("picture",poster);
-      formData.append("obj",JSON.stringify(obj));
+      formData.append("seatpicture", seatpicture);
+      formData.append("picture", poster);
+      formData.append("obj", JSON.stringify(obj));
       $.ajax({
         type: "POST",
-        url: "api/concert.do",
+        url: "Auth/concert.do",
         dataType: "json",
         mimeType: 'multipart/form-data',
-        contentType:false,
-        processData:false,
+        contentType: false,
+        processData: false,
         data: formData,
         success: function (response) {
           if (response.status == 200) {
             alert("成功");
+            window.location.replace("supplier_view2.html")
           }
         },
         error: function (err) {

@@ -151,7 +151,7 @@
 
                     //url加上concertid,為啥不行
                     $.ajax({
-                        url: "api/concert.do?concertid=" + localStorage.concert_id,
+                        url: "Auth/concert.do?concertid=" + localStorage.concert_id,
                         method: 'get',
                         dataType: 'json',
                         error: function (err) {

@@ -64,7 +64,7 @@ public class TokenAuth implements Filter {
 			if(token == null||token.isEmpty()) {
 				System.out.println("Token is null or empty");
 				//STEP2.1 憒�閮餃����靘停瘝�oken嚗�隞亙停銝���(��)
-				if(path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST")) {
+				if((path.equals("/Auth/member")&&httpRequest.getMethod().equals("POST"))||(path.equals("/Auth/concert.do")&&httpRequest.getMethod().equals("GET"))) {
 					chain.doFilter(request, response);//�脣雿輻�撓���雯��嚗X 頛詨auth/order > ��隞亥�蝙�� /order
 				} else {
 					httpResponse.sendRedirect("/login");//瘝�oken嚗�token�蝛箇��誨銵其����嚗��ogin��
