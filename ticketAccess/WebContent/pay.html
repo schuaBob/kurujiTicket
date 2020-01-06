@@ -180,15 +180,16 @@
                 function update() {
 
                     for (var v = 0; v < 5; v++) {
-                        alert(localStorage.area(v + 1));
-                        if (localStorage.area(v + 1) != 0) {
+                        var tempArea = eval(`localStorage.area${v+1}`)
+                        alert(tempArea);
+
+                        if (tempArea != 0) {
                             //  alert(localStorage.memberid);
 
                             var data = {
                                 "concertid": localStorage.concert_id,
-                                "seatarea": localStorage.area(v + 1),
-                                "ticketamount": localStorage.area(v + 1) + _q,
-
+                                "seatarea": tempArea,
+                                "ticketamount":eval(`localStorage.area${v+1}_q`),
                                 "name": localStorage.temp_name,
                                 "phonenumber": localStorage.temp_phone,
                                 "email": localStorage.temp_mail,
