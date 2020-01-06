@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+
+<meta charset="UTF-8">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <style>
+        #logout:hover {
+            cursor: pointer;
+        }
+    </style>
+
+
+
+
+</head>
+
+
+
+
+
+<body>
+    <main>
+        <header>
+            <!--應該要匯入navbar ktml-->
+            <div id="include"></div>
+
+            <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+                <nav class="navbar navbar-light bg-transparent">
+                    <a class="navbar-brand" href="/">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
+                            style="width:35vh">
+                    </a>
+                </nav>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index-signin.html">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="date.html">Buy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="order.html">MyOrder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="edit.html">MemberData</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- 引入測試-->
+        <div w3-include-html="navbar.html"></div>
+
+        <div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <p id="concert-name">周杰倫嘉年華演唱會</p>
+
+
+
+                        <ul class="nav nav-pills" id="progress">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tickettab">選擇票種</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="datatab">填寫表單</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="paytab">選擇付款方式</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="col-4" id="tickettype_concertdata">
+
+                    </div>
+                </div>
+                <div class="text-center"><img src="" id="pic" style="max-width: 350px;"></div>
+                <form>
+                    <fieldset id="ticketset">
+                        <div class="area_choice">
+                            <div class="area_title">
+                                票種/票價/購買數量
+                            </div>
+
+                            <ul class="list-group ">
+
+
+
+
+
+
+
+                            </ul>
+                        </div>
+                        <div class="area_button">
+                            <a href="data.html" class="btn btn-primary" role="button" id="ticket_b">下一步</a>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+
+                $("#datetab").removeClass("active");
+                $("#tickettab").addClass("active");
+
+                // alert(localStorage.concert_id);
+                $("#logout").click(function () {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "login",
+                        success: function (res) {
+                            console.log("success")
+                            window.location.replace(res.redirect);
+                        },
+                        error: function (err) {
+                            alert("Error");
+                            console.log(err)
+                        }
+                    })
+                })
+
+                //剩餘區域票數
+
+                //購買區域票數，可以給function用嗎
+                var oq = [];
+                var q = [];
+                //寫入幾區和票數和數量
+                getconcertdata();
+
+
+                $("#ticket_b").click(function () {
+                    limit();
+
+                });
+
+                //寫入頁面
+
+                function getconcertdata() {
+
+                    //localstorage
+
+                    var a = localStorage.concert_content;
+                    $("#tickettype_concertdata").html(a);
+
+
+                    //url加上concertid,為啥不行
+                    $.ajax({
+                        url: "Auth/concert.do?concertid=" + localStorage.concert_id,
+                        method: 'get',
+                        dataType: 'json',
+                        error: function (err) {
+                            alert("沒有連上");
+                        },
+                        success: function (response) {
+
+                            //   alert("連上");
+                            let data = JSON.parse(response.data);
+
+                            console.log(data);
+                            $("#pic").attr("src", data[0].seatpicture)
+
+                            data.forEach(e => {
+                                let tmp = JSON.parse(e.ticketstatus).data;
+                                let i = 0;
+                                tmp.forEach(f => {
+                                    var areaquantity = (f.SeatTotal - f.Sold);
+                                    //   alert(areaquantity);
+                                    q[i] = areaquantity;
+
+                                    var temp = '';
+                                    temp += '<div class="area_item"><li class="list-group-item d-flex justify-content-between align-items-center "><p id="area' + (i + 1) + '">' + f.Area + '</p>';
+                                    temp += '<span class="badge badge-primary badge-pill" id="price' + (i + 1) + '">' + f.Price + '</span><div class="dropdown">';
+                                    temp += ' <select class="custom-select" id="orderquantity' + (i + 1) + '">';
+                                    temp += '<option selected value="0" id="drop' + (i + 1) + '">要幾張</option>';
+                                    temp += '<option value="1">1</option><option value="2">2</option> <option value="3">3</option><option value="4">4</option> </select></div> </li></div>';
+                                    $(".list-group").append(temp);
+                                    i++;
+
+                                });
+                            });
+
+                            botton_change();
+
+                        }
+                    });
+                }
+
+
+                //限制加上
+
+
+                function botton_change() {
+
+                    for (var a = 0; a < q.length; a++) {
+                        if (q[a] < 4) {
+                            if (q[a] == 0) {
+                                $('#orderquantity1').prop('disabled', 'true');
+                                $('#drop' + (a + 1)).html('已售完');
+                            } else {
+                                $(" #orderquantity1 option[value]").prop('disabled', true);
+                                for (var i = 0; i < q[a]; i++) {
+                                    var a = i + 1;
+                                    $(" #orderquantity" + (a + 1) + " option[value*=" + a + "]").prop('disabled', false);
+                                }
+                            }
+
+
+                        }
+
+                    }
+
+
+
+
+                }
+
+
+
+                //不能超過4張
+                function limit() {
+
+                    //數量限制
+                    //   alert("fdf");
+                    var total = 0;
+                    for (var a = 0; a < q.length; a++) {
+                        if ($("#orderquantity" + (a + 1)).val() == undefined) {
+                            oq[a] = 0;
+                        } else {
+                            oq[a] = ($("#orderquantity" + (a + 1)).val() * 1);
+                        }
+                        // alert( oq[a] );
+                        total += oq[a];
+
+                    }
+
+
+                    if (total > 4) {
+                        event.preventDefault();
+                        alert("現在" + total + "張" + "\n一個人總共最多只能買4張!");
+                    }
+
+                    else if (total == 0) {
+                        event.preventDefault();
+                        alert("你忘記選數量囉");
+                    }
+                    //存入
+                    else if (total <= 4) {
+                        storage();
+
+                    }
+                }
+
+                function storage() {
+
+
+                    //要判斷有甚麼area，提前判斷，看是否有localstorage
+                    var first = "";
+                    var second = "";
+                    //價錢
+                    var pr = [];
+                    for (var t = 0; t < q.length; t++) {
+                        pr[t] = ($("#price" + (t + 1)).html() * 1);
+
+
+                    }
+
+
+
+
+                    //購買區域票數
+                    //存買哪區、幾張、存顯示
+                    var money = 0;
+                    var tempoq = [];
+                    var temparea = [];
+                    var temp = 0;
+                    for (var b = 0; b < q.length; b++) {
+
+                        if (oq[b] != 0) {
+
+                            tempoq[temp] = oq[b];
+                            temparea[temp] = $("#area" + (b + 1)).text();
+                            temp++;
+                            first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
+                            second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
+                            money += (oq[b] * pr[b]);
+                        }
+
+                    }
+                    localStorage.setItem("areaq", JSON.stringify(tempoq));
+
+
+                    localStorage.setItem("area", JSON.stringify(temparea));
+
+
+
+                    //總價錢
+                    localStorage.setItem("total_money", money);
+
+                    //之後修space
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                    //alert(first);
+                    // alert(display);
+                    localStorage.setItem("display", display);
+                }
+
+
+            });
+        </script>
+    </main>
+</body>
+
+</html>
