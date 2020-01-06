@@ -8,8 +8,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
@@ -30,11 +30,12 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
+                            style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -100,11 +101,13 @@
                             <div class="col">付款方式</div>
 
                             <div class="col">
-                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card" checked>信用卡
+                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card"
+                                    checked>信用卡
                             </div>
                             <div class="col">
 
-                                <input class="form-check-input" type="radio" name="paymethod" value="linepay" id="linepay">LINE PAY
+                                <input class="form-check-input" type="radio" name="paymethod" value="linepay"
+                                    id="linepay">LINE PAY
                             </div>
 
                         </div>
@@ -175,17 +178,21 @@
                 }
 
                 function update() {
-                    alert("!!");
-                    for (var v = 0; v <5; v++) {
-                        alert(localStorage.area(v+1));
-                        if (localStorage.area(v+1) != 0) {
+                    var json_areaq = JSON.parse(localStorage.getItem("areaq"));
+                    var json_area = JSON.parse(localStorage.getItem("area"));
+                    //alert(json_areaq.length);
+
+                    for (var v = 0; v <json_areaq.length ; v++) {
+                        
+
+                        if (json_area[v] != 0) {
                             //  alert(localStorage.memberid);
+                            //alert(json_areaq[v]);
 
                             var data = {
                                 "concertid": localStorage.concert_id,
-                                "seatarea": localStorage.area(v+1),
-                                "ticketamount": localStorage.area(v+1)+_q,
-
+                                "seatarea": json_area[v],
+                                "ticketamount":json_areaq[v],
                                 "name": localStorage.temp_name,
                                 "phonenumber": localStorage.temp_phone,
                                 "email": localStorage.temp_mail,
@@ -216,76 +223,6 @@
                         }
                     }
 
-
-
-                    // if (localStorage.area2 != 0) {
-
-                    //     var data = {
-                    //         "concertid": localStorage.concert_id,
-                    //         "seatarea": localStorage.area2,
-                    //         "ticketamount": localStorage.area2_q,
-
-                    //         "name": localStorage.temp_name,
-                    //         "phonenumber": localStorage.temp_phone,
-                    //         "email": localStorage.temp_mail,
-                    //         "payment": localStorage.payment,
-                    //         "totalprice": localStorage.totalprice
-                    //     }
-
-
-                    //     var data_string = JSON.stringify(data);
-
-                    //     $.ajax({
-                    //         type: "PUT",
-                    //         url: "order",
-                    //         data: data_string,
-                    //         crossDomain: true,
-                    //         cache: false,
-                    //         dataType: 'json',
-                    //         success: function (response) {
-                    //             if (response.status == 200) {
-
-                    //             }
-                    //         },
-                    //         error: function () {
-                    //             alert("無法連線到伺服器！");
-                    //         }
-                    //     });
-                    // }
-                    // if (localStorage.area3 != 0) {
-
-                    //     var data = {
-                    //         "concertid": localStorage.concert_id,
-                    //         "seatarea": localStorage.area3,
-                    //         "ticketamount": localStorage.area3_q,
-
-                    //         "name": localStorage.temp_name,
-                    //         "phonenumber": localStorage.temp_phone,
-                    //         "email": localStorage.temp_mail,
-                    //         "payment": localStorage.payment,
-                    //         "totalprice": localStorage.totalprice
-                    //     }
-
-
-                    //     var data_string = JSON.stringify(data);
-
-                    //     $.ajax({
-                    //         type: "PUT",
-                    //         url: "order",
-                    //         data: data_string,
-                    //         crossDomain: true,
-                    //         cache: false,
-                    //         dataType: 'json',
-                    //         success: function (response) {
-                    //             if (response.status == 200) {
-
-                    //             }
-                    //         },
-                    //         error: function () {
-                    //             alert("無法連線到伺服器！");
-                    //         }
-                    //     });
-                    // }
                 }
 
 

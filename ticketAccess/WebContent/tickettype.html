@@ -128,8 +128,8 @@
                 //剩餘區域票數
 
                 //購買區域票數，可以給function用嗎
-                var oq = [0, 0, 0, 0, 0];
-                var q = [0, 0, 0, 0, 0];
+                var oq = [];
+                var q = [];
                 //寫入幾區和票數和數量
                 getconcertdata();
 
@@ -197,7 +197,8 @@
 
                 function botton_change() {
 
-
+                    alert(q.length);
+                  
                     for (var a = 0; a < q.length; a++) {
                         if (q[a] < 4) {
                             if (q[a] == 0) {
@@ -216,34 +217,7 @@
 
                     }
 
-                    // if (q[1] < 4) {
-                    //     if (q[1] == 0) {
-                    //         $('#orderquantity2').prop('disabled', 'true');
-                    //         $('#drop2').html('已售完');
-                    //     } else {
-                    //         $("  #orderquantity2 option[value]").prop('disabled', true);
-                    //         for (var i = 0; i < q[1]; i++) {
-                    //             var a = i + 1;
-                    //             $(" #orderquantity2 option[value*=" + a + "]").prop('disabled', false);
-                    //         }
-
-                    //     }
-
-                    // }
-                    // if (q[2] < 4) {
-                    //     if (q[2] == 0) {
-                    //         $('#orderquantity3').prop('disabled', 'true');
-                    //         $('#drop3').html('已售完');
-                    //     } else {
-                    //         $("#orderquantity3 option[value]").prop('disabled', true);
-                    //         for (var i = 0; i < q[3]; i++) {
-                    //             var a = i + 1;
-                    //             $("#orderquantity3 option[value*=" + a + "]").prop('disabled', false);
-                    //         }
-                    //     }
-
-
-                    // }
+        
 
 
                 }
@@ -285,16 +259,13 @@
                 }
 
                 function storage() {
-                    //先消除
-                    // localStorage.setItem("area1", 0);
-                    // localStorage.setItem("area2", 0);
-                    // localStorage.setItem("area3", 0);
-
+                   
+                  
                     //要判斷有甚麼area，提前判斷，看是否有localstorage
                     var first = "";
                     var second = "";
                     //價錢
-                    var pr = [0, 0, 0, 0, 0];
+                    var pr = [];
                     for (var t = 0; t < q.length; t++) {
                         pr[t] = ($("#price" + (t + 1)).html() * 1);
 
@@ -307,18 +278,26 @@
                     //購買區域票數
                     //存買哪區、幾張、存顯示
                     var money=0;
+                    var tempoq=[];
+                    var temparea=[];
+                    var temp=0;
                     for (var b = 0; b < q.length; b++) {
+                        
                         if (oq[b] != 0) {
-                            localStorage.setItem("area" + (b + 1) + "_q", oq[b]);
-
-                            localStorage.setItem("area" + (b + 1), $("#area"+ (b + 1)).text());
+                           
+                            tempoq[temp]=oq[b];
+                            temparea[temp]=$("#area"+ (b + 1)).text();
+                            temp++;
                             first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
-                            
                             second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
                             money+=(oq[b] * pr[b]);
                         }
 
                     }
+                    localStorage.setItem("areaq", JSON.stringify(tempoq));
+                   
+                   
+                    localStorage.setItem("area", JSON.stringify(temparea));
 
 
 
