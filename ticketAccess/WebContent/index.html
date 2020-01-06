@@ -446,12 +446,10 @@
               return a.concertstarttime < b.concertstarttime ? 1 : -1;
             })
             data.forEach((e, i) => {  //i (0開始~4)第幾個 , e 值
-              console.log(e) //印出concert所有內容
+
               var direction = i % 2 ? "text-right" : "";//免
-              console.log(i % 2)
-              console.log(direction)
-              var picture = "index/silhouette-of-dancing-people-inside-club-1677710.jpg";
-              var card = createConcertCard(e.idconcert, e.name, e.session, picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
+
+              var card = createConcertCard(e.idconcert, e.name, e.session, e.picture, e.concertstarttime, e.endsellingtime, e.location, direction);//取值，合成好介面
               $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
             }); //ajax抓資料 再放到html
           } else {
