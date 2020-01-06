@@ -26,7 +26,7 @@ import ncu.im3069.group14.tools.RequestHandler;
 /**
  * Servlet implementation class ConcertController
  */
-@WebServlet("/api/concert.do")
+@WebServlet("/Auth/concert.do")
 @MultipartConfig(fileSizeThreshold=1024*1024*10, maxFileSize=1024*1024*50, maxRequestSize=1024*1024*100,location="ticketAccess/picture")
 public class ConcertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -75,6 +75,7 @@ public class ConcertController extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestHandler jsr = new RequestHandler(request);
 		String main = request.getParameter("obj");
 		JSONObject temp = new JSONObject(main);
 		Part seatPicPart = request.getPart("seatpicture");
@@ -90,9 +91,9 @@ public class ConcertController extends HttpServlet {
 		posterPart.write(posterName);
 		temp.put("picture",File.separator+"picture"+File.separator+posterName);
 		temp.put("seatpicture", File.separator+"picture"+File.separator+seatPicName);
+		temp.put("supplierId", jsr.getMemberIDinRequest());
 		/** ��sonReader憿撠equest銋SON�撘��圾��蒂���� */
 		
-		RequestHandler jsr = new RequestHandler(request);
         Concert c = new Concert(temp);
         
         JSONObject data = ch.createConcert(c);

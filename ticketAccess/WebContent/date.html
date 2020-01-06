@@ -153,7 +153,7 @@
                     let params = new URL(window.location.href).searchParams
 
                     $.ajax({
-                        url: `api/concert.do?session=${params.get('session')}`,
+                        url: `Auth/concert.do?session=${params.get('session')}`,
                         cache: false,
                         method: 'GET',
                         dataType: 'json',
