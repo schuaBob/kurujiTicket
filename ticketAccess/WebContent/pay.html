@@ -197,6 +197,7 @@
                 function update() {
                     var json_areaq = JSON.parse(localStorage.getItem("areaq"));
                     var json_area = JSON.parse(localStorage.getItem("area"));
+                    var json_money = JSON.parse(localStorage.getItem("money"));
                     //alert(json_areaq.length);
 
                     for (var v = 0; v < json_areaq.length; v++) {
@@ -214,7 +215,7 @@
                                 "phonenumber": localStorage.temp_phone,
                                 "email": localStorage.temp_mail,
                                 "payment": localStorage.payment,
-                                "totalprice": localStorage.total_money
+                                "totalprice": json_money[v]
                             }
                             //alert(localStorage.area1+"區");
 
