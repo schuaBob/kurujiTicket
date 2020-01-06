@@ -178,18 +178,21 @@
                 }
 
                 function update() {
+                    var json_areaq = JSON.parse(localStorage.getItem("areaq"));
+                    var json_area = JSON.parse(localStorage.getItem("area"));
+                    //alert(json_areaq.length);
 
-                    for (var v = 0; v < 5; v++) {
-                        var tempArea = eval(`localStorage.area${v+1}`)
-                        alert(tempArea);
+                    for (var v = 0; v <json_areaq.length ; v++) {
+                        
 
-                        if (tempArea != 0) {
+                        if (json_area[v] != 0) {
                             //  alert(localStorage.memberid);
+                            //alert(json_areaq[v]);
 
                             var data = {
                                 "concertid": localStorage.concert_id,
-                                "seatarea": tempArea,
-                                "ticketamount":eval(`localStorage.area${v+1}_q`),
+                                "seatarea": json_area[v],
+                                "ticketamount":json_areaq[v],
                                 "name": localStorage.temp_name,
                                 "phonenumber": localStorage.temp_phone,
                                 "email": localStorage.temp_mail,
