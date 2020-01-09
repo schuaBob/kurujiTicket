@@ -49,7 +49,7 @@
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="#">哭嚕嘰搶票系統</a>
+    <a class="navbar-brand" href="/">哭嚕嘰搶票系統</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -61,7 +61,7 @@
           <a class="nav-link" href="supplier_home.html">新增活動<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="supplier_view.html">檢視新增票券</a>
+          <a class="nav-link" href="supplier_view2.html">檢視新增票券</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" id="logout">Logout</a>
@@ -336,7 +336,7 @@
             let count = 0;
             temp.forEach(f => {
               count++;
-              $("#_tbody").append("<tr><th scope='row'>" + count + "</th><td>" + f.Area + "</td><td>" + f.SeatTotal + "</td><td>" + f.Price + "</td></tr>");
+              $("#_tbody").append("<tr><th scope='row'>" + count + "</th><td>" + f.Area + "</td><td>" + f.Price + "</td><td>" + f.SeatTotal + "</td></tr>");
             });
           } else {
             alert("沒東西或有問題");
