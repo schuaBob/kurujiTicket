@@ -17,7 +17,7 @@ public class ConcertHelper {
 	
 	private Connection conn = null;	
 	private PreparedStatement pres = null;
-	
+	//取得helper
 	public static ConcertHelper getHelper() {
 		if(ch==null) {
 			ch = new ConcertHelper();
@@ -25,27 +25,14 @@ public class ConcertHelper {
 		return ch;
 	}
 	
-//	public Boolean checkDuplicate(Supplier s) {
-//		
-//	}
-//	
-//	public JSONObject getBySupplierId(Integer id) {
-//		
-//	}
-//	public JSONObject getAll() {
-//		
-//	}
-//	public JSONObject update(Concert c) {
-//		
-//	}
 	public JSONObject createConcert(Concert c) {
 		
 		int row = 0;
 				
 		try {
-			/** 嚙踝蕭嚙緻嚙踝蕭w嚙踝蕭嚙編嚙線 */
+			//取得mysql連線
             conn = MysqlConnect.getConnect();
-            /** sql嚙踝蕭嚙瞌  */
+            //sql語法
             String sql = "INSERT INTO concert(name,supplierid,location,picture,seatpicture,endsellingtime,content,ticketstatus,concertstarttime,concertendtime,session) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             pres = conn.prepareStatement(sql);
             pres.setString(1, c.getConcertName());
@@ -60,17 +47,14 @@ public class ConcertHelper {
             pres.setString(10, c.getConcertEndTime());
             pres.setString(11, c.getSession());
             System.out.println(pres.toString());
-            /** 嚙踝蕭嚙踝蕭s嚙磕嚙踝蕭SQL嚙踝蕭嚙瞌嚙衛記嚙踝蕭嚙緞嚙確嚙踝蕭嚙踝蕭嚙� */
+            //執行insert指令
             row = pres.executeUpdate();
             
 		}catch(SQLException e) {
-            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
         	MysqlConnect.close(pres, conn);
         }
 		
@@ -111,13 +95,10 @@ public class ConcertHelper {
 			}
 			result = new JSONArray(arrayList);
 		}catch(SQLException e) {
-            /** 嚙盤嚙碼JDBC SQL嚙踝蕭嚙瞌嚙踝蕭嚙羯 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 嚙磐嚙踝蕭嚙羯嚙篁嚙盤嚙碼嚙踝蕭嚙羯嚙確嚙踝蕭 */
             e.printStackTrace();
         } finally {
-            /** 嚙踝蕭嚙踝蕭嚙編嚙線嚙踝蕭嚙踝蕭嚙踝蕭狾嚙踝蕭嚙複庫嚙踝蕭嚙踝蕭嚙踝蕭嚙赭源 **/
         	MysqlConnect.close(pres, conn);
         }			
 		return result;
