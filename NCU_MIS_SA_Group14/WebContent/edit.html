@@ -326,6 +326,9 @@
     $(document).ready(function () {
       console.log("docuement ready");
       initFunc();
+      
+     //檢視會員資料和修改會員資料
+      //submit按下後先檢查輸入的資料格式 正確會把有改的資料傳到/Auth/member裡
       $("#submitForm").click(function (e) {
         var phone_rule = /^[09]{2}[0-9]{8}$/;
         var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -360,6 +363,7 @@
         }
       })
     })
+    //get會員資料放到對應欄位裡
     var initFunc = function () { //430放好
       console.log("start intiFunc");
       $.ajax({

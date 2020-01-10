@@ -1,5 +1,92 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<<<<<<< HEAD
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+   
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Jekyll v3.8.6">
+        <title>Jumbotron Template · Bootstrap</title>
+    
+        <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/jumbotron/">
+    
+        <!-- Bootstrap core CSS -->
+    <link href="/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+        <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+    <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
+    <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#563d7c">
+    
+    
+        <style>
+          .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          #logout{
+            cursor: pointer;
+          }
+          @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+              font-size: 3.5rem;
+            }
+          }
+        </style>
+        <link href="jumbotron.css" rel="stylesheet">
+      </head>
+
+
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">哭嚕嘰搶票系統</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="supplier_home.html">新增活動<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="supplier_view.html">檢視新增票券</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" id="logout">Logout</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    
+    <main role="main">
+    
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <div class="container">
+          <div class="container all-concert">
+=======
 
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -80,6 +167,7 @@
     <div class="jumbotron">
       <div class="container">
         <div class="container all-concert">
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
           <h6 class="display-4">檢視新增票券</h6>
           <p>
 
@@ -201,6 +289,13 @@
           console.log(err)
         }
       });
+<<<<<<< HEAD
+ 
+      var initFunc = function () { //從後端取得上一次新增的單筆演唱會資料
+      $.ajax({
+        type: "GET",
+        url: "api/concert.do?getspecifyconcert=true", 
+=======
     });
 
     var createConcertCard = function (concertname, supplierid, location, picture, seatpicture, endsellingtime, content, ticketstatus, concertstarttime, concertendtime) {//船參數進去 合成html
@@ -316,10 +411,35 @@
       $.ajax({
         type: "GET",
         url: "Auth/concert.do?getspecifyconcert=true", //session代表場次代號
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
         cache: false,
         dataType: "json",
         timeout: 5000,
         success: function (response) {
+<<<<<<< HEAD
+          if(response.status == 200 && response.isEmpty == "false"){ //後端條件值
+                    let data = JSON.parse(response.data); //[{Row1},{Row2}]
+                    let lastIndex = data.length - 1; //最後一筆idex為total length-1
+                    $("#Name").text(data[lastIndex].name); //讀取該筆資料的演唱會名稱，並指定id，在html對應之table即可放入此id
+                    $("#Location").text(data[lastIndex].location);
+                    $("#Picture").text(data[lastIndex].picture);
+                    $("#Seatpicture").text(data[lastIndex].seatpicture);
+                    $("#Endsellingtime").text(data[lastIndex].endsellingtime);
+                    $("#Content").text(data[lastIndex].content);
+                    $("#Concertstarttime").text(data[lastIndex].concertstarttime);
+                    $("#Concertendtime").text(data[lastIndex].concertendtime);
+                    let temp = JSON.parse(data[lastIndex].ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
+                    let count = 0;//動態將新增ticketstatus時存放的N筆票券資料讀出
+                    temp.forEach(f =>{
+                          count++;//每讀取一筆Count+1
+                          $("#_tbody").append("<tr><th scope='row'>"+count+"</th><td>"+f.Area+"</td><td>"+f.SeatTotal+"</td><td>"+f.Price+"</td></tr>");
+                          //在html裡面的 <tbody>一筆一筆加入該ticketstatus資料
+                    });           
+                }else{
+                    alert("沒東西或有問題");
+                }
+
+=======
 
           if (response.status == 200 && response.isEmpty == "false") {
             let data = JSON.parse(response.data); //[{Row1},{Row2}]
@@ -352,6 +472,7 @@
           // } else {
           //   alert("沒東西或有問題");
           // }
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
         },
         error: function (err) {
           alert("無法連線到伺服器！");
@@ -360,6 +481,14 @@
         console.log(result)
       })
     }
+<<<<<<< HEAD
+    </script>
+    <footer class="container">
+      <p>© KuluGi 2019</p>
+    </footer>
+    
+    </body>
+=======
 
   </script>
   <footer class="container">
@@ -368,4 +497,5 @@
 
 </body>
 
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
 </html>

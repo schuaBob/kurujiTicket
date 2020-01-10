@@ -7,8 +7,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         #logout:hover {
@@ -34,12 +34,11 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
-                            style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -96,7 +95,9 @@
 
                     </div>
                 </div>
-                <div class="text-center"><img src="" id="pic" style="max-width: 350px;"></div>
+                <div class="text-center">
+                    <img src="" id="pic" style="max-width: 350px;">
+                </div>
                 <form>
                     <fieldset id="ticketset">
                         <div class="area_choice">
@@ -124,6 +125,7 @@
         <script>
             $(document).ready(function () {
 
+                //改變導覽欄狀態
                 $("#datetab").removeClass("active");
                 $("#tickettab").addClass("active");
 
@@ -143,31 +145,34 @@
                     })
                 })
 
-                //剩餘區域票數
 
-                //購買區域票數，可以給function用嗎
+                //購買的區域票數
                 var oq = [];
+                //目前的區域票數
                 var q = [];
-                //寫入幾區和票數和數量
+
+                //寫入有幾區、區域票價、區域票數
                 getconcertdata();
 
 
                 $("#ticket_b").click(function () {
+                    //限制不能一次購買四張
                     limit();
 
                 });
 
-                //寫入頁面
 
+                //寫入有幾區、區域票價、區域票數
                 function getconcertdata() {
 
-                    //localstorage
+
 
                     var a = localStorage.concert_content;
+                    //顯示此演唱會資訊
                     $("#tickettype_concertdata").html(a);
 
 
-                    //url加上concertid,為啥不行
+                    //用concert_id搜尋
                     $.ajax({
                         url: "Auth/concert.do?concertid=" + localStorage.concert_id,
                         method: 'get',
@@ -184,11 +189,14 @@
                             $("#pic").attr("src", data[0].seatpicture)
 
                             data.forEach(e => {
+
                                 let tmp = JSON.parse(e.ticketstatus).data;
                                 let i = 0;
                                 tmp.forEach(f => {
+                                    //總座位減賣出的
                                     var areaquantity = (f.SeatTotal - f.Sold);
                                     //   alert(areaquantity);
+                                    //目前區域票數
                                     q[i] = areaquantity;
 
                                     var temp = '';
@@ -197,6 +205,7 @@
                                     temp += ' <select class="custom-select" id="orderquantity' + (i + 1) + '">';
                                     temp += '<option selected value="0" id="drop' + (i + 1) + '">要幾張</option>';
                                     temp += '<option value="1">1</option><option value="2">2</option> <option value="3">3</option><option value="4">4</option> </select></div> </li></div>';
+                                    //動態新增
                                     $(".list-group").append(temp);
                                     i++;
 
@@ -210,9 +219,9 @@
                 }
 
 
-                //限制加上
+                
 
-
+                //按鈕狀態改變(是否售完)
                 function botton_change() {
 
                     for (var a = 0; a < q.length; a++) {
@@ -246,6 +255,7 @@
                     //數量限制
                     //   alert("fdf");
                     var total = 0;
+                    //做一些轉換
                     for (var a = 0; a < q.length; a++) {
                         if ($("#orderquantity" + (a + 1)).val() == undefined) {
                             oq[a] = 0;
@@ -273,13 +283,15 @@
 
                     }
                 }
-
+                
+                //將顯示、購買票數、票價、花費存入localstorage
                 function storage() {
 
 
-                    //要判斷有甚麼area，提前判斷，看是否有localstorage
+                    //顯示
                     var first = "";
                     var second = "";
+                    
                     //價錢
                     var pr = [];
                     for (var t = 0; t < q.length; t++) {
@@ -291,10 +303,12 @@
 
 
 
-                    //購買區域票數
-                    //存買哪區、幾張、存顯示
-                    var money = 0;
+                    
+                    //花費
+                    var money = [];
+                    //買幾張
                     var tempoq = [];
+                    //買哪區
                     var temparea = [];
                     var temp = 0;
                     for (var b = 0; b < q.length; b++) {
@@ -306,22 +320,20 @@
                             temp++;
                             first += $("#area" + (b + 1)).text() + "票*" + oq[b] + "&nbsp;&nbsp;";
                             second += pr[b] + "*" + oq[b] + "&nbsp;&nbsp;";
-                            money += (oq[b] * pr[b]);
+                            money[b] = (oq[b] * pr[b]);
                         }
 
                     }
+                    //將array轉成json才存入
                     localStorage.setItem("areaq", JSON.stringify(tempoq));
-
 
                     localStorage.setItem("area", JSON.stringify(temparea));
 
-
-
                     //總價錢
-                    localStorage.setItem("total_money", money);
+                    localStorage.setItem("money", JSON.stringify(money));
 
-                    //之後修space
-                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money;
+                    //顯示
+                    var display = first + "&nbsp;&nbsp;&nbsp;(" + second + ")&nbsp;&nbsp;&nbsp;" + "&nbsp;TWD$" + money.reduce((a, b) => a + b);
                     //alert(first);
                     // alert(display);
                     localStorage.setItem("display", display);

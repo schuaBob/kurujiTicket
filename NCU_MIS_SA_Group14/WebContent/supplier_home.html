@@ -44,6 +44,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="supplier_view2.html">檢視新增票券</a>
+<<<<<<< HEAD
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="supplier_modify.html" tabindex="-1">修改活動內容</a>
+=======
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
         </li>
         <li class="nav-item">
           <a class="nav-link" id="logout">Logout</a>
@@ -160,7 +166,7 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
   <script type="text/javascript">
-    function insertFunction() {
+    function insertFunction() { //在html中動態新增ticketstatus button的 function
       document.getElementById("demo").insertAdjacentHTML("beforeend", `<div class="input-group mb-3 aaa">
                 <div class="input-group-prepend">
                   <span class="input-group-text">票種及價格</span>
@@ -186,10 +192,10 @@
       });
     });
 
-    $("#submitconcert").click(function () {
-      let statusArr = [];
-      $(".aaa").each(function () {
-        let temp = {
+    $("#submitconcert").click(function () { //按submit後送出新增演唱會資料
+      let statusArr = [];// 創一個ticketstatus的array(方便動態新增進去)
+      $(".aaa").each(function () { //讀出每筆ticketstatus
+        let temp = { 
           "Area": $(this).find(".area").val(),
           "SeatTotal": $(this).find(".seatamount").val(),
           "Sold": 0,
@@ -199,7 +205,7 @@
       });
       console.log(statusArr);
 
-      var obj = {
+      var obj = { //將該場演唱會的資料放入變數中，之後再整個丟入ajax
         "concertName": $("#concertNameID").val(),
         "supplierId": 001,
         "location": $("#addressID").val(),
@@ -239,34 +245,7 @@
           alert("無法連線到伺服器！");
         }
       });
-      // $.ajax({
-      //   type: "POST",
-      //   url: " ",
-      //   dataType: 'json',
-      //   error: function(err){
-      //   console.log(err)
-      //   },
-      //   success: function(data){
-      //     console.log(data.message)
-      //     indow.location.replace(data.redirect);
-      //   },
-      //   data: JSON.stringify(obj),
 
-      // });
-
-    });
-
-  //   if ( $('#starttime').prop('type') != 'date' ) {
-  //     var opt1={dateFormat: 'yy-mm-dd',
-  //                defaultDate: '2013-03-17',
-  //                showSecond: true,
-  //                timeFormat: 'HH:mm:ss',
-  //                hour:13,   
-  //                minute:25,   
-  //                second:10  
-  //                };
-  //  $('#datetimepicker1').datetimepicker(opt1);
-//  }
 
   </script>
 </body>

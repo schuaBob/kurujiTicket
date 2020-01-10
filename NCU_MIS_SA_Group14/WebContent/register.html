@@ -362,8 +362,9 @@
     </form> -->
   </div>
   <script type="text/javascript">
+    //會員註冊
     $(document).ready(function () {
-      $("#submitForm").click(function (e) {
+      $("#submitForm").click(function (e) { //檢查輸入格式
         var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
         var phone_rule = /^[09]{2}[0-9]{8}$/;
         var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -381,8 +382,8 @@
           alert("手機格式不符!");
         } else if ($("#name").val() == "" || $("#password").val() == "" || $("#email").val() == "" || $("#dob").val() == "" || $("#phonenumber").val() == "" || $("#idnumber").val() == "" || $("#address").val() == "") {
           alert("尚未輸入完畢!");
-        } else {
-          $.ajax({
+        } else { //用post把資料傳到/Auth/member
+          $.ajax({  
             url: "/Auth/member",
             method: 'POST',
             dataType: "JSON",
