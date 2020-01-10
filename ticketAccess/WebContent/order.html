@@ -110,9 +110,10 @@
 
 
             });
-
+            
+             //把所有order放上去
             function ordershow() {
-                //把所有order放上去
+               
                 $.ajax({
                     url: '/Auth/order',
                     method: 'GET',
@@ -122,6 +123,7 @@
                         // let order = JSON.parse(response.data);
 
                         console.log(order.data);
+                        //列出此member的order
                         $.each(order.data.orders, function (i, item) {
 
 
@@ -150,6 +152,7 @@
 
 
                         })
+                        //oreder按下詳細資料按鈕後
                         $(".see").on('click',function (e) {
                             console.log(e.currentTarget.attributes.orderid.value)
 
@@ -157,12 +160,13 @@
                             var data = {
                                 "orderid": id
                             }
+                            //此order id
                             var data_string = JSON.stringify(data);
-
+                            
+                            //此order其下的ticket
                             $.ajax({
                                 url: '/Auth/ticket',
                                 method: 'POST',
-
                                 data: data_string,
                                 error: function (err) {
 

@@ -63,34 +63,7 @@
                 </div>
             </nav>
 
-            <!-- <nav class="navbar navbar-light navbar-expand-lg fixed-top" id="navbar" style="padding-left:120vh">
 
-
-                <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white">
-                    <a href="index.html" class=" navbar-brand" id="brand">
-
-                        <img src='spotlights.png' id="logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link  " id="space" href="index-signin.html">現正熱映</a>
-                            <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link " id="space" href="#">登出</a>
-
-                        </div>
-                    </div>
-                </nav>
-            </nav> -->
         </header>
         <!-- 引入測試-->
         <div w3-include-html="navbar.html"></div>
@@ -138,17 +111,16 @@
             </div>
         </div>
         <script>
-            //想替他們加名字
-            // localStorage.clear();
+
             $(document).ready(function () {
 
+                //清除之前的localstorage
                 localStorage.clear();
 
-                //一開始跳轉此頁面
-                //ajax load資料concertname,location,ticketstatus(價錢、幾區),座位數量?
-                
+               
 
 
+                //ajax load資料concertname,location,ticketstatus(價錢、幾區),座位數量
                 getconcertdata();
 
                 $("#logout").click(function () {
@@ -169,11 +141,11 @@
 
 
                 //寫入頁面
-                //要有地方抓點入演唱會的id
                 function getconcertdata() {
                     let params = new URL(window.location.href).searchParams
 
-                    $.ajax({
+                   //用session抓concert資料
+                   $.ajax({
                         url: `Auth/concert.do?session=${params.get('session')}`,
                         cache: false,
                         method: 'GET',
@@ -181,15 +153,13 @@
 
                         success: function (response) {
 
-
-
-                            //
+                            //回傳資料
                             let data = JSON.parse(response.data);
                             //演唱會名字
                             $("#concert_name").html(data[0].session);
-                            //抓時間
+                            
 
-
+                            //放上同歌手的不同時間演唱會資料(地點、時間、座位)
                             data.forEach((e, i) => {
 
                                 var temp = "";
@@ -199,7 +169,10 @@
 
                                 var totalseat = 0;
                                 let tmp = JSON.parse(e.ticketstatus).data;
+                                
+                                //加總每一區的總座位-已販售的
                                 tmp.forEach(f => {
+                                    //目前票數
                                     totalseat += (f.SeatTotal - f.Sold);
                                 }
                                 );
@@ -208,15 +181,10 @@
                                 temp += '<span style="width:2%;"></span>';
                                 $(".order").append(temp);
 
-                                // if ($(".quantitynow" + (i + 1)).html() == ("剩下" + 0 + "張")) {
-                                //     $("#order_b" + (i + 1)).addClass("disabled");
-                                //     $("#order_b" + (i + 1)).prop('disabled', true);
-                                //     $("#order_b" + (i + 1)).text("已售完");
-                                // };
-
-                                // number++;
                             });
+                            //改按鈕狀態(是否已售完)
                             change_button();
+                            //存到loalstorage
                             storage();
 
 
@@ -254,8 +222,8 @@
 
                 function storage() {
                     console.log("concertid");
-                    
 
+                    //存演唱會名稱、concert_id
                     $("#order_b1").click(function () {
 
                         localStorage.setItem("concert_content", $("#concert1").html());
@@ -273,27 +241,6 @@
                         localStorage.setItem("concert_id", $('.quantitynow3').attr('id'));
                     });
 
-                    //var temp_content = ['0', '0'];
-
-
-                    // for (var r = 0; r < number; r++) {
-
-
-                    //     temp_content[r]=$("#concert" + (r + 1)).html();
-                    //     console.log(temp_content);
-                    //     $("#order_b" + (r + 1)).click(function () {
-
-                    //         alert("sdfsd");
-                    //         alert(temp_content[r]);
-                    //         localStorage.setItem("concert_content",temp_content[r]);
-                    //         localStorage.setItem("concert_id", $('.quantitynow' + (r + 1)).attr('id'));
-
-
-
-                    //     });
-
-
-                    // }
 
 
                 }

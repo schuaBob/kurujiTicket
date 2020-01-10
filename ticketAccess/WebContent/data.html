@@ -132,8 +132,6 @@
                 $("#ticketdata").append(localStorage.display);
 
                 //判斷會員
-                // var member = 5;
-                // localStorage.setItem("memberid", member);
                 $("#logout").click(function () {
                     $.ajax({
                         method: "DELETE",
@@ -148,17 +146,15 @@
                         }
                     })
                 })
-
+                //是否同會員資料
                 $('#member').mousedown(function () {
-
-
 
                     memebercheck();
                 });
 
 
                 $("#data_b").click(function () {
-
+                    //存name,phone,email
                     localStorage.setItem("temp_name", $("#order_name").val());
                     localStorage.setItem("temp_phone", $("#order_phone").val());
                     localStorage.setItem("temp_mail", $("#order_email").val());
@@ -167,8 +163,7 @@
 
                 //自動輸入member data
                 function memebercheck() {
-                    //url加上memberid
-                    //session
+                    
                     $.ajax({
                         url: "Auth/member",
                         method: 'get',

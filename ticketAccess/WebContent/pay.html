@@ -8,8 +8,8 @@
 <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <style>
@@ -34,12 +34,11 @@
             <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
                 <nav class="navbar navbar-light bg-transparent">
                     <a class="navbar-brand" href="/">
-                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic"
-                            style="width:35vh">
+                        <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
                     </a>
                 </nav>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -105,13 +104,11 @@
                             <div class="col">付款方式</div>
 
                             <div class="col">
-                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card"
-                                    checked>信用卡
+                                <input class="form-check-input " type="radio" name="paymethod" value="card" id="card" checked>信用卡
                             </div>
                             <div class="col">
 
-                                <input class="form-check-input" type="radio" name="paymethod" value="linepay"
-                                    id="linepay">LINE PAY
+                                <input class="form-check-input" type="radio" name="paymethod" value="linepay" id="linepay">LINE PAY
                             </div>
 
                         </div>
@@ -133,10 +130,12 @@
         </div>
         <script>
             $(document).ready(function () {
+                //付款方式
                 var paytype;
 
                 $("#datetab").removeClass("active");
                 $("#paytab").addClass("active");
+                //購買訊息顯示
                 $("#ticket").append(localStorage.display);
                 $("#logout").click(function () {
                     $.ajax({
@@ -152,10 +151,12 @@
                         }
                     })
                 })
-                //alert時間
+
                 $("#pay_b").click(function () {
 
+                    //付款時間提醒
                     show();
+                    //提交訂單
                     update();
 
 
@@ -168,7 +169,7 @@
 
                     var currentdate = new Date();
 
-                    //判斷radio botton
+                    //判斷用何者付款
                     if ($("#card").is(":checked")) {
                         paytype = "信用卡";
                         localStorage.setItem("payment", "credit");
@@ -178,12 +179,14 @@
                         localStorage.setItem("payment", "line");
                     }
 
+                    //提交訂單時間
                     var datetime = "現在是" +
                         + currentdate.getFullYear() + "/"
                         + (currentdate.getMonth() + 1) + "/" + currentdate.getDate() + " 的 "
                         + currentdate.getHours() + ":"
                         + currentdate.getMinutes() + ":"
                         + currentdate.getSeconds(); +"\n"
+                    //30分鐘限制
                     currentdate.setMinutes(currentdate.getMinutes() + 30);
                     var limittime = currentdate.getMinutes();
                     var paytime = "請你在" + currentdate.getHours() + ":"
@@ -195,6 +198,8 @@
                 }
 
                 function update() {
+
+                    //將localstorage轉回array
                     var json_areaq = JSON.parse(localStorage.getItem("areaq"));
                     var json_area = JSON.parse(localStorage.getItem("area"));
                     var json_money = JSON.parse(localStorage.getItem("money"));
@@ -204,9 +209,9 @@
 
 
                         if (json_area[v] != 0) {
-                            //  alert(localStorage.memberid);
-                            //alert(json_areaq[v]);
 
+
+                            //提交訂單需要的資料
                             var data = {
                                 "concertid": localStorage.concert_id,
                                 "seatarea": json_area[v],
@@ -219,6 +224,7 @@
                             }
                             //alert(localStorage.area1+"區");
 
+                            //data轉成json模式
                             var data_string = JSON.stringify(data);
 
                             $.ajax({
