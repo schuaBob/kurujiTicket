@@ -157,7 +157,7 @@
                             let data = JSON.parse(response.data);
                             //演唱會名字
                             $("#concert_name").html(data[0].session);
-                            
+                            localStorage.setItem("concert_name", data[0].session);
 
                             //放上同歌手的不同時間演唱會資料(地點、時間、座位)
                             data.forEach((e, i) => {
@@ -225,6 +225,7 @@
 
                     //存演唱會名稱、concert_id
                     $("#order_b1").click(function () {
+                        
 
                         localStorage.setItem("concert_content", $("#concert1").html());
                         localStorage.setItem("concert_id", $('.quantitynow1').attr('id'));
