@@ -40,7 +40,7 @@ public class TicketController extends HttpServlet {
 		
 		JSONObject jsonObj = new JSONObject();
 		
-		jsonObj.put("message", "¬d¸ß²¼¨é¦¨¥\");
+		jsonObj.put("message", "æŸ¥è©¢ç¥¨åˆ¸æˆåŠŸ");
 		jsonObj.put("data", data);
 		rh.sendJsonRes(jsonObj, response);
 		
@@ -60,7 +60,7 @@ public class TicketController extends HttpServlet {
 		JSONObject resp = new JSONObject();
 		
 		resp.put("status","200");
-		resp.put("message", "²¼¨é¨Ï¥Î¦¨¥\¡I");
+		resp.put("message", "ç¥¨åˆ¸ä½¿ç”¨æˆåŠŸï¼");
         resp.put("result", result);
         rh.sendJsonRes(resp, response);
         
