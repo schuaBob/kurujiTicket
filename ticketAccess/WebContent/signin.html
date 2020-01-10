@@ -230,6 +230,7 @@
 		</form> -->
 	</div>
 	<script type="text/javascript">
+	//會員登入
 		$(document).ready(function () {
 			$("#submitForm").click(function (e) {
 
@@ -242,7 +243,7 @@
 					alert("信箱格式不符！");
 				} else if (!password_rule.test($("#memberPassword").val())) {
 					alert("密碼格式不符!");
-				} else {
+				} else { 
 					$.ajax({
 						url: "login",
 						method: "POST",
