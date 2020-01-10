@@ -4,34 +4,33 @@ import org.json.*;
 import java.util.*;
 
 public class Concert {
-	//name ºt°Û·|¦WºÙ
+	//name æ¼”å”±æœƒåç¨±
 	private String name;
-	//id ºt°Û·|½s¸¹
+	//id æ¼”å”±æœƒid
 	private int id;
-	//supplier id ¨ÑÀ³°Ó½s¸¹
+	//supplier id ä¾›æ‡‰å•†id
 	private int supplierId;
-	//location ºt°Û·|¦a§}
+	//location æ¼”å”±æœƒåœ°é»
 	private String location;
-	//picture ºt°Û·|¹Ï¤ù(¸ô®|)
+	//picture æ¼”å”±æœƒåœ–ç‰‡
 	private String picture;
-	//seatpicture ®y¦ì¹Ï(¸ô®|)
+	//seatpicture åº§ä½åœ–
 	private String seatpicture;
-	//endsellingtime ºt°Û·|°â²¼ºI¤î®É¶¡
+	//endsellingtime éŠ·å”®çµæŸæ™‚é–“
 	private String endsellingtime;
-	//content ºt°Û·|¤º®e
+	//content æ¼”å”±æœƒå…§å®¹
 	private String content;
-	//ticketstatus ¦U¤À°Ï²¼»ù¥H¤ÎÁ`¶q
+	//ticketstatus è¨˜éŒ„å„ç¨®ç¥¨åˆ¸è³‡è¨Š
 	private JSONObject ticketstatus;
-	//concertstarttime ºt°Û·|¶}©l®É¶¡
+	//concertstarttime æ¼”å”±æœƒé–‹å§‹æ™‚é–“
 	private String concertstarttime;
-	//concertendtime ºt°Û·|¶}©l®É¶¡
+	//concertendtime æ¼”å”±æœƒçµæŸæ™‚é–“
 	private String concertendtime;
 	private String session;
 	private ConcertHelper ch = ConcertHelper.getHelper();
 	
 	public Concert(String name) {		
 		this.name = name;
-//		update();
 	}
 	public Concert(String name,int supplierId, String location, String picture, String seatpicture, String endsellingtime
 			, String content, JSONObject ticketstatus, String concertstarttime,String concertendtime) {
@@ -46,6 +45,7 @@ public class Concert {
 		this.concertstarttime = concertstarttime;
 		this.concertendtime = concertendtime;
 	}
+	
 	public Concert(JSONObject obj) {
 		if(obj.has("concertId")) {
 			this.id = obj.getInt("concertId");
@@ -95,10 +95,4 @@ public class Concert {
 	public String getConcertEndTime() {
 		return concertendtime;
 	}
-	
-//	public JSONObject update() {
-//		/** ·s«Ø¤@­ÓJSONObject¥Î¥HÀx¦s§ó·s«á¤§¸ê®Æ */
-//        JSONObject data = new JSONObject();
-//        
-//	}
 }
