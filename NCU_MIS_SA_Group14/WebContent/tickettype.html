@@ -71,7 +71,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-6">
-                        <p id="concert-name">周杰倫嘉年華演唱會</p>
+                        <p id="concert-name"></p>
 
 
 
@@ -128,6 +128,7 @@
                 //改變導覽欄狀態
                 $("#datetab").removeClass("active");
                 $("#tickettab").addClass("active");
+                $("#concert-name").text(localStorage.concert_name);
 
                 // alert(localStorage.concert_id);
                 $("#logout").click(function () {
