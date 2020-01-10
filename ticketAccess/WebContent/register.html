@@ -48,7 +48,7 @@
       font-size: 17px;
       border: 1px solid #ccc;
     } */
-/* 
+    /* 
     .ticket button {
       float: right;
       padding: 7px 10px;
@@ -173,7 +173,8 @@
       margin: 0 0 0 30%;
       font-weight: bold;
     }
-/* 
+
+    /* 
     .regdob input {
       width: 30%;
       padding: 5px;
@@ -301,7 +302,7 @@
           <span>Password</span>
           <input type="password" maxlength="100" id="password">
         </label>
-        
+
         <label>
           <span>IDNumber</span>
           <input type="text" maxlength="10" id="idnumber">
@@ -372,50 +373,48 @@
 
         if (!password_rule.test($("#password").val())) {
           alert("密碼格式不符!");
-        }
-        if (!email_rule.test($("#email").val())) {
+        } else if (!email_rule.test($("#email").val())) {
           alert("信箱格式不符！");
-        }
-        if (!dob_rule.test($("#dob").val())) {
+        } else if (!dob_rule.test($("#dob").val())) {
           alert("生日日期格式為YYYY-MM-DD");
-        }
-        if (!phone_rule.test($("#phonenumber").val())) {
+        } else if (!phone_rule.test($("#phonenumber").val())) {
           alert("手機格式不符!");
-        }
-        if ($("#name").val() == "" || $("#password").val() == "" || $("#email").val() == "" || $("#dob").val() == "" || $("#phonenumber").val() == "" || $("#idnumber").val() == "" || $("#address").val() == "") {
+        } else if ($("#name").val() == "" || $("#password").val() == "" || $("#email").val() == "" || $("#dob").val() == "" || $("#phonenumber").val() == "" || $("#idnumber").val() == "" || $("#address").val() == "") {
           alert("尚未輸入完畢!");
+        } else {
+          $.ajax({
+            url: "/Auth/member",
+            method: 'POST',
+            dataType: "JSON",
+            data: JSON.stringify({
+              name: $("#name").val(),
+              password: $("#password").val(),
+              email: $("#email").val(),
+              dob: $("#dob").val(),
+              idnumber: $("#idnumber").val(),
+              phonenumber: $("#phonenumber").val(),
+              address: $("#address").val()
+            }),
+            error: function (err) {
+              console.log(err)
+            },
+            success: function (res) {
+              console.log(res.message)
+              window.location.replace(res.redirect);
+            }
+          });
         }
 
 
 
 
 
-        console.log("Submit")
-        // console.log($("#name").val()())
-        console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
+        // console.log("Submit")
+        // // console.log($("#name").val()())
+        // console.log(`${$("#name").val()}, ${$("#password").val()},${$("#email").val()}, ${$("#dob").val()},${$("#idnumber").val()},${$("#phonenumber").val()}, ${$("#address").val()}`)
 
 
-        $.ajax({
-          url: "/Auth/member",
-          method: 'POST',
-          dataType: "JSON",
-          data: JSON.stringify({
-            name: $("#name").val(),
-            password: $("#password").val(),
-            email: $("#email").val(),
-            dob: $("#dob").val(),
-            idnumber: $("#idnumber").val(),
-            phonenumber: $("#phonenumber").val(),
-            address: $("#address").val()
-          }),
-          error: function (err) {
-            console.log(err)
-          },
-          success: function (res) {
-            console.log(res.message)
-            window.location.replace(res.redirect);
-          }
-        });
+
       })
     })
   </script>

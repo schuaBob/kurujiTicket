@@ -1,11 +1,11 @@
 package ncu.im3069.group14.controller;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,18 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import ncu.im3069.group14.app.*;
-import java.sql.Date;
-import java.util.ArrayList;
+
+
 
 import org.json.*;
 import ncu.im3069.group14.tools.RequestHandler;
+
+ 
+
 
 
 /**
  * Servlet implementation class ConcertController
  */
-@WebServlet("/api/concert.do")
-@MultipartConfig
+@WebServlet("/Auth/concert.do")
+@MultipartConfig(fileSizeThreshold=1024*1024*10, maxFileSize=1024*1024*50, maxRequestSize=1024*1024*100)
 public class ConcertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,15 +45,17 @@ public class ConcertController extends HttpServlet {
 		
 		RequestHandler jsr = new RequestHandler(request);
 		JSONArray result = new JSONArray();
-        /** ¨ú¥X¸g¸ÑªR¨ì JsonReader ¤§ Request °Ñ¼Æ */
+        /** ï¿½ï¿½î¡¼ïŠ¾è¬îš¨åœ¾ï¿½ï¿½î“ï‘ JsonReader éŠ‹ï¿½ Request ï¿½ï¿½ï¶î² */
 		if(!"".equals(jsr.getParameter("session"))){
 			String session = jsr.getParameter("session");
 			result = ch.getConcertByAttr("session",session);     
 		}else if(!"".equals(jsr.getParameter("concertid"))) {
 			String concertid = jsr.getParameter("concertid");
 			result = ch.getConcertByAttr("idconcert",concertid);			
+		}else if( !"".equals(jsr.getParameter("getspecifyconcert")) && (jsr.getMemberIDinRequest()!="0")){
+			result = ch.getConcertByAttr("supplierid",jsr.getMemberIDinRequest());
 		}else {
-			result = ch.getConcertByAttr("",""); //¦^¶Ç¥ş³¡
+			result = ch.getConcertByAttr("",""); //ï¿½ï¿½îµ¤î¾¦ï¿½ï…²ï¿½ï€¸
 		}
 		
 		if(result.isEmpty()) {
@@ -70,28 +75,34 @@ public class ConcertController extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		Part seatPicFile = request.getPart("seatpicture");
-//		String fileName = Paths.get(seatPicFile.getSubmittedFileName()).getFileName().toString();
-//		InputStream fileContent = seatPicFile.getInputStream();
-//		System.out.println(fileName);
-//		String path= getServletContext().getRealPath("/WebContent/picture");
-//		System.out.println(path);
-//		File file = new File(path, fileName);
-//		System.out.println(file.getAbsolutePath());
-		
-		/** ³z¹LJsonReaderÃş§O±NRequest¤§JSON®æ¦¡¸ê®Æ¸ÑªR¨Ã¨ú¦^ */
 		RequestHandler jsr = new RequestHandler(request);
-        JSONObject jso = jsr.toJsonObj();
-        Concert c = new Concert(jso);
+		String main = request.getParameter("obj");
+		JSONObject temp = new JSONObject(main);
+		Part seatPicPart = request.getPart("seatpicture");
+		Part posterPart = request.getPart("picture");
+		System.out.println("seatPicPart: "+seatPicPart.getSubmittedFileName()+", Size: "+seatPicPart.getSize());
+		System.out.println("posterPart: "+posterPart.getSubmittedFileName()+", Size: "+posterPart.getSize());
+		String seatPicName = seatPicPart.getSubmittedFileName();
+		String posterName = posterPart.getSubmittedFileName();
+		
+		String path = request.getServletContext().getRealPath(File.separator+"picture");
+		System.out.println(path);
+
+		seatPicPart.write(path+File.separator+seatPicName);
+		posterPart.write(path+File.separator+posterName);
+		temp.put("picture",File.separator+"picture"+File.separator+posterName);
+		temp.put("seatpicture", File.separator+"picture"+File.separator+seatPicName);
+		/** ï¿½îµï¿½îŒ›sonReaderæ†¿îµ¤ï†æ’ ï‰¸equestéŠ‹ï“¤SONï¿½î¹µæ’˜î´ï¿½ï‹ªï¿½î©–åœ¾ï¿½ï¿½î“è’‚ï¿½ï¿½î¡¼ï¿½ï¿½ */
+		
+        Concert c = new Concert(temp);
         
         JSONObject data = ch.createConcert(c);
     	JSONObject resp = new JSONObject();
     	resp.put("status", "200");
-        resp.put("message", "¦¨¥\·s¼Wºt°Û·|");
+        resp.put("message", "ï¿½ï¿½î“ï¿½î¸‚î¡‡æ†“îµ¥ï¿½î‚îœï¿½ï¿½ï¿½");
         resp.put("row-effect", data);
         
-        /** ³z¹LJsonReaderª«¥ó¦^¶Ç¨ì«eºİ¡]¥HJSONObject¤è¦¡¡^ */
+        /** ï¿½îµï¿½îŒ›sonReaderï¿½ï§éšå—…ï¿½îµ¤î¾¦ï¿½ï‘ï¿½ï¿½ïš™å¢åš—ï…èª‘JSONObjectï¿½î¡æ’˜î»ï¿½ï¿½ */
         jsr.sendJsonRes(resp, response);
 	}
 }

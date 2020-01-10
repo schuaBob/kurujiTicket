@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US">
+<<<<<<< HEAD
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -85,19 +86,244 @@
       <div class="jumbotron">
         <div class="container">
           <div class="container all-concert">
+=======
+
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.6">
+  <title>Jumbotron Template · Bootstrap</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/jumbotron/">
+
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    #logout {
+      cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">哭嚕嘰搶票系統</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="supplier_home.html">新增活動<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="supplier_view2.html">檢視新增票券</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" id="logout">Logout</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <main role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <div class="container all-concert">
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
           <h6 class="display-4">檢視新增票券</h6>
           <p>
-            
+
             <form>
-            <div class="form-group">
+              <div class="form-group">
+                <table>
+                  <tr>
+                    <td>演唱會名稱:</td>
+                    <td id="Name"></td>
+                  </tr>
+                  <table>
+              </div>
+
+              <div class="form-group">
+                <table>
+                  <tr>
+                    <td>地址:</td>
+                    <td id="Location"></td>
+                  </tr>
+                  <table>
+              </div>
+
+              <div class="form-group">
+                <table>
+                  <tr>
+                    <td>演唱會描述:</td>
+                    <td id="Content"></td>
+                  </tr>
+                  <table>
+              </div>
+
+              <div class="form-group">
+                <table>
+                  <tr>
+                    <td>演唱會時間:從</td>
+                    <td id="Concertstarttime"></td>
+                  </tr>
+                  <tr>
+                    <td>到</td>
+                    <td id="Concertendtime"></td>
+                  </tr>
+                  <table>
+              </div>
+
+              <div class="form-group">
+                <table>
+                  <tr>
+                    <td>關閉售票日期與時間:</td>
+                    <td id="Endsellingtime"></td>
+                  </tr>
+                  <table>
+              </div>
+              <div id="demo">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">票種及價格</span>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">區域</th>
+                          <th scope="col">票價</th>
+                          <th scope="col">數量</th>
+                        </tr>
+                      </thead>
+                      <tbody id="_tbody">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              </script>
+            </form>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>主視覺</h2>
+          <figure class="figure">
+            <img src="" class="figure-img img-fluid rounded" id="Picture">
+            
+          </figure>
+        </div>
+        <div class="col-md-4">
+          <h2>座位圖</h2>
+          <figure class="figure">
+            <img src="" class="figure-img img-fluid rounded" id="Seatpicture">
+            
+          </figure>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <hr>
+  </main>
+  <script>
+    $(document).ready(() => {
+      initFunc();//觸發 撈資料 476
+    });
+
+    $("#logout").click(function () {
+      $.ajax({
+        method: "DELETE",
+        url: "login",
+        success: function (res) {
+          console.log("success")
+          window.location.replace(res.redirect);
+        },
+        error: function (err) {
+          alert("Error");
+          console.log(err)
+        }
+      });
+<<<<<<< HEAD
+ 
+      var initFunc = function () { //從後端取得上一次新增的單筆演唱會資料
+      $.ajax({
+        type: "GET",
+        url: "api/concert.do?getspecifyconcert=true", 
+=======
+    });
+
+    var createConcertCard = function (concertname, supplierid, location, picture, seatpicture, endsellingtime, content, ticketstatus, concertstarttime, concertendtime) {//船參數進去 合成html
+      var tempDate = new Date(concertstarttime);
+      var year, month, date, hour, min;
+      year = tempDate.getFullYear();
+      month = tempDate.getMonth() + 1;
+      date = tempDate.getDate();
+      hour = tempDate.getHours();
+      min = (tempDate.getMinutes() < 10 ? '0' : '') + tempDate.getMinutes();
+
+      var statusobject = JSON.parse(ticketstatus)
+      statusobject.data.forEach((a, b, statusArr) => {  //a 物件  b為 index
+        console.log(a)
+        area = a.Area
+        price = a.Price
+        ammount = a.Sold
+        //SeatTotal
+      });
+      let info = $(`<div class="form-group">
               <table> 
-                <tr> <td>演唱會名稱:</td> <td id="Name"></td> </tr>
+                <tr> <td>演唱會名稱:</td> <td>${concertname}</td> </tr>
                 <table>
             </div>
 
             <div class="form-group">
               <table> 
-              <tr> <td>地址:</td> <td id="Location"></td> </tr>
+              <tr> <td>地址:</td> <td>${location}</td> </tr>
               <table>
             </div>
               
@@ -105,23 +331,24 @@
               <table> 
                 <tr>  
                   <td>演唱會描述:</td> 
-                  <td id="Content"></td> 
+                  <td>${content}</td> 
                 </tr>
               <table>
             </div>
 
             <div class="form-group">
               <table> 
-                <tr> <td>演唱會時間:從</td> <td id="Concertstarttime"></td> </tr>
-                <tr> <td>到</td> <td id="Concertendtime"></td> </tr>
+                <tr> <td>演唱會時間:從</td> <td>${concertstarttime}</td> </tr>
+                <tr> <td>到</td> <td>${concertendtime}</td> </tr>
               <table>
             </div>
 
             <div class="form-group">
               <table> 
-                <tr> <td>關閉售票日期與時間:</td> <td id="Endsellingtime"></td> </tr>
+                <tr> <td>關閉售票日期與時間:</td> <td>${endsellingtime}</td> </tr>
               <table>
-            </div>
+            </div>`)
+      let ticketarea = $(`
             <div id="demo">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -135,57 +362,61 @@
                         <th scope="col">數量</th>
                       </tr>
                     </thead>
-                    <tbody id="_tbody">
-                      
+                    <tbody>
+                      <tr>
+                       <!-- <th scope="row">1</th>-->
+                        <td>${area}</td>
+                        <td>${price}</td>
+                        <td>${ammount}</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-            </div>
-
-              </script>
-            </form>
-          </p>
-         </div>
-        </div>
-      </div>
-    
-      <div class="container">
+            </div>`)
+      let pic = $(`<div class="container">
         <!-- Example row of columns -->
         <div class="row">
           <div class="col-md-4">
             <h2>主視覺</h2>
             <figure class="figure">
-              <img src="..." class="figure-img img-fluid rounded" alt="...">
+              <img src="${picture}" class="figure-img img-fluid rounded" alt="...">
               <figcaption class="figure-caption">A caption for the above image.</figcaption>
             </figure>
           </div>
           <div class="col-md-4">
             <h2>座位圖</h2>
             <figure class="figure">
-              <img src="..." class="figure-img img-fluid rounded" alt="...">
+              <img src="${seatpicture}" class="figure-img img-fluid rounded" alt="...">
               <figcaption class="figure-caption">A caption for the above image.</figcaption>
             </figure>
           </div>
         </div>
-      </div>
-  </div>
-       
-        <hr>
-    </main>
-    <script>
-      $(document).ready(() => {
-      initFunc();//觸發 撈資料 476
-      });
- 
-      var initFunc = function () { //從後端取得上一次新增的單筆演唱會資料
+      </div>`)
+      let struct = $(`<div class="card bg-transparent">
+                        <div class="card-body">
+                          <div class="row">
+                          </div>
+                        </div>
+                      </div>`) //純字串
+
+      struct.find(".row").append(info).append(ticketarea).append(pic);
+
+      console.log(struct);
+      return struct;
+    };
+
+
+    var initFunc = function () { //430放好
       $.ajax({
         type: "GET",
-        url: "api/concert.do?getspecifyconcert=true", 
+        url: "Auth/concert.do?getspecifyconcert=true", //session代表場次代號
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
         cache: false,
         dataType: "json",
         timeout: 5000,
         success: function (response) {
+<<<<<<< HEAD
           if(response.status == 200 && response.isEmpty == "false"){ //後端條件值
                     let data = JSON.parse(response.data); //[{Row1},{Row2}]
                     let lastIndex = data.length - 1; //最後一筆idex為total length-1
@@ -208,6 +439,40 @@
                     alert("沒東西或有問題");
                 }
 
+=======
+
+          if (response.status == 200 && response.isEmpty == "false") {
+            let data = JSON.parse(response.data); //[{Row1},{Row2}]
+            let lastIndex = data.length - 1;
+            $("#Name").text(data[lastIndex].name);
+            $("#Location").text(data[lastIndex].location);
+            $("#Picture").attr("src",data[lastIndex].picture);
+            $("#Seatpicture").attr("src",data[lastIndex].seatpicture)
+            $("#Endsellingtime").text(data[lastIndex].endsellingtime);
+            $("#Content").text(data[lastIndex].content);
+            $("#Concertstarttime").text(data[lastIndex].concertstarttime);
+            $("#Concertendtime").text(data[lastIndex].concertendtime);
+            let temp = JSON.parse(data[lastIndex].ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
+            let count = 0;
+            temp.forEach(f => {
+              count++;
+              $("#_tbody").append("<tr><th scope='row'>" + count + "</th><td>" + f.Area + "</td><td>" + f.Price + "</td><td>" + f.SeatTotal + "</td></tr>");
+            });
+          } else {
+            alert("沒東西或有問題");
+          }
+          // if (response.status == 200 && response.isEmpty == "false") { 
+          //   let data = JSON.parse(response.data);//抓資料
+
+          //   data.forEach((e, i)=>{  //i (0開始~4)第幾個 , e 值
+          //     console.log(e) //取出concert所有內容
+          //     var card = createConcertCard(e.concertName, e.supplierid, e.location, e.picture, e.seatpicture, e.endsellingtime, e.content, e.ticketstatus, e.concertstarttime,e.concertendtime);//取值，合成好介面
+          //     $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
+          //   }); //ajax抓資料 再放到html
+          // } else {
+          //   alert("沒東西或有問題");
+          // }
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
         },
         error: function (err) {
           alert("無法連線到伺服器！");
@@ -216,10 +481,21 @@
         console.log(result)
       })
     }
+<<<<<<< HEAD
     </script>
     <footer class="container">
       <p>© KuluGi 2019</p>
     </footer>
     
     </body>
+=======
+
+  </script>
+  <footer class="container">
+    <p>© KuluGi 2019</p>
+  </footer>
+
+</body>
+
+>>>>>>> 3308c3a715ce42dc2e18c8404e89d6496e5bbba9
 </html>

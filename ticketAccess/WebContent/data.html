@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-Hant-TW">
 
+
 <meta charset="UTF-8">
+
 
 
 <head>
@@ -10,135 +12,142 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
         crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
-
-
-
+    <style>
+        #logout:hover {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
-
-
-
-
 <body>
-    <main>
-        <header>
-            <!--應該要匯入navbar ktml-->
-            <div id="include"></div>
-
-            <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-transparent" id="navbar" style="padding-left:120vh">
-
-
-                <nav class="navbar navbar-expand-lg navbar-light">
-                    <a href="index.html" class=" navbar-brand" id="brand">
-
-                        <img src='spotlights.png' id="logo">
+    <nav id="kurujiNav" class="navbar navbar-expand-lg navbar-light bg-transparent">
+        <nav class="navbar navbar-light bg-transparent">
+            <a class="navbar-brand" href="/">
+                <img src="index/Peachpuff Brush Stroke Photography Logo(已去底)cut.png" class="brand-pic" style="width:35vh">
+            </a>
+        </nav>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index-signin.html">Home
+                        <span class="sr-only">(current)</span>
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-item nav-link  " id="space" href="index.html">現正熱映</a>
-                            <span class="border border-dark navv"></span>
-                            <a class="nav-item nav-link   active" id="space" href="date.html">我要購票</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link  disable" id="space" href="order.html">訂單紀錄</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link disable" id="space" href="#">會員</a>
-                            <span class="border border-dark"></span>
-                            <a class="nav-item nav-link " id="space" href="#">登出</a>
-
-                        </div>
-                    </div>
-                </nav>
-            </nav>
-        </header>
-        <!-- 引入測試-->
-        <div w3-include-html="navbar.html"></div>
-        <div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <p id="concert-name">周杰倫嘉年華演唱會</p>
-                    </div>
-                    <div class="col-4" id="concertdata" style="padding-top:6%;">
-
-                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="date.html">Buy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="order.html">MyOrder</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="edit.html">MemberData</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    </header>
+    <!-- 引入測試-->
+    <div w3-include-html="navbar.html"></div>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <p id="concert-name">周杰倫嘉年華演唱會</p>
                 </div>
-                <ul class="nav nav-pills" id="progress">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="tickettab" href="tickettype.html">選擇票種</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="datatab">填寫表單</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="paytab">選擇付款方式</a>
-                    </li>
+                <div class="col-4" id="concertdata" style="padding-top:6%;">
 
-                </ul>
+                </div>
+            </div>
+            <ul class="nav nav-pills" id="progress">
+                <li class="nav-item">
+                    <a class="nav-link active" id="datetab" href="date.html">選擇日期</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tickettab" href="tickettype.html">選擇票種</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="datatab">填寫表單</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="paytab">選擇付款方式</a>
+                </li>
 
-                <div style="height:6vh;"></div>
+            </ul>
 
-                <div id="dataset">
+            <div style="height:6vh;"></div>
 
-                    <div class="data_front">
+            <div id="dataset">
 
-                        <div class="alert alert-primary" id="ticketdata">
-                            <img src="checklist.png" style="width:5vh;">&nbsp;&nbsp;
+                <div class="data_front">
+
+                    <div class="alert alert-primary" id="ticketdata">
+                        <img src="checklist.png" style="width:5vh;">&nbsp;&nbsp;
+                    </div>
+                    <div class="data_title">聯絡人資料</div>
+                </div>
+                <div class="data_content">
+                    <form-row>
+                        <label for="validationDefault01">*姓名</label>
+                        <input type="text" class="form-control" id="order_name" placeholder="王曉明" required>
+                    </form-row>
+                    <form-row>
+                        <label for="validationDefault01">*EMAIL</label>
+                        <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
+                    </form-row>
+                    <form-row>
+                        <label for="validationDefault01">*手機</label>
+
+                        <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
+                    </form-row>
+
+                    <form-row>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
+                            <label> 同會員資料 </label>
                         </div>
-                        <div class="data_title">聯絡人資料</div>
-                    </div>
-                    <div class="data_content">
-                        <form-row>
-                            <label for="validationDefault01">*姓名</label>
-                            <input type="text" class="form-control" id="order_name" placeholder="王曉明" required>
-                        </form-row>
-                        <form-row>
-                            <label for="validationDefault01">*EMAIL</label>
-                            <input type="email" class="form-control" id="order_email" placeholder="XXX@mail.com" required>
-                        </form-row>
-                        <form-row>
-                            <label for="validationDefault01">*手機</label>
 
-                            <input type="tel" class="form-control" name="order_phone" id="order_phone" placeholder="0912345678" pattern="[0-9]{10}" required>
-                        </form-row>
-
-                        <form-row>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="member" value="yes" id="member">
-                                <label> 同會員資料 </label>
-                            </div>
-                    </div>
-                    <div class="data_button">
-                        <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
-                    </div>
+                        <div class="data_button">
+                            <a href="pay.html" class="btn btn-primary" role="submit" id="data_b"> 下一步</a>
+                        </div>
                     </form-row>
 
                 </div>
             </div>
+        </div>
 
-        </div>
-        </div>
         <script>
             $(document).ready(function () {
 
-              localStorage.memberid=0;
-              
+                localStorage.memberid = 0;
+
                 $("#datetab").removeClass("active");
                 $("#datatab").addClass("active");
                 $("#ticketdata").append(localStorage.display);
-                
-                //判斷會員
-                var member = 5;
-                localStorage.setItem("memberid", member);
 
+                //判斷會員
+                // var member = 5;
+                // localStorage.setItem("memberid", member);
+                $("#logout").click(function () {
+                    $.ajax({
+                        method: "DELETE",
+                        url: "login",
+                        success: function (res) {
+                            console.log("success")
+                            window.location.replace(res.redirect);
+                        },
+                        error: function (err) {
+                            alert("Error");
+                            console.log(err)
+                        }
+                    })
+                })
 
                 $('#member').mousedown(function () {
 
@@ -150,20 +159,14 @@
 
                 $("#data_b").click(function () {
 
-                    datasubmit();
+                    localStorage.setItem("temp_name", $("#order_name").val());
+                    localStorage.setItem("temp_phone", $("#order_phone").val());
+                    localStorage.setItem("temp_mail", $("#order_email").val());
+                   // alert(localStorage.temp_name);
                 });
 
                 //自動輸入member data
                 function memebercheck() {
-
-
-
-
-                    $("#order_name").val("111");
-                    $("#order_phone").val("0912334567");
-                    $("#order_email").val("a2333@gmail.com");
-
-
                     //url加上memberid
                     //session
                     $.ajax({
@@ -174,51 +177,23 @@
                             alert("玫璉上");
                         },
                         success: function (response) {
-                            let people = JSON.parse(response.data);
-                            $("#order_name").val(people[0].name);
-                            $("#order_phone").val(people[0].phonenumber);
-                            $("#order_mail").val(people[0].email);
+                            let people = response.memberData
+                            console.log(people)
+                            $("#order_name").val(people.name);
+                            $("#order_phone").val(people.phonenumber);
+                            $("#order_email").val(people.email)
+
 
                         }
+
                     });
 
 
                 }
 
-
-                function datasubmit() {
-                    var name = $('#order_name').val();
-                    var email = $('#order_email').val();
-                    var phone = $('#order_phone').val();
-
-                    //輸入預防
-                    var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
-                    var phone_rule = /^[09]{2}[0-9]{8}$/;
-
-                    if (!name) {
-                        event.preventDefault();
-                        alert("請輸入名字!");
-                    }
-                    if (!email_rule.test(email)) {
-                        event.preventDefault();
-                        alert("Email格式不符！");
-                    }
-                    if (!phone_rule.test(phone)) {
-                        event.preventDefault();
-                        alert("phone格式不符!");
-                    }
-                    else {
-                        localStorage.setItem("temp_name", name);
-                        localStorage.setItem("temp_mail", email);
-                        localStorage.setItem("temp_phone", phone);
-
-                    }
-                }
-
-
             });
         </script>
-    </main>
+        </main>
 </body>
 
 </html>

@@ -3,12 +3,10 @@ package ncu.im3069.group14.controller;
 import java.io.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ncu.im3069.group14.tools.*;
-import ncu.im3069.group14.util.Token;
 import ncu.im3069.group14.app.*;
 import java.sql.Date;
 
@@ -38,10 +36,10 @@ public class MemberController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+		System.out.println("In member get");
 		RequestHandler rh = new RequestHandler(request);
 		String id = rh.getMemberIDinRequest();
-		
+		System.out.println(id);
 		JSONObject memberData = mh.readByID(id);
 		
 		JSONObject resObj = new JSONObject();
@@ -120,7 +118,7 @@ public class MemberController extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestHandler rh = new RequestHandler(request);
 		JSONObject req = rh.toJsonObj();
-		int id = req.getInt("id");
+		int id = Integer.parseInt(rh.getMemberIDinRequest());
 		String password = req.getString("password");
 		String phonenumber = req.getString("phonenumber");
 		String address = req.getString("address");
@@ -130,10 +128,8 @@ public class MemberController extends HttpServlet {
 		JSONObject resObj = new JSONObject();
 		
 		if(memRes.getInt("row")>0) {
-			Cookie jwtCookie = new Cookie("Token",null);
-			Token.addTokentoCookie(jwtCookie, response);
 			resObj.put("message", "修改成功");
-			resObj.put("redirect", "signin.html");
+			resObj.put("redirect", "/");
 			rh.sendJsonRes(resObj, response);
 		} else {
 			resObj.put("message", "修改失敗");
