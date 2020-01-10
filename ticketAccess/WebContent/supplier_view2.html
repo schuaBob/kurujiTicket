@@ -40,7 +40,9 @@
             -ms-user-select: none;
             user-select: none;
           }
-    
+          #logout{
+            cursor: pointer;
+          }
           @media (min-width: 768px) {
             .bd-placeholder-img-lg {
               font-size: 3.5rem;
@@ -66,19 +68,8 @@
           <li class="nav-item active">
             <a class="nav-link" href="supplier_view.html">檢視新增票券</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="supplier_modify.html" >修改活動內容</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">供應商專區</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">檢視其他供應商</a>
-              <a class="dropdown-item" href="#">Q&A</a>
-              <a class="dropdown-item" href="#">Logout</a>
-            </div>
+          <li class="nav-item active">
+            <a class="nav-link" id="logout">Logout</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -186,161 +177,37 @@
       $(document).ready(() => {
       initFunc();//觸發 撈資料 476
       });
-      
-      var createConcertCard = function (concertname, supplierid, location, picture,seatpicture, endsellingtime, content, ticketstatus, concertstarttime, concertendtime) {//船參數進去 合成html
-      var tempDate = new Date(concertstarttime);
-      var year, month, date, hour, min;
-      year = tempDate.getFullYear();
-      month = tempDate.getMonth()+1;
-      date = tempDate.getDate();
-      hour = tempDate.getHours();
-      min = (tempDate.getMinutes()<10? '0':'') +tempDate.getMinutes();
-
-      var statusobject = JSON.parse(ticketstatus)
-      statusobject.data.forEach((a,b,statusArr) => {  //a 物件  b為 index
-        console.log(a)
-        area = a.Area
-        price = a.Price
-        ammount = a.Sold
-        //SeatTotal
-      });
-      let info = $(`<div class="form-group">
-              <table> 
-                <tr> <td>演唱會名稱:</td> <td>${concertname}</td> </tr>
-                <table>
-            </div>
-
-            <div class="form-group">
-              <table> 
-              <tr> <td>地址:</td> <td>${location}</td> </tr>
-              <table>
-            </div>
-              
-            <div class="form-group">
-              <table> 
-                <tr>  
-                  <td>演唱會描述:</td> 
-                  <td>${content}</td> 
-                </tr>
-              <table>
-            </div>
-
-            <div class="form-group">
-              <table> 
-                <tr> <td>演唱會時間:從</td> <td>${concertstarttime}</td> </tr>
-                <tr> <td>到</td> <td>${concertendtime}</td> </tr>
-              <table>
-            </div>
-
-            <div class="form-group">
-              <table> 
-                <tr> <td>關閉售票日期與時間:</td> <td>${endsellingtime}</td> </tr>
-              <table>
-            </div>`)
-      let ticketarea = $(`
-            <div id="demo">
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">票種及價格</span>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">區域</th>
-                        <th scope="col">票價</th>
-                        <th scope="col">數量</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                       <!-- <th scope="row">1</th>-->
-                        <td>${area}</td>
-                        <td>${price}</td>
-                        <td>${ammount}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>`)
-      let pic = $(`<div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-4">
-            <h2>主視覺</h2>
-            <figure class="figure">
-              <img src="${picture}" class="figure-img img-fluid rounded" alt="...">
-              <figcaption class="figure-caption">A caption for the above image.</figcaption>
-            </figure>
-          </div>
-          <div class="col-md-4">
-            <h2>座位圖</h2>
-            <figure class="figure">
-              <img src="${seatpicture}" class="figure-img img-fluid rounded" alt="...">
-              <figcaption class="figure-caption">A caption for the above image.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </div>`)
-      let struct = $(`<div class="card bg-transparent">
-                        <div class="card-body">
-                          <div class="row">
-                          </div>
-                        </div>
-                      </div>`) //純字串
-      
-        struct.find(".row").append(info).append(ticketarea).append(pic);
-     
-      console.log(struct);
-      return struct;
-    };
-
-
-      var initFunc = function () { //430放好
+ 
+      var initFunc = function () { //從後端取得上一次新增的單筆演唱會資料
       $.ajax({
         type: "GET",
-        url: "api/concert.do?concertid=1", //session代表場次代號
+        url: "api/concert.do?getspecifyconcert=true", 
         cache: false,
         dataType: "json",
         timeout: 5000,
         success: function (response) {
-
-          if(response.status == 200 && response.isEmpty == "false"){
+          if(response.status == 200 && response.isEmpty == "false"){ //後端條件值
                     let data = JSON.parse(response.data); //[{Row1},{Row2}]
-                    data.forEach(e => {
-                        $("#Name").text(e.name); 
-                        $("#Location").text(e.location);
-                        $("#Picture").text(e.picture);
-                        $("#Seatpicture").text(e.seatpicture);
-                        $("#Endsellingtime").text(e.endsellingtime);
-                        $("#Content").text(e.content);
-                        $("#Concertstarttime").text(e.concertstarttime);
-                        $("#Concertendtime").text(e.concertendtime);
-
-                        let temp = JSON.parse(e.ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
-                        let count = 0;
-                        temp.forEach(f =>{
-                          count++;
+                    let lastIndex = data.length - 1; //最後一筆idex為total length-1
+                    $("#Name").text(data[lastIndex].name); //讀取該筆資料的演唱會名稱，並指定id，在html對應之table即可放入此id
+                    $("#Location").text(data[lastIndex].location);
+                    $("#Picture").text(data[lastIndex].picture);
+                    $("#Seatpicture").text(data[lastIndex].seatpicture);
+                    $("#Endsellingtime").text(data[lastIndex].endsellingtime);
+                    $("#Content").text(data[lastIndex].content);
+                    $("#Concertstarttime").text(data[lastIndex].concertstarttime);
+                    $("#Concertendtime").text(data[lastIndex].concertendtime);
+                    let temp = JSON.parse(data[lastIndex].ticketstatus).data; //Row1的ticketstatus，[{Area:A,...},{Area:B,...}]
+                    let count = 0;//動態將新增ticketstatus時存放的N筆票券資料讀出
+                    temp.forEach(f =>{
+                          count++;//每讀取一筆Count+1
                           $("#_tbody").append("<tr><th scope='row'>"+count+"</th><td>"+f.Area+"</td><td>"+f.SeatTotal+"</td><td>"+f.Price+"</td></tr>");
-                          // $("#Area1").text(f.Area);
-                          // $("#SeatTotal1").text(f.SeatTotal);
-                          // $("#Price1").text(f.Price);
-                        });                        
-                    });
+                          //在html裡面的 <tbody>一筆一筆加入該ticketstatus資料
+                    });           
                 }else{
                     alert("沒東西或有問題");
                 }
-          // if (response.status == 200 && response.isEmpty == "false") { 
-          //   let data = JSON.parse(response.data);//抓資料
-            
-          //   data.forEach((e, i)=>{  //i (0開始~4)第幾個 , e 值
-          //     console.log(e) //取出concert所有內容
-          //     var card = createConcertCard(e.concertName, e.supplierid, e.location, e.picture, e.seatpicture, e.endsellingtime, e.content, e.ticketstatus, e.concertstarttime,e.concertendtime);//取值，合成好介面
-          //     $(".all-concert").append(card)//把 card append 到allconcert 裡面 ，使用者看到
-          //   }); //ajax抓資料 再放到html
-          // } else {
-          //   alert("沒東西或有問題");
-          // }
+
         },
         error: function (err) {
           alert("無法連線到伺服器！");
@@ -349,7 +216,6 @@
         console.log(result)
       })
     }
-
     </script>
     <footer class="container">
       <p>© KuluGi 2019</p>
@@ -357,4 +223,3 @@
     
     </body>
 </html>
-
